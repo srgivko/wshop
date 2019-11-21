@@ -32,11 +32,11 @@ INSERT INTO roles (id, name) VALUES
 ;
 
 INSERT INTO users (id, email, password, name) VALUES
-(1, 'superadmin@gmail.com', '$2a$10$p3PHnpoBAnzZiL8mr3gMieMhVVSb585ajC2ZsBB0kwb4KvZKFSdNi', 'Super Admin'),
-(2, 'admin@gmail.com', '$2a$10$hKDVYxLefVHV/vtuPhWD3OigtRyOykRLDdUAp80Z1crSoS1lFqaFS', 'Admin'),
-(3, 'cms@gmail.com', '$2a$10$/Y0IarSOuH2dz.UOLrZbaus17K6AJF7n15qWr02aWN1MOz5vEKT8y', 'CMSGuy'),
-(4, 'siva@gmail.com', '$2a$10$UFEPYW7Rx1qZqdHajzOnB.VBR3rvm7OI7uSix4RadfQiNhkZOi2fi', 'Siva'),
-(5, 'user@gmail.com', '$2a$10$ByIUiNaRfBKSV6urZoBBxe4UbJ/sS6u1ZaPORHF9AtNWAuVPVz1by', 'DemoUser')
+(1, 'superadmin@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Super Admin'),
+(2, 'admin@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Admin'),
+(3, 'cms@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'CMSGuy'),
+(4, 'siva@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Siva'),
+(5, 'user@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'DemoUser')
 
 ;
 

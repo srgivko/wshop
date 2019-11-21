@@ -1,33 +1,22 @@
 package by.lodochkina.wshop.admin.security;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import by.lodochkina.wshop.security.SecurityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component
-public class PostAuthorizationFilter extends OncePerRequestFilter
-{
-    @Autowired
-    private final SecurityService securityService;
+public class PostAuthorizationFilter extends OncePerRequestFilter {
 
-    protected String[] IGNORE_URIS = {"/assets/"};
-
-    public PostAuthorizationFilter(SecurityService securityService) {
-        this.securityService = securityService;
-    }
+    private static final String[] IGNORE_URIS = {"/assets/"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         String uri = request.getRequestURI();
         if(!isIgnorableURI(uri)){
             String menu = MenuConfiguration.getMatchingMenu(uri);
@@ -36,12 +25,9 @@ public class PostAuthorizationFilter extends OncePerRequestFilter
         chain.doFilter(request, response);
     }
 
-    private boolean isIgnorableURI(String uri)
-    {
-        for (String u : IGNORE_URIS)
-        {
-            if(uri.startsWith(u))
-            {
+    private boolean isIgnorableURI(String uri) {
+        for (String u : IGNORE_URIS) {
+            if(uri.startsWith(u)) {
                 return true;
             }
         }

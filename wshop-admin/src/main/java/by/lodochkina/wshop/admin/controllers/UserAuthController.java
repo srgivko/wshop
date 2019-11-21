@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.TemplateEngine;
@@ -19,6 +20,8 @@ import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 
 @Controller
 public class UserAuthController extends WShopAdminBaseController {
+
+    private static final String VIEW_PREFIX = "public/";
 
     private final EmailService emailService;
 
@@ -34,6 +37,11 @@ public class UserAuthController extends WShopAdminBaseController {
         this.securityService = securityService;
         this.templateEngine = templateEngine;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping(value = "/forgotPwd")
+    public String forgotPwd() {
+        return VIEW_PREFIX + "forgotPwd";
     }
 
     @PostMapping(value = "/resetPwd")
@@ -57,6 +65,24 @@ public class UserAuthController extends WShopAdminBaseController {
             redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST));
         }
         return "redirect:/login";
+    }
+
+    @GetMapping(value="/resetPwd")
+    public String resetPwd(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
+    {
+        String email = request.getParameter("email");
+        String token = request.getParameter("token");
+
+        boolean valid = this.securityService.verifyPasswordResetToken(email, token);
+        if(valid){
+            model.addAttribute("email", email);
+            model.addAttribute("token", token);
+            return VIEW_PREFIX+"resetPwd";
+        } else {
+            redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST));
+            return "redirect:/login";
+        }
+
     }
 
     @PostMapping(value = "/forgotPwd")
@@ -86,5 +112,10 @@ public class UserAuthController extends WShopAdminBaseController {
         } catch (WShopException e) {
             System.err.println("Some error");
         }
+    }
+
+    @Override
+    protected String getHeaderTitle() {
+        return "Управление пользователями";
     }
 }

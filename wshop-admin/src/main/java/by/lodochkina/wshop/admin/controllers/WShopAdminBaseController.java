@@ -1,17 +1,18 @@
 package by.lodochkina.wshop.admin.controllers;
 
 import by.lodochkina.wshop.admin.security.AuthenticatedUser;
-import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-public class WShopAdminBaseController {
+public abstract class WShopAdminBaseController {
 
     @Autowired
     protected MessageSource messageSource;
+
+    protected abstract String getHeaderTitle();
 
     public String getMessage(String code) {
         return messageSource.getMessage(code, null, null);
