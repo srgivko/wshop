@@ -2,6 +2,7 @@ package by.lodochkina.wshop.admin.security;
 
 import by.lodochkina.wshop.entities.User;
 import by.lodochkina.wshop.security.SecurityService;
+import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

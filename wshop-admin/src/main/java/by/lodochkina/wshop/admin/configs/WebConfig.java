@@ -2,9 +2,16 @@ package by.lodochkina.wshop.admin.configs;
 
 import by.lodochkina.wshop.admin.security.PostAuthorizationFilter;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +21,22 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import javax.servlet.Filter;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    @Value("${server.port}")
+    private int serverPort;
+
+    private final MessageSource messageSource;
+
     @Autowired
-    private MessageSource messageSource;
+    public WebConfig(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Override
     public Validator getValidator() {
@@ -46,6 +61,7 @@ public class WebConfig implements WebMvcConfigurer {
         return new SpringSecurityDialect();
     }
 
+    //solve this http://stackoverflow.com/questions/25957879/filter-order-in-spring-boot
     @Bean
     public FilterRegistrationBean securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
         FilterRegistrationBean registration = new FilterRegistrationBean(securityFilter);
@@ -62,5 +78,53 @@ public class WebConfig implements WebMvcConfigurer {
         return registrationBean;
     }
 
+    @Bean
+    public ClassLoaderTemplateResolver templateResolver() {
+        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+        resolver.setPrefix("templates/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode("HTML");
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setOrder(1);
+        resolver.setCacheable(false);
+        return resolver;
+    }
 
+    @Bean
+    public ClassLoaderTemplateResolver emailTemplateResolver(){
+        ClassLoaderTemplateResolver emailTemplateResolver = new ClassLoaderTemplateResolver();
+        emailTemplateResolver.setPrefix("email-templates/");
+        emailTemplateResolver.setSuffix(".html");
+        emailTemplateResolver.setTemplateMode("HTML");
+        emailTemplateResolver.setCharacterEncoding("UTF-8");
+        emailTemplateResolver.setOrder(3);
+        return emailTemplateResolver;
+    }
+
+//    https://stackoverflow.com/questions/47700115/tomcatembeddedservletcontainerfactory-is-missing-in-spring-boot-2
+    @Bean
+    public ServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+            @Override
+            protected void postProcessContext(Context context) {
+                SecurityConstraint securityConstraint = new SecurityConstraint();
+                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                SecurityCollection collection = new SecurityCollection();
+                collection.addPattern("/*");
+                securityConstraint.addCollection(collection);
+                context.addConstraint(securityConstraint);
+            }
+        };
+        tomcat.addAdditionalTomcatConnectors(redirectConnector());
+        return tomcat;
+    }
+
+    private Connector redirectConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setScheme("http");
+        connector.setPort(9090);
+        connector.setSecure(false);
+        connector.setRedirectPort(serverPort);
+        return connector;
+    }
 }

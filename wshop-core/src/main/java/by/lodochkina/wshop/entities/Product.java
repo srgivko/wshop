@@ -30,7 +30,7 @@ public class Product implements Serializable {
     private String description;
 
     @Column(nullable = false)
-    private BigDecimal price = new BigDecimal("0.0");
+    private BigDecimal price = new BigDecimal("0.00");
 
     private String imageUrl;
 
