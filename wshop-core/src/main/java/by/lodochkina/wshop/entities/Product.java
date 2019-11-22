@@ -54,6 +54,10 @@ public class Product implements Serializable {
     @JoinColumn(name = "unit_id")
     private Unit unit;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "producer_id")
+    private Producer producer;
+
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "product_tag",

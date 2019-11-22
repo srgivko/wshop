@@ -4,8 +4,8 @@ delete from  permissions;
 delete from  roles;
 delete from  users;
 
-delete from product_tag;
-delete from category_tag;
+delete from  product_tag;
+delete from  category_tag;
 delete from  order_items;
 delete from  orders;
 delete from  payments;
@@ -15,6 +15,7 @@ delete from  products;
 delete from  categories;
 delete from  tags;
 delete from  units;
+delete from  producers;
 
 insert into tags (id, name) values
 (1, 'tag_1'),
@@ -31,6 +32,15 @@ insert into units (id, name) values
 (4, 'unit_4'),
 (5, 'unit_5')
 ;
+
+insert into producers (id, name, description) values
+(1, 'producer_1','descriptor_1'),
+(2, 'producer_2','descriptor_2'),
+(3, 'producer_3','descriptor_3'),
+(4, 'producer_4','descriptor_4'),
+(5, 'producer_5','descriptor_5')
+;
+
 
 INSERT INTO permissions (id, name) VALUES
 (1, 'MANAGE_CATEGORIES'),
@@ -52,13 +62,7 @@ INSERT INTO roles (id, name) VALUES
 ;
 
 INSERT INTO users (id, email, password, name) VALUES
-(1, 'superadmin@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Super Admin'),
-(2, 'admin@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Admin'),
-(3, 'cms@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'CMSGuy'),
-(4, 'siva@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Siva'),
-(5, 'user@gmail.com', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'DemoUser')
-
-;
+(1, 'pi-ls@mail.ru', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Super Admin');
 
 insert into role_permission(role_id, perm_id) values
 (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),
@@ -67,12 +71,7 @@ insert into role_permission(role_id, perm_id) values
 ;
 
 insert into user_role(user_id, role_id) values
-(1,1),
-(2,2),
-(3,3),
-(4,2),(4,3),
-(5,4)
-;
+(1,1),(1,2),(1,3),(1,4);
 
 insert into categories(id, name, disp_order,disabled) values
 (1,'Flowers',1,false),
@@ -81,37 +80,36 @@ insert into categories(id, name, disp_order,disabled) values
 ;
 
 INSERT INTO products (id,cat_id,unit_id,sku,name,description,image_url,price,disabled,created_on) VALUES
- (1,1,1,'P1001','Quilling Toy 1','Quilling Toy 1','1.jpg','430.00',false,now()),
- (2,2,2,'P1002','Quilling Toy 2','Quilling Toy 2','2.jpg','490.00',false,now()),
- (3,3,3,'P1003','Quilling Toy 3','Quilling Toy 3','3.jpg','400.00',false,now()),
- (4,1,1,'P1004','Quilling Toy 4','Quilling Toy 4','4.jpg','430.00',false,now()),
- (5,2,2,'P1005','Quilling Toy 5','Quilling Toy 5','5.jpg','750.00',false,now()),
- (6,3,3,'P1006','Quilling Toy 6','Quilling Toy 6','6.jpg','350.00',false,now()),
- (7,1,3,'P1007','Quilling Toy 7','Quilling Toy 7','7.jpg','220.00',false,now()),
- (8,2,2,'P1008','Quilling Toy 8','Quilling Toy 8','8.jpg','120.00',false,now()),
- (9,3,1,'P1009','Quilling Toy 9','Quilling Toy 9','9.jpg','150.00',false,now()),
- (10,1,1,'P1010','Quilling Toy 10','Quilling Toy 10','10.jpg','460.00',false,now()),
- (11,2,1,'P1011','Quilling Toy 11','Quilling Toy 11','11.jpg','440.00',false,now()),
- (12,3,1,'P1012','Quilling Toy 12','Quilling Toy 12','12.jpg','450.00',false,now()),
- (13,1,1,'P1013','Quilling Toy 13','Quilling Toy 13','13.jpg','470.00',false,now()),
- (14,2,3,'P1014','Quilling Toy 14','Quilling Toy 14','14.jpg','250.00',false,now()),
- (15,3,1,'P1015','Quilling Toy 15','Quilling Toy 15','15.jpg','450.00',false,now()),
- (16,1,2,'P1016','Quilling Toy 16','Quilling Toy 16','16.jpg','150.00',false,now()),
- (17,2,1,'P1017','Quilling Toy 17','Quilling Toy 17','17.jpg','450.00',false,now()),
- (18,3,1,'P1018','Quilling Toy 18','Quilling Toy 18','18.jpg','450.00',false,now()),
- (19,1,1,'P1019','Quilling Toy 19','Quilling Toy 19','19.jpg','400.00',false,now()),
- (20,2,1,'P1020','Quilling Toy 20','Quilling Toy 20','20.jpg','450.00',false,now()),
- (21,3,3,'P1021','Quilling Toy 21','Quilling Toy 21','21.jpg','450.00',false,now()),
- (22,1,1,'P1022','Quilling Toy 22','Quilling Toy 22','22.jpg','550.00',false,now()),
- (23,2,2,'P1023','Quilling Toy 23','Quilling Toy 23','23.jpg','450.00',false,now()),
- (24,3,1,'P1024','Quilling Toy 24','Quilling Toy 24','24.jpg','450.00',false,now()),
- (25,1,3,'P1025','Quilling Toy 25','Quilling Toy 25','25.jpg','250.00',false,now())
+ (1,1,1,'P1001','Quilling Toy 1','Quilling Toy 1','1.png','430.00',false,now()),
+ (2,2,2,'P1002','Quilling Toy 2','Quilling Toy 2','1.png','490.00',false,now()),
+ (3,3,3,'P1003','Quilling Toy 3','Quilling Toy 3','1.png','400.00',false,now()),
+ (4,1,1,'P1004','Quilling Toy 4','Quilling Toy 4','1.png','430.00',false,now()),
+ (5,2,2,'P1005','Quilling Toy 5','Quilling Toy 5','1.png','750.00',false,now()),
+ (6,3,3,'P1006','Quilling Toy 6','Quilling Toy 6','1.png','350.00',false,now()),
+ (7,1,3,'P1007','Quilling Toy 7','Quilling Toy 7','1.png','220.00',false,now()),
+ (8,2,2,'P1008','Quilling Toy 8','Quilling Toy 8','1.png','120.00',false,now()),
+ (9,3,1,'P1009','Quilling Toy 9','Quilling Toy 9','1.png','150.00',false,now()),
+ (10,1,1,'P1010','Quilling Toy 10','Quilling Toy 10','1.png','460.00',false,now()),
+ (11,2,1,'P1011','Quilling Toy 11','Quilling Toy 11','1.png','440.00',false,now()),
+ (12,3,1,'P1012','Quilling Toy 12','Quilling Toy 12','1.png','450.00',false,now()),
+ (13,1,1,'P1013','Quilling Toy 13','Quilling Toy 13','1.png','470.00',false,now()),
+ (14,2,3,'P1014','Quilling Toy 14','Quilling Toy 14','1.png','250.00',false,now()),
+ (15,3,1,'P1015','Quilling Toy 15','Quilling Toy 15','1.png','450.00',false,now()),
+ (16,1,2,'P1016','Quilling Toy 16','Quilling Toy 16','1.png','150.00',false,now()),
+ (17,2,1,'P1017','Quilling Toy 17','Quilling Toy 17','1.png','450.00',false,now()),
+ (18,3,1,'P1018','Quilling Toy 18','Quilling Toy 18','1.png','450.00',false,now()),
+ (19,1,1,'P1019','Quilling Toy 19','Quilling Toy 19','1.png','400.00',false,now()),
+ (20,2,1,'P1020','Quilling Toy 20','Quilling Toy 20','1.png','450.00',false,now()),
+ (21,3,3,'P1021','Quilling Toy 21','Quilling Toy 21','1.png','450.00',false,now()),
+ (22,1,1,'P1022','Quilling Toy 22','Quilling Toy 22','1.png','550.00',false,now()),
+ (23,2,2,'P1023','Quilling Toy 23','Quilling Toy 23','1.png','450.00',false,now()),
+ (24,3,1,'P1024','Quilling Toy 24','Quilling Toy 24','1.png','450.00',false,now()),
+ (25,1,3,'P1025','Quilling Toy 25','Quilling Toy 25','1.png','250.00',false,now())
 ;
 
 INSERT INTO customers (id,firstname,lastname,email,phone,password)
 VALUES
-  (1,'Siva','K','sivaprasadreddy.k@gmail.com','999999999','$2a$10$UFEPYW7Rx1qZqdHajzOnB.VBR3rvm7OI7uSix4RadfQiNhkZOi2fi'),
-  (2,'Ramu','P','ramu@gmail.com','8888888888','$2a$10$UoEimdoV95/jTs2E99ARLO.eUBxYVcDZamedqhkwfPUx9iOMFEfyq')
+  (1,'Siva','K','pi-ls@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi')
   ;
 
 insert into addresses (id, address_line1, address_line2, city, state, zip_code, country) values
@@ -157,4 +155,4 @@ ALTER SEQUENCE roles_id_seq RESTART WITH 100;
 ALTER SEQUENCE tags_id_seq RESTART WITH 100;
 ALTER SEQUENCE units_id_seq RESTART WITH 100;
 ALTER SEQUENCE users_id_seq RESTART WITH 100;
-
+ALTER SEQUENCE producers_id_seq RESTART WITH 100;

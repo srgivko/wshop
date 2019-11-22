@@ -1,1 +1,2 @@
 keytool -genkey -alias wshopadmintomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore jwshopadminkeystore.p12 -validity 3650
+keytool -genkey -alias wshopsitetomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore wshopsitekeystore.p12 -validity 3650

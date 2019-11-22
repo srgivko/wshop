@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -48,4 +49,12 @@ public class Order implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
     private Date createdOn;
+
+    public BigDecimal getTotalAmount() {
+        BigDecimal amount = new BigDecimal("0.0");
+        for (OrderItem item : items) {
+            amount = amount.add(item.getSubTotal());
+        }
+        return amount;
+    }
 }

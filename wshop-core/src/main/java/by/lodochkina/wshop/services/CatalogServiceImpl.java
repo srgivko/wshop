@@ -1,10 +1,8 @@
 package by.lodochkina.wshop.services;
 
 import by.lodochkina.wshop.WShopException;
-import by.lodochkina.wshop.entities.Category;
-import by.lodochkina.wshop.entities.Product;
-import by.lodochkina.wshop.entities.Tag;
-import by.lodochkina.wshop.entities.Unit;
+import by.lodochkina.wshop.entities.*;
+import by.lodochkina.wshop.security.ProducerRepository;
 import by.lodochkina.wshop.shop.CategoryRepository;
 import by.lodochkina.wshop.shop.ProductRepository;
 import by.lodochkina.wshop.shop.TagRepository;
@@ -27,13 +25,16 @@ public class CatalogServiceImpl implements CatalogService {
     private final TagRepository tagRepository;
 
     private final UnitRepository unitRepository;
+    
+    private final ProducerRepository producerRepository;
 
     @Autowired
-    public CatalogServiceImpl(CategoryRepository categoryRepository, ProductRepository productRepository, TagRepository tagRepository, UnitRepository unitRepository) {
+    public CatalogServiceImpl(CategoryRepository categoryRepository, ProductRepository productRepository, TagRepository tagRepository, UnitRepository unitRepository, ProducerRepository producerRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.tagRepository = tagRepository;
         this.unitRepository = unitRepository;
+        this.producerRepository = producerRepository;
     }
 
     @Override
@@ -124,6 +125,11 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
+    public List<Producer> getAllProducers() {
+        return this.producerRepository.findAll();
+    }
+
+    @Override
     public Optional<Tag> findTagByName(String name) {
         return this.tagRepository.findByName(name);
     }
@@ -131,6 +137,11 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public Optional<Unit> findUnitByName(String name) {
         return this.unitRepository.findByName(name);
+    }
+
+    @Override
+    public Optional<Producer> findProducerByName(String name) {
+        return this.producerRepository.findByName(name);
     }
 
     @Transactional
@@ -175,6 +186,27 @@ public class CatalogServiceImpl implements CatalogService {
         return this.unitRepository.save(persistedUnit.get());
     }
 
+    @Transactional
+    @Override
+    public Producer createProducer(Producer producer) {
+        Optional<Producer> tagByName = this.findProducerByName(producer.getName());
+        if (tagByName.isPresent()) {
+            throw new WShopException("Producer name " + producer.getName() + " already exist");
+        }
+        return this.producerRepository.save(producer);
+    }
+
+    @Transactional
+    @Override
+    public Producer updateProducer(Producer producer) {
+        Optional<Producer> persistedProducer = this.producerRepository.findById(producer.getId());
+        if (!persistedProducer.isPresent()) {
+            throw new WShopException("Producer " + producer.getId() + " doesn't exist");
+        }
+        BeanUtils.copyProperties(producer, persistedProducer.get(), "id");
+        return this.producerRepository.save(persistedProducer.get());
+    }
+
     @Override
     public Optional<Tag> findTagById(Long id) {
         return this.tagRepository.findById(id);
@@ -183,5 +215,10 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public Optional<Unit> findUnitById(Long id) {
         return this.unitRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Producer> findProducerById(Long id) {
+        return this.producerRepository.findById(id);
     }
 }

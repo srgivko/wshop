@@ -1,7 +1,9 @@
 package by.lodochkina.wshop.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_items")
+@ToString(exclude = {"order"})
+@EqualsAndHashCode(exclude = {"order"})
 public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 8364702588264579499L;
@@ -30,4 +34,8 @@ public class OrderItem implements Serializable {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    public BigDecimal getSubTotal() {
+        return product.getPrice().multiply(new BigDecimal(quantity));
+    }
 }

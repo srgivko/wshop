@@ -20,6 +20,7 @@ public class MenuConfiguration {
         MENU_URL_PATTERN_MAP.put("/permissions", "Permissions");
         MENU_URL_PATTERN_MAP.put("/units", "Units");
         MENU_URL_PATTERN_MAP.put("/tags", "Tags");
+        MENU_URL_PATTERN_MAP.put("/producers", "Producers");
     }
 
     private MenuConfiguration() {}

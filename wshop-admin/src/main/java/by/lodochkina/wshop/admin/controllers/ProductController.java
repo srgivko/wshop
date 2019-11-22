@@ -2,10 +2,7 @@ package by.lodochkina.wshop.admin.controllers;
 
 import by.lodochkina.wshop.admin.services.SavingFIleServiceImpl;
 import by.lodochkina.wshop.admin.validators.ProductValidator;
-import by.lodochkina.wshop.entities.Category;
-import by.lodochkina.wshop.entities.Product;
-import by.lodochkina.wshop.entities.Tag;
-import by.lodochkina.wshop.entities.Unit;
+import by.lodochkina.wshop.entities.*;
 import by.lodochkina.wshop.services.CatalogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +57,11 @@ public class ProductController extends WShopAdminBaseController {
     @ModelAttribute("tagList")
     public List<Tag> tagList() {
         return this.catalogService.getAllTags();
+    }
+
+    @ModelAttribute("producerList")
+    public List<Producer> producerList() {
+        return this.catalogService.getAllProducers();
     }
 
     @GetMapping("/products")

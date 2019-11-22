@@ -12,7 +12,8 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title">Create New Unit</h3>
+            <h3 class="box-title" th:if="unit.id==null">Create New Unit</h3>
+            <h3 class="box-title" th:if="unit.id!=null">Edit Unit</h3>
         </div>
         <div class="box-body">
             <form unit="form" th:action="@{/units/{id}(id=${unit.id})}" th:object="${unit}" method="post">

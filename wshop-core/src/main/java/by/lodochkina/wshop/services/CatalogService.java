@@ -1,9 +1,6 @@
 package by.lodochkina.wshop.services;
 
-import by.lodochkina.wshop.entities.Category;
-import by.lodochkina.wshop.entities.Product;
-import by.lodochkina.wshop.entities.Tag;
-import by.lodochkina.wshop.entities.Unit;
+import by.lodochkina.wshop.entities.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
@@ -37,9 +34,13 @@ public interface CatalogService {
 
     List<Unit> getAllUnits();
 
+    List<Producer> getAllProducers();
+
     Optional<Tag> findTagByName(String name);
 
     Optional<Unit> findUnitByName(String name);
+
+    Optional<Producer> findProducerByName(String name);
 
     Tag createTag(Tag tag);
 
@@ -49,7 +50,13 @@ public interface CatalogService {
 
     Unit updateUnit(Unit unit);
 
+    Producer createProducer(Producer producer);
+
+    Producer updateProducer(Producer producer);
+
     Optional<Tag> findTagById(Long id);
 
     Optional<Unit> findUnitById(Long id);
+
+    Optional<Producer> findProducerById(Long id);
 }
