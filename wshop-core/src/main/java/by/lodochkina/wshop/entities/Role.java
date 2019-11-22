@@ -1,7 +1,9 @@
 package by.lodochkina.wshop.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -9,12 +11,13 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@ToString(exclude = {"users"})
 @Entity
 @Table(name = "roles")
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)

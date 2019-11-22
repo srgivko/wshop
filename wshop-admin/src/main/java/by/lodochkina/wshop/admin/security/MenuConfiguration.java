@@ -18,7 +18,8 @@ public class MenuConfiguration {
         MENU_URL_PATTERN_MAP.put("/users", "Users");
         MENU_URL_PATTERN_MAP.put("/roles", "Roles");
         MENU_URL_PATTERN_MAP.put("/permissions", "Permissions");
-
+        MENU_URL_PATTERN_MAP.put("/units", "Units");
+        MENU_URL_PATTERN_MAP.put("/tags", "Tags");
     }
 
     private MenuConfiguration() {}

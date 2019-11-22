@@ -5,6 +5,7 @@ import by.lodochkina.wshop.admin.validators.RoleValidator;
 import by.lodochkina.wshop.entities.Permission;
 import by.lodochkina.wshop.entities.Role;
 import by.lodochkina.wshop.security.SecurityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -24,9 +25,11 @@ import java.util.Map;
 
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_ROLES;
 
+@Slf4j
 @Controller
 @Secured(MANAGE_ROLES)
 public class RoleController extends WShopAdminBaseController {
+
     private static final String VIEW_PREFIX = "roles/";
 
     private final SecurityService securityService;
@@ -52,7 +55,7 @@ public class RoleController extends WShopAdminBaseController {
             return VIEW_PREFIX + "create_role";
         }
         Role persistedRole = this.securityService.createRole(role);
-        System.err.format("Created new role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
+        log.debug("Created new role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
         redirectAttributes.addFlashAttribute("info", "Role created successfully"); //TODO; i18n
         return "redirect:/roles";
     }
@@ -102,7 +105,7 @@ public class RoleController extends WShopAdminBaseController {
     @PostMapping(value="/roles/{id}")
     public String updateRole(@ModelAttribute("role") Role role, RedirectAttributes redirectAttributes) {
         Role persistedRole = securityService.updateRole(role);
-        System.out.format("Updated role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
+        log.debug("Updated role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
         redirectAttributes.addFlashAttribute("info", "Role updated successfully");
         return "redirect:/roles";
     }

@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -122,5 +119,44 @@ public class SecurityServiceImpl implements SecurityService {
         }
         role.setPermissions(persistedPermissions);
         return roleRepository.save(role);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public User updateUser(User user) {
+        Optional<User> persistedUser = this.userRepository.findById(user.getId());
+        if (!persistedUser.isPresent()) {
+            throw new WShopException("User " + user.getId() + " doesn't exist");
+        }
+        return saveUser(user, persistedUser.get());
+    }
+
+    @Transactional
+    @Override
+    public User createUser(User user) {
+        Optional<User> userByEmail = this.findUserByEmail(user.getEmail());
+        if (userByEmail.isPresent()) {
+            throw new WShopException("Email " + user.getEmail() + " already in use");
+        }
+        return saveUser(user, user);
+    }
+
+    private User saveUser(User user, User user2) {
+        Set<Role> updatedRoles = new HashSet<>();
+        Set<Role> roles = user.getRoles();
+        if (roles != null) {
+            for (Role role : roles) {
+                if (role.getId() != null) {
+                    updatedRoles.add(this.roleRepository.findById(role.getId()).orElseThrow(WShopException::new));
+                }
+            }
+        }
+        user2.setRoles(updatedRoles);
+        return this.userRepository.save(user2);
     }
 }

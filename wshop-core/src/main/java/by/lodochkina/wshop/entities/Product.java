@@ -4,9 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,14 +25,17 @@ public class Product implements Serializable {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotEmpty(message = "Model cannot be empty")
     private String sku;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
     private String description;
 
     @Column(nullable = false)
+    @NotNull(message = "price cannot be empty")
     private BigDecimal price = new BigDecimal("0.00");
 
     private String imageUrl;
@@ -40,7 +46,19 @@ public class Product implements Serializable {
     @Column(name = "created_on")
     private Date createdOn = new Date();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cat_id")
     private Category category;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "product_tag",
+            joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "ID")})
+    private Set<Tag> tags;
+
 }

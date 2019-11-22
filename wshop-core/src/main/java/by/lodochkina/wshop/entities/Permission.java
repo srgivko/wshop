@@ -2,6 +2,7 @@ package by.lodochkina.wshop.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,11 +10,12 @@ import java.util.List;
 @Entity
 @Table(name = "permissions")
 @Data
+@ToString(exclude = "roles")
 @NoArgsConstructor
 public class Permission {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)

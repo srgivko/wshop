@@ -30,4 +30,11 @@ public interface SecurityService {
 
     @Transactional
     Role updateRole(Role role);
+
+    List<User> getAllUsers();
+
+    User createUser(User user);
+
+    @Transactional
+    User updateUser(User user);
 }
