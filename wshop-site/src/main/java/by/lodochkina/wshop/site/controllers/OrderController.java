@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -106,7 +103,7 @@ public class OrderController extends WShopSiteBaseController {
         return "redirect:orderconfirmation?orderNumber=" + savedOrder.getOrderNumber();
     }
 
-    protected void sendOrderConfirmationEmail(Order order) {
+    private void sendOrderConfirmationEmail(Order order) {
         try {
             this.emailService.send(order.getCustomer().getEmail(),
                     "QuilCartCart - Order Confirmation",
@@ -122,5 +119,11 @@ public class OrderController extends WShopSiteBaseController {
         Order order = this.orderService.findOrderByOrderNumber(orderNumber).orElseThrow(WShopException::new);
         model.addAttribute("order", order);
         return "orderconfirmation";
+    }
+
+    @GetMapping("/orders/{id}")
+    public String viewOrder(@PathVariable(value = "id") Order order, Model model) { ;
+        model.addAttribute("order", order);
+        return "view_order";
     }
 }

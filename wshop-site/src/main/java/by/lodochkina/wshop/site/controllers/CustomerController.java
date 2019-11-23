@@ -1,7 +1,9 @@
 package by.lodochkina.wshop.site.controllers;
 
+import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.customers.CustomerService;
 import by.lodochkina.wshop.entities.Customer;
+import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.validators.CustomerValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -37,13 +40,13 @@ public class CustomerController extends WShopSiteBaseController {
     }
 
     @GetMapping("/register")
-    protected String registerForm(Model model) {
+    public String registerForm(Model model) {
         model.addAttribute("customer", new Customer());
         return "register";
     }
 
     @PostMapping("/register")
-    protected String register(
+    public String register(
             @Valid @ModelAttribute("customer") Customer customer,
             BindingResult result, Model model,
             RedirectAttributes redirectAttributes) {
@@ -63,4 +66,13 @@ public class CustomerController extends WShopSiteBaseController {
         return "redirect:/login";
     }
 
+    @GetMapping("/myAccount")
+    public String myAccount(Model model) {
+        String email = getCurrentUser().getCustomer().getEmail();
+        Customer customer = this.customerService.findCustomerByEmail(email).orElseThrow(WShopException::new);
+        model.addAttribute("customer", customer);
+        List<Order> orders = this.customerService.getCustomerOrders(customer.getId());
+        model.addAttribute("orders", orders);
+        return "myAccount";
+    }
 }

@@ -30,7 +30,7 @@ public abstract class WShopSiteBaseController {
         return authenticatedUser;
     }
 
-    public static AuthenticatedUser getCurrentUser() {
+    static AuthenticatedUser getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof AuthenticatedUser) {
             return ((AuthenticatedUser) principal);
@@ -42,7 +42,7 @@ public abstract class WShopSiteBaseController {
         return getCurrentUser() != null;
     }
 
-    protected Cart getOrCreateCart(HttpServletRequest request) {
+    Cart getOrCreateCart(HttpServletRequest request) {
         Cart cart = null;
         cart = (Cart) request.getSession().getAttribute("CART_KEY");
         if (cart == null) {

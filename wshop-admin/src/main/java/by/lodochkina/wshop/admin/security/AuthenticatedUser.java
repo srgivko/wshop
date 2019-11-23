@@ -4,7 +4,7 @@ import by.lodochkina.wshop.entities.Permission;
 import by.lodochkina.wshop.entities.Role;
 import by.lodochkina.wshop.entities.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.*;
 
@@ -24,19 +24,19 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        Set<String> roleAndPermissions = new HashSet<>();
+
         Set<Role> roles = user.getRoles();
+        Set<GrantedAuthority> authorities = new HashSet<>();
 
         for (Role role : roles) {
-            roleAndPermissions.add(role.getName());
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
             List<Permission> permissions = role.getPermissions();
             for (Permission permission : permissions) {
-                roleAndPermissions.add("ROLE_" + permission.getName());
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + permission.getName()));
             }
         }
 
-        String[] roleNames = new String[roleAndPermissions.size()];
-        return AuthorityUtils.createAuthorityList(roleAndPermissions.toArray(roleNames));
+        return authorities;
     }
 
     @Override
