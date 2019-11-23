@@ -27,12 +27,17 @@
                             <th style="width: 10px">#</th>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Parent category</th>
                             <th>Edit</th>
                         </tr>
                         <tr th:each="product,iterStat : ${products}">
                             <td th:text="${iterStat.count}">1</td>
                             <td th:text="${product.name}">Product Name</td>
                             <td th:text="${product.description}">Product Description</td>
+                            <td>
+                                <a th:href="@{/categories/{id}(id=${product.category?.id})}"
+                                   th:text="${product.category?.name}">Parent category name</a>
+                            </td>
                             <td><a th:href="@{/products/{id}(id=${product.id})}"
                                    class="btn btn-sm btn-default"><i class="fa fa-edit"></i>Edit</a>
                             </td>

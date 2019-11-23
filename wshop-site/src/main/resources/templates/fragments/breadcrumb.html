@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb" xmlns:th="http://www.thymeleaf.org"
+     th:fragment="breadcrumb (categoryPath, currentProduct)">
+    <!--/*@thymesVar id="category" type="by.lodochkina.wshop.entities.Category"*/-->
+    <!--/*@thymesVar id="categoryPath" type="java.util.List<Category>"*/-->
+    <!--/*@thymesVar id="currentProduct" type="by.lodochkina.wshop.entities.Product"*/-->
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}"><i class="fa fa-home fa-lg"></i></a></li>
+                <li class="breadcrumb-item" th:each="category : ${categoryPath}">
+                    <a th:href="@{|/categories/${category.id}|}" th:text="${category.name}"></a></li>
+                <li th:if="${currentProduct}" class="breadcrumb-item" aria-current="page" th:text="${currentProduct.name}"></li>
+            </ol>
+        </div>
+    </div>
+</nav>

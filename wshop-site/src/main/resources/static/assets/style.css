@@ -122,7 +122,7 @@ z-index: 999;}
     width: 20px;
 }
 .shopping-item i.fa {
-    margin-left: 15px;
+    margin-left: 0; /*15px*/
 }
 
 
@@ -1119,4 +1119,10 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 
 .pagination > li > a, .pagination > li > span {
   color: #5a88ca;
+}
+
+li.breadcrumb-item:last-child a{
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
 }

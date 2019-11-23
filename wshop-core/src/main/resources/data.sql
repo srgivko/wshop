@@ -73,10 +73,10 @@ insert into role_permission(role_id, perm_id) values
 insert into user_role(user_id, role_id) values
 (1,1),(1,2),(1,3),(1,4);
 
-insert into categories(id, name, disp_order,disabled) values
-(1,'Flowers',1,false),
-(2,'Toys',2,false),
-(3,'Birds',3,false)
+insert into categories(id, name, disp_order,disabled, parent_cat_id) values
+(1,'Flowers',1,false,null),
+(2,'Toys',2,false,null),
+(3,'Birds',3,false,1)
 ;
 
 INSERT INTO products (id,cat_id,unit_id,sku,name,description,image_url,price,disabled,created_on) VALUES

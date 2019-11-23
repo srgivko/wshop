@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorator="layout/mainLayout">
 
 <head>
@@ -28,14 +28,22 @@
                             <th style="width: 10px">#</th>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Parent category</th>
                             <th>Edit</th>
                         </tr>
                         <tr th:each="cat,iterStat : ${categories}">
                             <td th:text="${iterStat.count}">1</td>
                             <td th:text="${cat.name}">Category Name</td>
                             <td th:text="${cat.description}">Category Description</td>
-                            <td><a th:href="@{/categories/{id}(id=${cat.id})}" class="btn btn-sm btn-default">
-                                <i class="fa fa-edit"></i> Edit</a></td>
+                            <td>
+                                <a th:href="@{/categories/{id}(id=${cat.parentCategory?.id})}"
+                                   th:text="${cat.parentCategory?.name}">Parent category name</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/categories/{id}(id=${cat.id})}" class="btn btn-sm btn-default">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                            </td>
                         </tr>
 
                     </table>

@@ -36,6 +36,7 @@ public class CartController extends WShopSiteBaseController {
         int itemCount = cart.getItemCount();
         Map<String, Object> map = new HashMap<>();
         map.put("count", itemCount);
+        map.put("amount", cart.getTotalAmount().doubleValue());
         return map;
     }
 

@@ -7,14 +7,15 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
-@EqualsAndHashCode(exclude = {"products"})
-@ToString(exclude = {"products"})
+@EqualsAndHashCode(exclude = {"products", "childCategories"})
+@ToString(exclude = {"products", "childCategories"})
 public class Category {
 
     @Id
@@ -42,4 +43,11 @@ public class Category {
             joinColumns = {@JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "ID")})
     private Set<Tag> tags;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent_cat_id")
+    private Category parentCategory;
+
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
+    private Set<Category> childCategories = new HashSet<>();
 }

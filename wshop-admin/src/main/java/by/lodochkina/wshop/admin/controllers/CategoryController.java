@@ -10,7 +10,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -36,6 +39,11 @@ public class CategoryController extends WShopAdminBaseController {
     @Override
     protected String getHeaderTitle() {
         return "Управление категориями";
+    }
+
+    @ModelAttribute("categoriesList")
+    public List<Category> getAllCategories() {
+        return this.catalogService.getAllCategories();
     }
 
     @GetMapping("/categories")

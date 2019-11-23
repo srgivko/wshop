@@ -14,17 +14,9 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-
+                <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=${product})"></div>
                 <div class="col-md-offset-2 col-md-8">
                     <div class="product-content-right">
-                        <div class="product-breadcroumb">
-                            <a href="" th:href="@{/}">Home</a>
-                            <a href="" th:href="@{/categories/{id}(id=${product.category.id})}">
-                                <span th:text="${product.category.name}">Category Name</span></a>
-                            <a href="" th:href="@{/products/{id}(id=${product.id})}">
-                                <span th:text="${product.name}">ProductName</span></a>
-                        </div>
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="product-images">
@@ -32,7 +24,6 @@
                                         <img src="assets/img/product-2.jpg" alt=""
                                              th:src="@{'/images/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
                                     </div>
-
                                 </div>
                             </div>
 

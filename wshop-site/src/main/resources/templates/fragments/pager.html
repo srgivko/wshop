@@ -1,0 +1,37 @@
+<div class="container-fluid" xmlns:th="http://www.thymeleaf.org" th:fragment="pager (page)"
+     th:with="url=${#httpServletRequest.requestURI}" th:if="${page.content!=null && !page.content.isEmpty()}">
+    <!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
+    <!--/*@thymesVar id="filter" type="java.lang.String"*/-->
+    <div class="row">
+        <ul class="pagination col-md-10">
+            <li class="page-item"
+                th:classappend="${0==page.number || page.totalPages<1} ? disabled">
+                <a class="page-link" tabindex="-1"
+                   th:href="@{${url}(size=${page.size}, page=${page.number}-1, sort=${sort})}">Предыдущая</a>
+            </li>
+            <li class="page-item" th:if="${page.totalPages > 0}"
+                th:each="i : ${#numbers.sequence( 1, page.totalPages, 1)}"
+                th:classappend="${i==page.number+1} ? active">
+                <a class="page-link"
+                   th:href="@{${url}(size=${page.size}, page=${i}-1, sort=${sort})}"
+                   th:text="${i}"></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${page.totalPages==page.number+1 || page.totalPages==1} ? disabled">
+                <a class="page-link"
+                   th:href="@{${url}(size=${page.size}, page=${page.number}+1)}">Следующая</a>
+            </li>
+        </ul>
+        <ul class="pagination col-md-2">
+            <li class="page-item" th:each="i : ${ {5, 10, 25, 50} }"
+                th:classappend="${page.size==i}?active">
+                <!--/*@thymesVar id="i" type="java.lang.Integer"*/-->
+                <a class="page-link" href="#" tabindex="-1" th:text="${page.size}"
+                   th:if="${page.size==i}"></a>
+                <a class="page-link"
+                   th:href="@{${url}(size=${i}, page=0, sort=${sort})}"
+                   tabindex="-1" th:if="${page.size!=i}" th:text="${i}"></a>
+            </li>
+        </ul>
+    </div>
+</div>

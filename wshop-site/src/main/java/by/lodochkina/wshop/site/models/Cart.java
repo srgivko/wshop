@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Cart {
-    private List<LineItem> items = new ArrayList<LineItem>();
+    private List<LineItem> items = new ArrayList<>();
     private Customer customer = new Customer();
     private Address deliveryAddress = new Address();
     private Payment payment = new Payment();
@@ -32,7 +32,7 @@ public class Cart {
 
     public void updateItemQuantity(Product product, int quantity) {
         for (LineItem lineItem : items) {
-            if (lineItem.getProduct().getSku().equals(product.getSku())) {
+            if (lineItem.getProduct().getId().equals(product.getId())) {
                 lineItem.setQuantity(quantity);
             }
         }
@@ -52,7 +52,7 @@ public class Cart {
     }
 
     public void clearItems() {
-        items = new ArrayList<LineItem>();
+        items = new ArrayList<>();
     }
 
     public int getItemCount() {

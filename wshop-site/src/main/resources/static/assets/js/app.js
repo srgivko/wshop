@@ -23,6 +23,7 @@ function updateCartItemCount() {
         contentType: "application/json",
         complete: function (responseData, status, xhttp) {
             $('#cart-item-count').text('(' + responseData.responseJSON.count + ')');
+            $('#cart-item-amount').text(responseData.responseJSON.amount+' б.р.');
         }
     });
 }
