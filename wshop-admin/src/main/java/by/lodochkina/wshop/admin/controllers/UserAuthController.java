@@ -82,7 +82,6 @@ public class UserAuthController extends WShopAdminBaseController {
             redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST));
             return "redirect:/login";
         }
-
     }
 
     @PostMapping(value = "/forgotPwd")
@@ -106,7 +105,7 @@ public class UserAuthController extends WShopAdminBaseController {
             ctx.setVariable("resetPwdURL", resetPwdURL);
 
             // Create the HTML body using Thymeleaf
-            final String htmlContent = this.templateEngine.process("forgot-password-email", ctx);
+            final String htmlContent = this.templateEngine.process("templates/email-templates/forgot-password-email", ctx);
 
             this.emailService.send(email, getMessage(LABEL_PASSWORD_RESET_EMAIL_SUBJECT), htmlContent);
         } catch (WShopException e) {

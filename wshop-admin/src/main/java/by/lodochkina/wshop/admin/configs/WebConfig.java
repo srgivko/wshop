@@ -79,29 +79,6 @@ public class WebConfig implements WebMvcConfigurer {
         return registrationBean;
     }
 
-    @Bean
-    public ClassLoaderTemplateResolver templateResolver() {
-        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setPrefix("templates/");
-        resolver.setSuffix(".html");
-        resolver.setTemplateMode("HTML");
-        resolver.setCharacterEncoding("UTF-8");
-        resolver.setOrder(1);
-        resolver.setCacheable(false);
-        return resolver;
-    }
-
-    @Bean
-    public ClassLoaderTemplateResolver emailTemplateResolver(){
-        ClassLoaderTemplateResolver emailTemplateResolver = new ClassLoaderTemplateResolver();
-        emailTemplateResolver.setPrefix("email-templates/");
-        emailTemplateResolver.setSuffix(".html");
-        emailTemplateResolver.setTemplateMode("HTML");
-        emailTemplateResolver.setCharacterEncoding("UTF-8");
-        emailTemplateResolver.setOrder(3);
-        return emailTemplateResolver;
-    }
-
 //    https://stackoverflow.com/questions/47700115/tomcatembeddedservletcontainerfactory-is-missing-in-spring-boot-2
     @Bean
     public ServletWebServerFactory servletContainer() {
