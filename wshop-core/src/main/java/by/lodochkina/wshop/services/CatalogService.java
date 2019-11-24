@@ -59,4 +59,6 @@ public interface CatalogService {
     Optional<Unit> findUnitById(Long id);
 
     Optional<Producer> findProducerById(Long id);
+
+    List<Category> getRootCategories();
 }

@@ -17,13 +17,6 @@ import java.util.Map;
 @Controller
 public class CartController extends WShopSiteBaseController {
 
-    private final CatalogService catalogService;
-
-    @Autowired
-    public CartController(CatalogService catalogService) {
-        this.catalogService = catalogService;
-    }
-
     @Override
     protected String getHeaderTitle() {
         return "Корзина";
@@ -44,7 +37,7 @@ public class CartController extends WShopSiteBaseController {
     @ResponseBody
     public void addToCart(@RequestBody Product product, HttpServletRequest request) {
         Cart cart = getOrCreateCart(request);
-        Product p = this.catalogService.findProductById(product.getId()).orElseThrow(WShopException::new);
+        Product p = super.catalogService.findProductById(product.getId()).orElseThrow(WShopException::new);
         cart.addItem(p);
     }
 

@@ -17,13 +17,6 @@ import java.util.List;
 @Controller
 public class ProductController extends WShopSiteBaseController {
 
-    private final CatalogService catalogService;
-
-    @Autowired
-    public ProductController(CatalogService catalogService) {
-        this.catalogService = catalogService;
-    }
-
     @GetMapping("/products/{id}")
     public String product(@PathVariable("id") Product product, Model model) {
         List<Category> categoryPath = new ArrayList<>();
@@ -40,7 +33,7 @@ public class ProductController extends WShopSiteBaseController {
 
     @GetMapping("/products")
     public String searchProducts(@RequestParam(name = "q", defaultValue = "") String query, Model model) {
-        List<Product> products = this.catalogService.searchProducts(query);
+        List<Product> products = super.catalogService.searchProducts(query);
         model.addAttribute("products", products);
         return "products";
     }

@@ -101,8 +101,17 @@
             </div>
         </div>
 
-        <div layout:fragment="content">
-            <p>Main Content here....</p>
+        <div class="container-fluid" style="margin-top: 15px;">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-2">
+                    <div th:replace="fragments/mainCategoryMenu :: mainCategoryMenu (rootCategories=${categoryMenu})"></div>
+                </div>
+                <div class="col-md-8">
+                    <div layout:fragment="content">
+                        <p>Main Content here....</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script src="https://code.jquery.com/jquery.min.js"></script>

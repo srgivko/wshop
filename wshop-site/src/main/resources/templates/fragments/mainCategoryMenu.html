@@ -1,0 +1,44 @@
+<div id="categoryMenu" xmlns:th="http://www.thymeleaf.org" th:fragment="mainCategoryMenu (rootCategories)" th:if="${rootCategories!=null && !rootCategories.isEmpty()}">
+    <!--/*@thymesVar id="rootCategories" type="java.util.List<Category>"*/-->
+    <!--/*@thymesVar id="rootCategory" type="by.lodochkina.wshop.entities.Category"*/-->
+    <!--/*@thymesVar id="subCategory" type="by.lodochkina.wshop.entities.Category"*/-->
+    <!--/*@thymesVar id="subSubCategory" type="by.lodochkina.wshop.entities.Category"*/-->
+    <div class="list-group panel">
+        <th:block th:each="rootCategory, iStat : ${rootCategories}">
+            <th:block th:if="${rootCategory.childCategories!=null && !rootCategory.childCategories.isEmpty()}">
+                <div class="list-group-item">
+                    <a th:href="@{|/categories/${rootCategory.id}|}" th:text="${rootCategory.name}"></a>
+                    <a th:href="${'#submenu'+iStat.index}" data-toggle="collapse"
+                       data-parent="#categoryMenu"><i class="fa fa-caret-down"></i></a>
+                </div>
+                <div class="collapse" th:id="${'submenu'+iStat.index}">
+                    <th:block th:each="subCategory, iStat2: ${rootCategory.childCategories}">
+                        <a th:unless="${subCategory.childCategories!=null && !subCategory.childCategories.isEmpty()}"
+                           th:href="@{|/categories/${subCategory.id}|}"
+                           class="list-group-item list-group-item-info"
+                           th:data-parent="${'submenu'+iStat.index}" th:text="${subCategory.name}"></a>
+                        <th:block th:if="${subCategory.childCategories!=null && !subCategory.childCategories.isEmpty()}">
+                            <div class="list-group-item list-group-item-info">
+                                <a th:href="@{|/categories/${subCategory.id}|}"
+                                   th:text="${subCategory.name}"></a>
+                                <a th:href="${'#submenu-2-'+iStat2.index}" data-toggle="collapse"
+                                   th:data-parent="${'#submenu'+iStat.index}"><i
+                                        class="fa fa-caret-down"></i></a>
+                            </div>
+                            <div class="collapse" th:id="${'submenu-2-'+iStat2.index}">
+                                <a th:each="subSubCategory: ${subCategory.childCategories}"
+                                   th:href="@{|/categories/${subSubCategory.id}|}"
+                                   class="list-group-item list-group-item-warning"
+                                   th:data-parent="${'#submenu-2-'+iStat2.index}"
+                                   th:text="${subSubCategory.name}"></a>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </div>
+            </th:block>
+            <a th:unless="${rootCategory.childCategories!=null && !rootCategory.childCategories.isEmpty()}"
+               th:href="@{|/categories/${rootCategory.id}|}"
+               class="list-group-item" data-parent="#categoryMenu" th:text="${rootCategory.name}"></a>
+        </th:block>
+    </div>
+</div>

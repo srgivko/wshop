@@ -1,0 +1,10 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="childCategories (childCategories)"
+     class="row child-categories" th:if="${childCategories!=null && !childCategories.isEmpty()}">
+    <!--/*@thymesVar id="childCategories" type="java.util.List<Category>"*/-->
+    <div class="col-md-3 col-sm-6" th:each="category, iStat : ${childCategories}">
+        <!--/*@thymesVar id="category" type="by.lodochkina.wshop.entities.Category"*/-->
+        <div class="single-promo" th:classappend="${'promo'+(iStat.index+1)}">
+            <a href="#" th:href="@{/categories/{id}(id=${category.id})}" th:text="${category.name}">Category name</a>
+        </div>
+    </div>
+</div>

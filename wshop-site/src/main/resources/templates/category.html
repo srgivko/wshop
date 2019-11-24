@@ -11,26 +11,16 @@
 <div layout:fragment="content">
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=null)"></div>
-            </div>
-            <div class="row" th:if="${category.childCategories!=null && !category.childCategories.isEmpty()}">
-                <div class="col-md-3 col-sm-6" th:each="cat : ${category.childCategories}">
-                    <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
-                    <a href="#" th:href="@{/categories/{id}(id=${cat.id})}" th:text="${cat.name}">Category name</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
+        <div class="container-fluid">
+            <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=null)"></div>
+            <div th:replace="fragments/childCategories :: childCategories (childCategories=${category.childCategories})"></div>
+            <div class="row" th:if="${productPage.content!=null && !productPage.content.isEmpty()}">
+                <div class="col-md-12">
                     <label for="sorting">Сортировка</label>
                     <select id="sorting" onchange="location = this.value;" class="form-control"
                             style="margin-bottom: 10px; width: auto;">
-                        <!-- when an option is selected, redirect to the value !-->
                         <option value="?sort=name" th:selected="${sort=='name'}">По названию (возрастанию)</option>
-                        <!-- change values to what is required !-->
-                        <option value="?sort=name_desc" th:selected="${sort=='name_desc'}">По названию (убыванию)
-                        </option>
+                        <option value="?sort=name_desc" th:selected="${sort=='name_desc'}">По названию (убыванию)</option>
                         <option value="?sort=price" th:selected="${sort=='price'}">Сначала дешевые</option>
                         <option value="?sort=price_desc" th:selected="${sort=='price_desc'}">Сначала дорогие</option>
                         <option value="?sort=oldest" th:selected="${sort=='oldest'}">Сначала старые</option>

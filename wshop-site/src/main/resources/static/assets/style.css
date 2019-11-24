@@ -690,9 +690,11 @@ width: 10px;
 
 .single-product-area .zigzag-bottom {background-color: #f4f4f4}
 
+/*
 .single-product-area {
   padding: 80px 0 130px;
 }
+*/
 
 
 
@@ -1105,8 +1107,6 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     margin-bottom: 15px;
 }
 
-
-
 .single-shop-product h2 {
     font-size: 20px;
     margin: 10px 0;
@@ -1125,4 +1125,12 @@ li.breadcrumb-item:last-child a{
     color: #6c757d;
     pointer-events: none;
     cursor: default;
+}
+
+div.single-promo > a {
+    color: white;
+}
+
+.row.child-categories {
+    margin-bottom: 15px;
 }

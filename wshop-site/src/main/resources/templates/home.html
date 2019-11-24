@@ -9,14 +9,13 @@
 <div layout:fragment="content">
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
-        <div class="container">
-
+        <div class="container-fluid">
             <div class="row" th:each="cat : ${categories}">
                 <div class="woocommerce-info">
                     <a class="" th:href="@{/categories/{id}(id=${cat.id})}"
                        th:text="${'Category: '+cat.name}">Category Name</a>
                 </div>
-                <div class="col-md-3 col-sm-6" th:each="product : ${cat.products}">
+                <div class="col-md-3 col-xs-6" th:each="product : ${cat.products}">
                     <div class="single-shop-product">
                         <div class="product-upper">
                             <img src="assets/img/products/2.jpg" alt=""
@@ -35,13 +34,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
-
 </body>
-
 </html>

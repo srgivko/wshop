@@ -56,10 +56,4 @@ public class CategoryController extends WShopSiteBaseController {
         return "Категория";
     }
 
-    @Data
-    @AllArgsConstructor
-    public static class SortDto {
-        private String value;
-        private String text;
-    }
 }

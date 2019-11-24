@@ -1,5 +1,7 @@
 package by.lodochkina.wshop.site.controllers;
 
+import by.lodochkina.wshop.entities.Category;
+import by.lodochkina.wshop.services.CatalogService;
 import by.lodochkina.wshop.site.models.Cart;
 import by.lodochkina.wshop.site.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public abstract class WShopSiteBaseController {
 
     @Autowired
     protected MessageSource messageSource;
+
+    @Autowired
+    protected CatalogService catalogService;
 
     protected abstract String getHeaderTitle();
 
@@ -23,6 +29,11 @@ public abstract class WShopSiteBaseController {
 
     public String getMessage(String code, String defaultMsg) {
         return messageSource.getMessage(code, null, defaultMsg, null);
+    }
+
+    @ModelAttribute("categoryMenu")
+    public List<Category> getCategoryMenu() {
+        return this.catalogService.getRootCategories();
     }
 
     @ModelAttribute("authenticatedUser")

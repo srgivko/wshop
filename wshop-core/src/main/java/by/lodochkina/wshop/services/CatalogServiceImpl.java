@@ -221,4 +221,9 @@ public class CatalogServiceImpl implements CatalogService {
     public Optional<Producer> findProducerById(Long id) {
         return this.producerRepository.findById(id);
     }
+
+    @Override
+    public List<Category> getRootCategories() {
+        return this.categoryRepository.getRootCategories();
+    }
 }
