@@ -107,9 +107,19 @@ INSERT INTO products (id,cat_id,unit_id,sku,name,description,image_url,price,dis
  (25,1,3,'P1025','Quilling Toy 25','Quilling Toy 25','1.png','250.00',false,now())
 ;
 
-INSERT INTO customers (id,firstname,lastname,email,phone,password)
+INSERT INTO customers (id,firstname,lastname,email,phone,password,created_on)
 VALUES
-  (1,'Siva','K','pi-ls@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi')
+  (1,'Siva','K','pi-ls@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (2,'Siva1','K','pi-ls-1@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (3,'Siva2','K','pi-ls-2@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (4,'Siva3','K','pi-ls-3@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (5,'Siva4','K','pi-ls-4@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (6,'Siva5','K','pi-ls-5@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (7,'Siva6','K','pi-ls-6@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (8,'Siva7','K','pi-ls-7@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (9,'Siva8','K','pi-ls-8@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (10,'Siva9','K','pi-ls-9@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
+  (11,'Siva10','K','pi-ls-10@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now())
   ;
 
 insert into addresses (id, address_line1, address_line2, city, state, zip_code, country) values
@@ -119,11 +129,21 @@ insert into payments (id, cc_number, cvv, amount) values
 (1, '1111111111111111', '123', 430.00);
 
 insert into orders (id, order_number, cust_id, billing_addr_id, delivery_addr_id, payment_id, status, created_on) values
-(1, '1447737431927', 1, 1, 1, 1, 'NEW', now());
+(1, '14477374319271', 1, 1, 1, 1, 'NEW', now()),
+(2, '14477374319272', 1, 1, 1, 1, 'NEW', now()),
+(3, '14477374319273', 1, 1, 1, 1, 'NEW', now()),
+(4, '14477374319274', 1, 1, 1, 1, 'COMPLETED', now()),
+(5, '14477374319275', 1, 1, 1, 1, 'NEW', now()),
+(6, '14477374319276', 1, 1, 1, 1, 'NEW', now()),
+(7, '14477374319277', 1, 1, 1, 1, 'NEW', now()),
+(8, '14477374319278', 1, 1, 1, 1, 'NEW', now()),
+(9, '14477374319279', 1, 1, 1, 1, 'NEW', now()),
+(10, '144773743192710', 1, 1, 1, 1, 'NEW', now()),
+(11, '144773743192711', 1, 1, 1, 1, 'NEW', now())
+;
 
 insert into order_items (id, order_id, price, product_id, quantity) values
 (1,1, 430.00, 1, 1);
-
 insert into product_tag(product_id, tag_id) values
 (1,1),
 (1,2),

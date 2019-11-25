@@ -1,0 +1,5 @@
+<div class="tags" xmlns:th="http://www.thymeleaf.org" th:fragment="tags (tags)" th:if="${tags!=null && !tags.isEmpty()}">
+    <!--/*@thymesVar id="tags" type="java.util.List<Tag>"*/-->
+    <!--/*@thymesVar id="tag" type="by.lodochkina.wshop.entities.Tag"*/-->
+    <a th:each="tag : ${tags}" th:href="@{/products?q={name}(name=${tag.name})}"><span><i class="fa fa-tag" aria-hidden="true"></i> <span th:text="${tag.name}"></span> </span></a>
+</div>

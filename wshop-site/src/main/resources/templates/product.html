@@ -15,6 +15,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=${product})"></div>
+                <div th:replace="fragments/tags :: tags (tags=${product.tags})"></div>
                 <div class="col-md-offset-2 col-md-8">
                     <div class="product-content-right">
                         <div class="row">

@@ -4,6 +4,8 @@ import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.customers.CustomerService;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
+import by.lodochkina.wshop.site.dto.CaptchaResponseDto;
+import by.lodochkina.wshop.site.security.CaptchaService;
 import by.lodochkina.wshop.validators.CustomerValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -26,12 +29,14 @@ public class CustomerController extends WShopSiteBaseController {
     private final CustomerService customerService;
     private final CustomerValidator customerValidator;
     private final PasswordEncoder passwordEncoder;
+    private final CaptchaService captchaService;
 
     @Autowired
-    public CustomerController(CustomerService customerService, CustomerValidator customerValidator, PasswordEncoder passwordEncoder) {
+    public CustomerController(CustomerService customerService, CustomerValidator customerValidator, PasswordEncoder passwordEncoder, CaptchaService captchaService) {
         this.customerService = customerService;
         this.customerValidator = customerValidator;
         this.passwordEncoder = passwordEncoder;
+        this.captchaService = captchaService;
     }
 
     @Override
@@ -47,11 +52,16 @@ public class CustomerController extends WShopSiteBaseController {
 
     @PostMapping("/register")
     public String register(
+            @RequestParam(value = "g-recaptcha-response", defaultValue = "default") String captchaResponse,
             @Valid @ModelAttribute("customer") Customer customer,
             BindingResult result, Model model,
             RedirectAttributes redirectAttributes) {
-        customerValidator.validate(customer, result);
-        if (result.hasErrors()) {
+        this.customerValidator.validate(customer, result);
+        CaptchaResponseDto captchaResponseDto = this.captchaService.checkCaptcha(captchaResponse);
+        if (!captchaResponseDto.isSuccess()) {
+            model.addAttribute("captchaError", "captchaError");
+        }
+        if (result.hasErrors() || !captchaResponseDto.isSuccess()) {
             return "register";
         }
 

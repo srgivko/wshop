@@ -14,6 +14,13 @@ public interface ProductRepository extends JpaRepositoryImplementation<Product, 
 
     Optional<Product> findBySku(String sku);
 
-    @Query("select p from Product p where lower(p.name) like concat('%',lower(:query),'%') or lower(p.sku) like concat('%',lower(:query),'%') or lower(p.description) like concat('%',lower(:query),'%')")
+    @Query("select p from Product p " +
+            "left join p.tags t " +
+            "where lower(p.name) like concat('%',lower(:query),'%') " +
+            "or lower(p.sku) like concat('%',lower(:query),'%') " +
+            "or lower(p.description) like concat('%',lower(:query),'%') " +
+            "or lower(t.name) like concat('%',lower(:query),'%') ")
     List<Product> search(@Param("query") String query);
+
+    List<Product> findTop5ByOrderByIdDesc();
 }
