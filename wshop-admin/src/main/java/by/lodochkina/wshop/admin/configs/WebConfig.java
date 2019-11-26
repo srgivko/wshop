@@ -1,6 +1,8 @@
 package by.lodochkina.wshop.admin.configs;
 
 import by.lodochkina.wshop.admin.security.PostAuthorizationFilter;
+import com.cksource.ckfinder.config.Config;
+import com.cksource.ckfinder.servlet.CKFinderServlet;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +25,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -114,4 +117,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/img/**")
                 .addResourceLocations("file://" + uploadPath + "/");
     }
+
+    @Bean
+    public ServletRegistrationBean exampleServletBean() {
+        ServletRegistrationBean bean = new ServletRegistrationBean(new CKFinderServlet(), "/ckfinder/*");
+        bean.setLoadOnStartup(1);
+        bean.setMultipartConfig(new MultipartConfigElement(uploadPath, 5242880,20971520, 0));
+        return bean;
+    }
+
 }

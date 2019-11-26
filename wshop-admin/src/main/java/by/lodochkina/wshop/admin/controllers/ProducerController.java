@@ -22,7 +22,7 @@ import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 @Slf4j
 @Controller
 @Secured(MANAGE_PRODUCTS)
-public class ProducerController extends WShopAdminBaseController {
+public class    ProducerController extends WShopAdminBaseController {
 
     private static final String VIEW_PREFIX = "producers/";
     private final CatalogService catalogService;

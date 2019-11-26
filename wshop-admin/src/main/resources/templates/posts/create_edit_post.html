@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/mainLayout">
+
+<head>
+    <title>Posts - New</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title" th:if="${post.id==null}">Create New Post</h3>
+            <h3 class="box-title" th:if="${post.id!=null}">Edit Post</h3>
+        </div>
+        <div class="box-body">
+            <form post="form" th:action="@{/posts/{id}(id=${post.id})}" th:object="${post}" method="post">
+                <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error'">
+                    <label>Title</label>
+                    <input type="text" class="form-control" name="title" th:field="*{title}"
+                           placeholder="Enter Post Title"/>
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
+                    <label>Description</label>
+                    <input type="text" class="form-control" name="description" th:field="*{description}"
+                           placeholder="Enter Post Description"/>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:class="text-red">
+                        Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('imgTitle')}? 'has-error'">
+                    <label>Title Image</label>
+                    <input type="text" class="form-control" th:field="*{imgTitle}" style="width:60%">
+                    <button type="button" id="ckfinder-popup-1" class="button-a button-a-background">Browse Server</button>
+                    <p th:if="${#fields.hasErrors('imgTitle')}" th:errors="*{imgTitle}" th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('createOn')}? 'has-error'">
+                    <label>Date</label>
+                    <input type="date" class="form-control" name="createOn" th:field="*{createOn}"
+                    placeholder="Enter Post createOn"/>
+                    <p th:if="${#fields.hasErrors('createOn')}" th:errors="*{createOn}" th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error'">
+                    <label>Content</label>
+                    <textarea name="content" id="editor" rows="10" cols="80" th:field="*{content}"></textarea>
+                    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-primary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<th:block layout:fragment="script">
+    <script th:src="@{'/assets/ckeditor/ckeditor.js'}"></script>
+    <script th:src="@{'/ckfinder/static/ckfinder.js'}"></script>
+    <script>
+        var editor = CKEDITOR.replace('editor');
+        CKFinder.setupCKEditor(editor);
+        var button1 = document.getElementById('ckfinder-popup-1');
+        button1.onclick = function () {
+            selectFileWithCKFinder('imgTitle');
+        };
+        function selectFileWithCKFinder(elementId) {
+            CKFinder.popup({
+                chooseFiles: true,
+                width: 800,
+                height: 600,
+                onInit: function (finder) {
+                    finder.on('files:choose', function (evt) {
+                        var file = evt.data.files.first();
+                        var output = document.getElementById(elementId);
+                        output.value = file.getUrl().substr(file.getUrl().indexOf('/img/')+5);
+                    });
+
+                    finder.on('file:choose:resizedImage', function (evt) {
+                        var output = document.getElementById(elementId);
+                        output.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/')+5);
+                    });
+                }
+            });
+        }
+    </script>
+</th:block>
+
+</body>
+</html>

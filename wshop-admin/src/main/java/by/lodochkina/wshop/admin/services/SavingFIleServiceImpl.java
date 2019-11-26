@@ -16,7 +16,6 @@ public class SavingFIleServiceImpl implements SavingFileService {
     @Value("${upload.path}")
     private String uploadPath;
 
-
     @Override
     public String saveFile(MultipartFile file) throws IOException, IllegalAccessException {
         if (file != null && !file.getOriginalFilename().isEmpty()) {

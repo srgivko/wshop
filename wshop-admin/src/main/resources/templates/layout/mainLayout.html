@@ -108,6 +108,7 @@
                         <!-- Optionally, you can add icons to the links -->
                         <li th:class="${CURRENT_MENU == 'Home'}? 'active' : ''" ><a href="#" th:href="@{'/home'}"><i class="fa fa-home"></i> <span>Home</span></a></li>
                         <li th:class="${CURRENT_MENU == 'Dashboard'}? 'active' : ''"><a href="#" th:href="@{'/dashboard'}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li th:class="${CURRENT_MENU == 'Posts'}? 'active' : ''"><a href="#" th:href="@{'/posts'}"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <span>Dashboard</span></a></li>
                         <li th:class="${CURRENT_MENU == 'Categories'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_CATEGORIES')"><a href="#" th:href="@{'/categories'}"><i class="fa fa-folder-open"></i> <span>Categories</span></a></li>
                         <li th:class="${CURRENT_MENU == 'Products'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')"><a href="#" th:href="@{'/products'}"><i class="fa fa-file"></i> <span>Products</span></a></li>
                         <li th:class="${CURRENT_MENU == 'Tags'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')"><a href="#" th:href="@{'/tags'}"><i class="fa fa-tags" aria-hidden="true"></i> <span>Tags</span></a></li>
@@ -170,6 +171,6 @@
         <script th:src="@{'/assets/plugins/jQuery/jQuery-2.1.4.min.js'}"></script>
         <script th:src="@{'/assets/bootstrap/js/bootstrap.min.js'}"></script>
         <script th:src="@{'/assets/dist/js/app.min.js'}"></script>
-
+        <th:block layout:fragment="script"></th:block>
     </body>
 </html>
