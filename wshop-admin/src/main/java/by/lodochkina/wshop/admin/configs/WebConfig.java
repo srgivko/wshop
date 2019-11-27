@@ -1,7 +1,6 @@
 package by.lodochkina.wshop.admin.configs;
 
 import by.lodochkina.wshop.admin.security.PostAuthorizationFilter;
-import com.cksource.ckfinder.config.Config;
 import com.cksource.ckfinder.servlet.CKFinderServlet;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.apache.catalina.Context;
@@ -52,7 +51,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("public/login");
-        registry.addRedirectViewController("/", "/home");
+        registry.addRedirectViewController("/", "/dashboard");
     }
 
     @Bean
@@ -67,16 +66,16 @@ public class WebConfig implements WebMvcConfigurer {
 
     //solve this http://stackoverflow.com/questions/25957879/filter-order-in-spring-boot
     @Bean
-    public FilterRegistrationBean securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean(securityFilter);
+    public FilterRegistrationBean<Filter> securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>(securityFilter);
         registration.setOrder(Integer.MAX_VALUE - 1);
         registration.setName(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME);
         return registration;
     }
 
     @Bean
-    public FilterRegistrationBean postAuthorizationFilterRegistrationBean(PostAuthorizationFilter postAuthorizationFilter) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+    public FilterRegistrationBean<PostAuthorizationFilter> postAuthorizationFilterRegistrationBean(PostAuthorizationFilter postAuthorizationFilter) {
+        FilterRegistrationBean<PostAuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(postAuthorizationFilter);
         registrationBean.setOrder(Integer.MAX_VALUE);
         return registrationBean;
@@ -119,8 +118,8 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ServletRegistrationBean exampleServletBean() {
-        ServletRegistrationBean bean = new ServletRegistrationBean(new CKFinderServlet(), "/ckfinder/*");
+    public ServletRegistrationBean<CKFinderServlet> exampleServletBean() {
+        ServletRegistrationBean<CKFinderServlet> bean = new ServletRegistrationBean<>(new CKFinderServlet(), "/ckfinder/*");
         bean.setLoadOnStartup(1);
         bean.setMultipartConfig(new MultipartConfigElement(uploadPath, 5242880,20971520, 0));
         return bean;

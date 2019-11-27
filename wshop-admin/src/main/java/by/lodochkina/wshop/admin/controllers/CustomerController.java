@@ -2,7 +2,6 @@ package by.lodochkina.wshop.admin.controllers;
 
 import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.customers.CustomerService;
-import by.lodochkina.wshop.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;

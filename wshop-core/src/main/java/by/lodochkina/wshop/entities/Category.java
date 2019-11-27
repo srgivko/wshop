@@ -14,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
-@EqualsAndHashCode(exclude = {"products", "childCategories"})
-@ToString(exclude = {"products", "childCategories"})
+@EqualsAndHashCode(exclude = {"products", "childCategories", "parentCategory"})
+@ToString(exclude = {"products", "childCategories", "parentCategory"})
 public class Category {
 
     @Id
@@ -31,6 +31,10 @@ public class Category {
 
     @Column(name = "disp_order")
     private Integer displayOrder;
+
+    @Column
+    @NotEmpty(message = "imageUrl cannot be empty")
+    private String imageUrl;
 
     private boolean disabled;
 
@@ -50,4 +54,6 @@ public class Category {
 
     @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
     private Set<Category> childCategories = new HashSet<>();
+
+
 }

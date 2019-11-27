@@ -32,6 +32,7 @@ public class Product implements Serializable {
     @NotEmpty(message = "Name cannot be empty")
     private String name;
 
+    @Column(columnDefinition="text")
     private String description;
 
     @Column(nullable = false)

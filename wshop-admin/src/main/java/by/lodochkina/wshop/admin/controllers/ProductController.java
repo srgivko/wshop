@@ -1,6 +1,5 @@
 package by.lodochkina.wshop.admin.controllers;
 
-import by.lodochkina.wshop.admin.services.SavingFIleServiceImpl;
 import by.lodochkina.wshop.admin.validators.ProductValidator;
 import by.lodochkina.wshop.entities.*;
 import by.lodochkina.wshop.services.CatalogService;
@@ -30,13 +29,10 @@ public class ProductController extends WShopAdminBaseController {
 
     private final ProductValidator productValidator;
 
-    private final SavingFIleServiceImpl savingFileService;
-
     @Autowired
-    public ProductController(CatalogService catalogService, ProductValidator productFormValidator, SavingFIleServiceImpl savingFileService) {
+    public ProductController(CatalogService catalogService, ProductValidator productFormValidator) {
         this.catalogService = catalogService;
         this.productValidator = productFormValidator;
-        this.savingFileService = savingFileService;
     }
 
     @Override
@@ -79,7 +75,7 @@ public class ProductController extends WShopAdminBaseController {
 
     @PostMapping("/products")
     public String createProduct(
-            @RequestParam(value = "file") MultipartFile file,
+           /* @RequestParam(value = "file") MultipartFile file,*/
             @Valid Product product,
             BindingResult result,
             RedirectAttributes redirectAttributes
@@ -88,7 +84,6 @@ public class ProductController extends WShopAdminBaseController {
         if (result.hasErrors()) {
             return VIEW_PREFIX + "create_product";
         }
-        product.setImageUrl(this.savingFileService.saveFile(file));
         Product persistedProduct = this.catalogService.createProduct(product);
         log.debug("Created new product with id : {} and name : {}", persistedProduct.getId(), persistedProduct.getName());
         redirectAttributes.addFlashAttribute("info", "Product created successfully");
@@ -102,13 +97,9 @@ public class ProductController extends WShopAdminBaseController {
     }
 
     @PostMapping("/products/{id}")
-    public String updateProduct(@RequestParam(value = "file") MultipartFile file, @Valid Product product, BindingResult result, RedirectAttributes redirectAttributes) throws Exception {
+    public String updateProduct(/*@RequestParam(value = "file") MultipartFile file,*/ @Valid Product product, BindingResult result, RedirectAttributes redirectAttributes) throws Exception {
         if (result.hasErrors()) {
             return VIEW_PREFIX + "edit_product";
-        }
-        String pathImg = this.savingFileService.saveFile(file);
-        if (pathImg != null && pathImg.isEmpty()) {
-            product.setImageUrl(pathImg);
         }
         Product persistedProduct = this.catalogService.updateProduct(product);
         log.debug("Updated product with id : {} and name : {}", persistedProduct.getId(), persistedProduct.getName());

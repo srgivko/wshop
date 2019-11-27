@@ -105,7 +105,7 @@ public class CatalogServiceImpl implements CatalogService {
         if (!persistedProduct.isPresent()) {
             throw new WShopException("Product " + product.getId() + " doesn't exist");
         }
-        BeanUtils.copyProperties(product, persistedProduct.get(), "id", "sku", "name", "createdOn", "imageUrl");
+        BeanUtils.copyProperties(product, persistedProduct.get(), "id", "sku", "name", "createdOn");
         return this.productRepository.save(persistedProduct.get());
     }
 

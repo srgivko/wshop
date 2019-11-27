@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorator="layout/mainLayout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
 
 <head>
     <title>Posts - New</title>
@@ -36,15 +36,25 @@
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('imgTitle')}? 'has-error'">
                     <label>Title Image</label>
-                    <input type="text" class="form-control" th:field="*{imgTitle}" style="width:60%">
-                    <button type="button" id="ckfinder-popup-1" class="button-a button-a-background">Browse Server</button>
-                    <p th:if="${#fields.hasErrors('imgTitle')}" th:errors="*{imgTitle}" th:class="text-red">Incorrect data</p>
+                    <div class="input-group">
+                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup">Browse Server</span>
+                        <input readonly type="text" class="form-control" th:field="*{imgTitle}">
+                        <span id="ckfinder-popup-1-delete" class="input-group-addon ckfinder-popup"
+                              th:style="${post.imgTitle!=null && post.imgTitle!=''  ? 'color:red' : 'display:none; color:red'}"><i
+                                class="fa fa-trash" aria-hidden="true"></i></span>
+                    </div>
+                    <p th:if="${#fields.hasErrors('imgTitle')}" th:errors="*{imgTitle}" th:class="text-red">
+                        Incorrect data
+                    </p>
+                    <img th:hidden="${(post.imgTitle==null || #strings.isEmpty(post.imgTitle))}" id="prev"
+                         th:src="${(post.imgTitle !=null && !#strings.isEmpty(post.imgTitle)) ? #strings.concat('/img/', post.imgTitle) : ''}"
+                         height="100" width="100" style="margin-top: 5px;"/>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('createOn')}? 'has-error'">
                     <label>Date</label>
-                    <input type="date" class="form-control" name="createOn" th:field="*{createOn}"
-                    placeholder="Enter Post createOn"/>
+                    <input type="datetime-local" class="form-control" name="createOn" th:field="*{createOn}"
+                           placeholder="Enter Post createOn"/>
                     <p th:if="${#fields.hasErrors('createOn')}" th:errors="*{createOn}" th:class="text-red">Incorrect data</p>
                 </div>
 
@@ -56,7 +66,6 @@
 
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn btn-primary">Reset</button>
                 </div>
             </form>
         </div>
@@ -65,14 +74,20 @@
 
 
 <th:block layout:fragment="script">
-    <script th:src="@{'/assets/ckeditor/ckeditor.js'}"></script>
-    <script th:src="@{'/ckfinder/static/ckfinder.js'}"></script>
     <script>
-        var editor = CKEDITOR.replace('editor');
+        var editor = CKEDITOR.replace('editor', {
+            height: 600
+        });
         CKFinder.setupCKEditor(editor);
         var button1 = document.getElementById('ckfinder-popup-1');
+        var button2 = document.getElementById('ckfinder-popup-1-delete');
         button1.onclick = function () {
             selectFileWithCKFinder('imgTitle');
+        };
+        button2.onclick = function f() {
+            document.getElementById('imgTitle').value = "";
+            document.getElementById('prev').hidden = true;
+            document.getElementById('ckfinder-popup-1-delete').style.display = "none";
         };
         function selectFileWithCKFinder(elementId) {
             CKFinder.popup({
@@ -84,11 +99,16 @@
                         var file = evt.data.files.first();
                         var output = document.getElementById(elementId);
                         output.value = file.getUrl().substr(file.getUrl().indexOf('/img/')+5);
+                        document.getElementById('ckfinder-popup-1-delete').style.display = '';
+                        document.getElementById('prev').src = file.getUrl();
+                        document.getElementById('prev').hidden = false;
                     });
 
                     finder.on('file:choose:resizedImage', function (evt) {
                         var output = document.getElementById(elementId);
                         output.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/')+5);
+                        document.getElementById('prev').src = evt.data.resizedUrl;
+                        document.getElementById('prev').hidden = false;
                     });
                 }
             });

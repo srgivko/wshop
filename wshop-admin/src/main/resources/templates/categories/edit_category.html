@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorator="layout/mainLayout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
 
 <head>
     <title>Categories - Edit</title>
@@ -10,7 +10,8 @@
 <body>
 
 <div layout:fragment="content">
-
+    <!--/*@thymesVar id="category" type="by.lodochkina.wshop.entities.Category"*/-->
+    <!--/*@thymesVar id="categoriesList" type="java.util.List<by.lodochkina.wshop.entities.Category>"*/-->
     <div class="box box-warning">
         <div class="box-header with-border">
             <h3 class="box-title">Edit Category</h3>
@@ -25,6 +26,23 @@
                     <label>Name</label>
                     <input type="text" class="form-control" name="name"
                            th:field="*{name}" readonly="readonly"/>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('imageUrl')}? 'has-error'">
+                    <label>Image</label>
+                    <div class="input-group">
+                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup">Browse Server</span>
+                        <input readonly type="text" class="form-control" th:field="*{imageUrl}"/>
+                        <span id="ckfinder-popup-1-delete" class="input-group-addon ckfinder-popup"
+                              th:style="${category.imageUrl!=null && category.imageUrl!=''  ? 'color:red' : 'display:none; color:red'}"><i
+                                class="fa fa-trash" aria-hidden="true"></i></span>
+                    </div>
+                    <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" th:class="text-red">
+                        Incorrect data
+                    </p>
+                    <img th:hidden="${(category.imageUrl==null || #strings.isEmpty(category.imageUrl))}" id="prev"
+                         th:src="${(category.imageUrl !=null && !#strings.isEmpty(category.imageUrl)) ? #strings.concat('/img/', category.imageUrl) : ''}"
+                         height="100" width="100" style="margin-top: 5px;"/>
                 </div>
 
                 <div class="form-group">
@@ -59,6 +77,45 @@
         </div>
     </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script>
+        var button1 = document.getElementById('ckfinder-popup-1');
+        var button2 = document.getElementById('ckfinder-popup-1-delete');
+        button1.onclick = function () {
+            selectFileWithCKFinder('imageUrl');
+        };
+        button2.onclick = function f() {
+            document.getElementById('imageUrl').value = "";
+            document.getElementById('prev').hidden = true;
+            document.getElementById('ckfinder-popup-1-delete').style.display = "none";
+        };
+        function selectFileWithCKFinder(elementId) {
+            CKFinder.popup({
+                chooseFiles: true,
+                width: 800,
+                height: 600,
+                onInit: function (finder) {
+                    finder.on('files:choose', function (evt) {
+                        var file = evt.data.files.first();
+                        var output = document.getElementById(elementId);
+                        output.value = file.getUrl().substr(file.getUrl().indexOf('/img/')+5);
+                        document.getElementById('ckfinder-popup-1-delete').style.display = '';
+                        document.getElementById('prev').src = file.getUrl();
+                        document.getElementById('prev').hidden = false;
+                    });
+
+                    finder.on('file:choose:resizedImage', function (evt) {
+                        var output = document.getElementById(elementId);
+                        output.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/')+5);
+                        document.getElementById('prev').src = evt.data.resizedUrl;
+                        document.getElementById('prev').hidden = false;
+                    });
+                }
+            });
+        }
+    </script>
+</th:block>
 
 </body>
 

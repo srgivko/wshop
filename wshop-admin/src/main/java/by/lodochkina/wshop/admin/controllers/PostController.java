@@ -5,6 +5,7 @@ import by.lodochkina.wshop.entities.Post;
 import by.lodochkina.wshop.posts.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_POSTS;
+
 @Slf4j
 @Controller
+@Secured(MANAGE_POSTS)
 public class PostController extends WShopAdminBaseController {
 
     private static final String VIEW_PREFIX = "posts/";

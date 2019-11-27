@@ -10,4 +10,6 @@ public class SecurityUtils {
     public static final String MANAGE_ROLES = "ROLE_MANAGE_ROLES";
     public static final String MANAGE_PERMISSIONS = "ROLE_MANAGE_PERMISSIONS";
     public static final String MANAGE_SETTINGS = "ROLE_MANAGE_SETTINGS";
+    public static final String MANAGE_DASHBOARD = "ROLE_MANAGE_DASHBOARD";
+    public static final String MANAGE_POSTS = "ROLE_MANAGE_POSTS";
 }

@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class MenuConfiguration {
+class MenuConfiguration {
 
-    private static final  Map<String, String> MENU_URL_PATTERN_MAP = new HashMap<>();
+    private static final Map<String, String> MENU_URL_PATTERN_MAP = new HashMap<>();
 
     static {
-        MENU_URL_PATTERN_MAP.put("/home", "Home");
         MENU_URL_PATTERN_MAP.put("/categories", "Categories");
         MENU_URL_PATTERN_MAP.put("/products", "Products");
         MENU_URL_PATTERN_MAP.put("/orders", "Orders");
@@ -25,17 +24,19 @@ public class MenuConfiguration {
         MENU_URL_PATTERN_MAP.put("/posts", "Posts");
     }
 
-    private MenuConfiguration() {}
+    private MenuConfiguration() {
 
-    public static Map<String, String> getMenuUrlPatternMap() {
+    }
+
+    private static Map<String, String> getMenuUrlPatternMap() {
         return Collections.unmodifiableMap(MENU_URL_PATTERN_MAP);
     }
 
-    public static String getMatchingMenu(String uri) {
-        Set<String> keySet = MENU_URL_PATTERN_MAP.keySet();
+    static String getMatchingMenu(String uri) {
+        Set<String> keySet = getMenuUrlPatternMap().keySet();
         for (String key : keySet) {
             if (uri.startsWith(key)) {
-                return MENU_URL_PATTERN_MAP.get(key);
+                return getMenuUrlPatternMap().get(key);
             }
         }
         return "";

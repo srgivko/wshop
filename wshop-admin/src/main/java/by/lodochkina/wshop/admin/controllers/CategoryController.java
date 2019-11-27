@@ -80,7 +80,7 @@ public class CategoryController extends WShopAdminBaseController {
     }
 
     @PostMapping("/categories/{id}")
-    public String updateCategory(@Valid Category category, RedirectAttributes redirectAttributes) {
+    public String updateCategory(@Valid Category category, BindingResult result, RedirectAttributes redirectAttributes) {
         Category persistedCategory = this.catalogService.updateCategory(category);
         log.debug("Updated category with id : {} and name : {}", persistedCategory.getId(), persistedCategory.getName());
         redirectAttributes.addFlashAttribute("info", "Category updated successfully");

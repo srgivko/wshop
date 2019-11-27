@@ -14,7 +14,7 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
 
     private transient User user;
 
-    public AuthenticatedUser(User user) {
+    AuthenticatedUser(User user) {
         super(user.getEmail(), user.getPassword(), getAuthorities(user));
         this.user = user;
     }

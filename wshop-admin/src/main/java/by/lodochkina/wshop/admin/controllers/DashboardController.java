@@ -2,11 +2,15 @@ package by.lodochkina.wshop.admin.controllers;
 
 import by.lodochkina.wshop.admin.services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_DASHBOARD;
+
 @Controller
+@Secured(MANAGE_DASHBOARD)
 public class DashboardController {
 
     private final DashboardService dashBoardService;

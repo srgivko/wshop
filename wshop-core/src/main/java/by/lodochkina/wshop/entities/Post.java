@@ -34,7 +34,7 @@ public class Post {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date createOn = new Date();
 
     @Column(columnDefinition="text")

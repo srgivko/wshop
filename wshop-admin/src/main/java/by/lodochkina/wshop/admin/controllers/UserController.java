@@ -1,5 +1,6 @@
 package by.lodochkina.wshop.admin.controllers;
 
+import by.lodochkina.wshop.admin.security.AuthenticatedUser;
 import by.lodochkina.wshop.admin.validators.UserValidator;
 import by.lodochkina.wshop.entities.Role;
 import by.lodochkina.wshop.entities.User;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,29 +84,13 @@ public class UserController extends WShopAdminBaseController {
         return "redirect:/users";
     }
 
-    @GetMapping(value = "/users/{id}")
+    @GetMapping("/users/{id}")
     public String editUserForm(@PathVariable("id") User user, Model model) {
-        /*Map<Long, Role> assignedRoleMap = new HashMap<>();
-        List<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            assignedRoleMap.put(role.getId(), role);
-        }
-        List<Role> userRoles = new ArrayList<>();
-        List<Role> allRoles = this.securityService.getAllRoles();
-        for (Role role : allRoles) {
-            if (assignedRoleMap.containsKey(role.getId())) {
-                userRoles.add(role);
-            } else {
-                userRoles.add(null);
-            }
-        }
-        user.setRoles(userRoles);*/
         model.addAttribute("user", user);
-        //model.addAttribute("rolesList",allRoles);
         return VIEW_PREFIX + "edit_user";
     }
 
-    @PostMapping(value = "/users/{id}")
+    @PostMapping("/users/{id}")
     public String updateUser(@PathVariable("id") User userFromDB, @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return VIEW_PREFIX + "edit_user";
@@ -114,5 +100,12 @@ public class UserController extends WShopAdminBaseController {
         log.debug("Updated user with id : {} and name : {}", persistedUser.getId(), persistedUser.getName());
         redirectAttributes.addFlashAttribute("info", "User updates successfully");
         return "redirect:/users";
+    }
+
+    @GetMapping("/myAccount")
+    public String userProfile(Model model, @AuthenticationPrincipal AuthenticatedUser authenticatedUser){
+        User user = authenticatedUser.getUser();
+        model.addAttribute("user", user);
+        return VIEW_PREFIX + "profile";
     }
 }
