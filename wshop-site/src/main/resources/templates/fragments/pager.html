@@ -3,7 +3,7 @@
     <!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
     <!--/*@thymesVar id="filter" type="java.lang.String"*/-->
     <div class="row">
-        <ul class="pagination col-md-10">
+        <ul class="pagination col-md-8">
             <li class="page-item"
                 th:classappend="${0==page.number || page.totalPages<1} ? disabled">
                 <a class="page-link" tabindex="-1"
@@ -22,7 +22,7 @@
                    th:href="@{${url}(size=${page.size}, page=${page.number}+1)}">Следующая</a>
             </li>
         </ul>
-        <ul class="pagination col-md-2">
+        <ul class="pagination col-md-4">
             <li class="page-item" th:each="i : ${ {5, 10, 25, 50} }"
                 th:classappend="${page.size==i}?active">
                 <!--/*@thymesVar id="i" type="java.lang.Integer"*/-->

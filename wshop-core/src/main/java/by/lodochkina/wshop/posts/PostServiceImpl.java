@@ -4,6 +4,8 @@ import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Post;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts() {
-        return this.postRepository.findAll();
+    public Page<Post> getAllPosts(Pageable pageable) {
+        return this.postRepository.findAll(pageable);
     }
 
     @Override
@@ -42,5 +44,10 @@ public class PostServiceImpl implements PostService {
         }
         BeanUtils.copyProperties(post, persistedPost.get(), "id");
         return this.postRepository.save(persistedPost.get());
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+        return this.postRepository.findAll();
     }
 }

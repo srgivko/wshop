@@ -1,5 +1,6 @@
 package by.lodochkina.wshop.entities;
 
+import by.lodochkina.wshop.WShopException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -44,4 +47,25 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
     private Date createdOn = new Date();
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "customer_product_wishlist",
+            joinColumns = {@JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")})
+    private Set<Product> wishList;
+
+    public void addProductToWishList(Product product) {
+        if (this.wishList == null) {
+            this.wishList = new HashSet<>();
+        }
+        this.wishList.add(product);
+    }
+
+    public void removeProductToWishList(Product product) {
+        if (this.wishList == null) {
+            throw new WShopException("You try remove product in empty wishlist");
+        }
+        this.wishList.remove(product);
+    }
 }

@@ -2,9 +2,7 @@ package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Product;
-import by.lodochkina.wshop.site.utils.SortUtil;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import by.lodochkina.wshop.site.utils.SortUtils;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -39,7 +37,7 @@ public class CategoryController extends WShopSiteBaseController {
 
         Collections.reverse(categoryPath);
 
-        List<Product> products = category.getProducts().stream().sorted(SortUtil.getComparator(sort))
+        List<Product> products = category.getProducts().stream().sorted(SortUtils.getComparator(sort))
                 .skip(pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize()).collect(Collectors.toList());
         PageImpl<Product> productPage = new PageImpl<>(products, pageable, category.getProducts().size());

@@ -1,3 +1,4 @@
+delete from  customer_product_wishlist;
 delete from  role_permission;
 delete from  user_role;
 delete from  permissions;
@@ -167,15 +168,14 @@ insert into category_tag(category_id, tag_id) values
 
 insert into posts(id, content, created_on, description, img_title, title) values
 (1, '<p><sub><em><strong>sdfsdfsdfswdfadsfsdaggdkgj;dflghjldfhgldfg<img alt="" src="https://localhost:9443/img/user6-128x128.jpg" style="float:right; height:128px; width:128px" />sdf</strong></em></sub></p>
-<p><iframe align="middle" frameborder="0" height="360" scrolling="no" src="https://www.youtube.com/embed/8pBkz_MBx00" width="640" allowfullscreen></iframe></p>', now(), 'description2', 'user6-128x128.jpg', 'title'),
+<p><iframe align="middle" frameborder="0" height="360" scrolling="no" src="https://www.youtube.com/embed/8pBkz_MBx00" width="640" allowfullscreen></iframe></p>', now(), 'description2', 'cat-97.jpg', 'title'),
 (2, '<p><sub><em><strong>sdfsdfsdfswdfadsfsdaggdkgj;dflghjldfhgldfg<img alt="" src="https://localhost:9443/img/user6-128x128.jpg" style="float:right; height:128px; width:128px" />sdf</strong></em></sub></p>
-<p><iframe align="middle" frameborder="0" height="360" scrolling="no" src="https://www.youtube.com/embed/8pBkz_MBx00" width="640"></iframe></p>', now(), 'description3', 'user6-128x128.jpg', 'titl3')
+<p><iframe align="middle" frameborder="0" height="360" scrolling="no" src="https://www.youtube.com/embed/8pBkz_MBx00" width="640"></iframe></p>', now(), 'description3', 'Adopt-a-cat-or-kitten-from-RSPCA.jpg', 'titl3')
 ;
 
 ALTER SEQUENCE addresses_id_seq RESTART WITH 100;
 ALTER SEQUENCE categories_id_seq RESTART WITH 100;
 ALTER SEQUENCE customers_id_seq RESTART WITH 100;
-ALTER SEQUENCE hibernate_sequence RESTART WITH 100;
 ALTER SEQUENCE order_items_id_seq RESTART WITH 100;
 ALTER SEQUENCE orders_id_seq RESTART WITH 100;
 ALTER SEQUENCE payments_id_seq RESTART WITH 100;

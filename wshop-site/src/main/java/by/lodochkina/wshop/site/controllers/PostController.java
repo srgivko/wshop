@@ -3,6 +3,9 @@ package by.lodochkina.wshop.site.controllers;
 import by.lodochkina.wshop.entities.Post;
 import by.lodochkina.wshop.posts.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +28,8 @@ public class PostController extends WShopSiteBaseController{
     }
 
     @GetMapping("/posts")
-    public String allPosts(Model model) {
-        model.addAttribute("posts", this.postService.getAllPosts());
+    public String allPosts(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        model.addAttribute("postPage", this.postService.getAllPosts(pageable));
         return "posts";
     }
 

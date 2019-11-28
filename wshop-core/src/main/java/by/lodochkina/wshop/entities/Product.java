@@ -65,5 +65,4 @@ public class Product implements Serializable {
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "ID")})
     private Set<Tag> tags;
-
 }

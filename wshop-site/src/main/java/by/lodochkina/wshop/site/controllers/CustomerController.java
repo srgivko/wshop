@@ -1,7 +1,6 @@
 package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.WShopException;
-import by.lodochkina.wshop.customers.CustomerService;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.site.dto.CaptchaResponseDto;
@@ -26,15 +25,13 @@ import java.util.List;
 @Controller
 public class CustomerController extends WShopSiteBaseController {
 
-    private final CustomerService customerService;
     private final CustomerValidator customerValidator;
     private final PasswordEncoder passwordEncoder;
     private final CaptchaService captchaService;
 
     @Autowired
-    public CustomerController(CustomerService customerService, CustomerValidator customerValidator, PasswordEncoder passwordEncoder, CaptchaService captchaService) {
-        this.customerService = customerService;
-        this.customerValidator = customerValidator;
+    public CustomerController(CustomerValidator customerValidator, CustomerValidator customerValidator1, PasswordEncoder passwordEncoder, CaptchaService captchaService) {
+        this.customerValidator = customerValidator1;
         this.passwordEncoder = passwordEncoder;
         this.captchaService = captchaService;
     }
@@ -69,7 +66,7 @@ public class CustomerController extends WShopSiteBaseController {
         String encodedPwd = passwordEncoder.encode(password);
         customer.setPassword(encodedPwd);
 
-        Customer persistedCustomer = customerService.createCustomer(customer);
+        Customer persistedCustomer = super.customerService.createCustomer(customer);
         log.debug("Created new Customer with id : {} and email : {}",
                 persistedCustomer.getId(), persistedCustomer.getEmail());
         redirectAttributes.addFlashAttribute("info", "Customer created successfully");
@@ -79,9 +76,9 @@ public class CustomerController extends WShopSiteBaseController {
     @GetMapping("/myAccount")
     public String myAccount(Model model) {
         String email = getCurrentUser().getCustomer().getEmail();
-        Customer customer = this.customerService.findCustomerByEmail(email).orElseThrow(WShopException::new);
+        Customer customer = super.customerService.findCustomerByEmail(email).orElseThrow(WShopException::new);
         model.addAttribute("customer", customer);
-        List<Order> orders = this.customerService.getCustomerOrders(customer.getId());
+        List<Order> orders = super.customerService.getCustomerOrders(customer.getId());
         model.addAttribute("orders", orders);
         return "myAccount";
     }

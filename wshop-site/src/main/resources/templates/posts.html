@@ -1,2 +1,44 @@
-<!--todo add view for posts-->
-https://bootsnipp.com/snippets/y8Era
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+<head>
+    <title>Posts</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--/*@thymesVar id="post" type="by.lodochkina.wshop.entities.Post"*/-->
+    <div class="container-fluid">
+        <div class="row blog-row">
+            <div class="col-md-6 col-sm-6 col-xs-12 margin_bottom30" th:each="post : ${postPage.content}">
+                <a th:href="@{/posts/{id}(id=${post.id})}">
+                    <img class="img-responsive center-block" th:src="@{'/images/{imgTitle}'(imgTitle=${post.imgTitle})}"
+                         height="250">
+                </a>
+                <div class="blog-content bg-white">
+                    <a th:href="@{/posts/{id}(id=${post.id})}"><h3 th:text="${post.title}">Blog Title Comes Here</h3>
+                    </a>
+                    <p th:with="contentWithoutTags=${post.content.replaceAll('<[^>]*>','')}"
+                       th:text="${contentWithoutTags.substring(0, contentWithoutTags.length() > 100 ? 100 : contentWithoutTags.length())}">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec mauris sit amet mi posuere
+                        imperdiet. Sed congue velit placerat sapien gravida sagittis. Phasellus in convallis urna, sit
+                        amet sollicitudin augue. Nullam vel est a neque lobortis iaculis....<a
+                            th:href="@{/posts/{id}(id=${post.id})}"
+                            class="heading_color">
+                        Continue Reading</a></p>
+                    <hr>
+                    <p><span>Share :
+				<a href="javascript::;"><i class="fa fa-facebook margin_left10" aria-hidden="true"></i></a>
+				<a href="javascript::;"><i class="fa fa-twitter margin_left10" aria-hidden="true"></i></a>
+				<a href="javascript::;"><i class="fa fa-google-plus margin_left10" aria-hidden="true"></i></a>
+				 </span>
+                        <span class="pull-right">By : <strong>Blogger</strong></span></p>
+                </div>
+            </div>
+        </div>
+        <div th:replace="fragments/pager :: pager (page = ${postPage})"></div>
+    </div>
+</div>
+</body>
+</html>

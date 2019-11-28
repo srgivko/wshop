@@ -6,15 +6,14 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Category</title>
+    <title>Wishlist</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container-fluid">
-            <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=null)"></div>
-            <div th:replace="fragments/childCategories :: childCategories (childCategories=${category.childCategories})"></div>
+            <div class="row" th:unless="${productPage.content!=null && !productPage.content.isEmpty()}"><h3 style="text-align: center">Wishlist is empty</h3></div>
             <div class="row" th:if="${productPage.content!=null && !productPage.content.isEmpty()}">
                 <div class="col-md-12">
                     <label for="sorting">Сортировка</label>
@@ -40,25 +39,16 @@
                         <div class="product-carousel-price">
                             <ins th:text="${product.price}">$9.00</ins>
                         </div>
-                        <div class="product-option-shop container-fluid">
-                            <div class="row">
-                                <a class="add_to_cart_button col-md-8" data-quantity="1" data-product_sku=""
-                                   data-product_id="70"
-                                   rel="nofollow" th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'">Add
-                                    to cart</a>
-                                <a th:style="${wishList.contains(product) ? 'display:none' : ''}"
-                                   sec:authorize="hasRole('ROLE_USER')" th:sec class="add_to_cart_button col-md-4"
-                                   data-quantity="1" data-product_sku=""
-                                   data-product_id="70" rel="nofollow"
-                                   th:onclick="'javascript:addProductToWishlist(\'' + ${product.id} + '\',this);'"><i
-                                        class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                <a th:style="${!wishList.contains(product) ? 'display:none' : ''}"
-                                   sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button col-md-4"
-                                   data-quantity="1" data-product_sku=""
-                                   data-product_id="70" rel="nofollow"
-                                   th:onclick="'javascript:removeProductFromWishlist(\'' + ${product.id} + '\',this);'"><i
-                                        class="fa fa-heart" aria-hidden="true"></i></a>
-                            </div>
+                        <div class="product-option-shop">
+                            <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                               data-product_id="70" rel="nofollow" href="#"
+                               th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'">Add to cart</a>
+                            <a th:style="${wishList.contains(product) ? 'display:none' : ''}" sec:authorize="hasRole('ROLE_USER')" th:sec class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                               data-product_id="70" rel="nofollow"
+                               th:onclick="'javascript:addProductToWishlist(\'' + ${product.id} + '\',this);'"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            <a th:style="${!wishList.contains(product) ? 'display:none' : ''}" sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                               data-product_id="70" rel="nofollow"
+                               th:onclick="'javascript:removeProductFromWishlist(\'' + ${product.id} + '\',this);'"><i class="fa fa-heart" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
