@@ -34,26 +34,25 @@
                                 <input type="submit" value="Login" class="button"/>
                             </div>
                         </div>
-                        <p>
-                            <div th:if="${param.error}" class="alert alert-danger alert-dismissable" >
-                        <p><i class="icon fa fa-ban"></i> <span th:text="#{error.login_failed}">Invalid Email and Password.</span></p>
-                <div th:if="${param.logout}" class="alert alert-info alert-dismissable" >
-                    <p><i class="icon fa fa-info"></i> <span th:text="#{info.logout_success}">You have been logged out.</span></p>
+                        <div th:if="${param.error}" class="alert alert-danger alert-dismissable">
+                            <p><i class="icon fa fa-ban"></i> <span th:text="#{error.login_failed}">Invalid Email and Password.</span>
+                            </p>
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-info alert-dismissable">
+                            <p><i class="icon fa fa-info"></i> <span th:text="#{info.logout_success}">You have been logged out.</span>
+                            </p>
+                        </div>
+                        <div th:if="${info!=null}" class="alert alert-warning alert-dismissable">
+                            <p><i class="icon fa fa-warning"></i> <span th:text="${info}"></span></p>
+                        </div>
+                        <p>New Customer? <a href="#" th:href="@{/register}" th:text="#{label.register}">Register</a></p>
+                        <p>Forget password? <a href="#" th:href="@{/forgetPwd}" th:text="#{label.forgetPwd}">New password</a></p>
+                        <div class="clear"></div>
+                    </form>
                 </div>
-                <div th:if="${info!=null}" class="alert alert-warning alert-dismissable" >
-                    <p><i class="icon fa fa-warning"></i> <span th:text="${info}"></span></p>
-                </div>
-                </p>
-                <p class="lost_password">
-                    New Customer? <a href="#" th:href="@{/register}" th:text="#{label.register}">Register</a>
-                </p>
-                <div class="clear"></div>
-                </form>
             </div>
         </div>
-
     </div>
-</div>
 </div>
 
 </body>

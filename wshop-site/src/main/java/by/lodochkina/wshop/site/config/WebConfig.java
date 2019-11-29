@@ -38,13 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
         return factory;
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/register").setViewName("register");
-        registry.addRedirectViewController("/", "/home");
-    }
-
     @Bean
     public LayoutDialect layoutDialect() {
         return new LayoutDialect();

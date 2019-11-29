@@ -111,19 +111,19 @@ INSERT INTO products (id,cat_id,unit_id,sku,name,description,image_url,price,dis
  (25,1,3,'P1025','Quilling Toy 25','Quilling Toy 25','1.png','250.00',false,now())
 ;
 
-INSERT INTO customers (id,firstname,lastname,email,phone,password,created_on)
+INSERT INTO customers (id,firstname,lastname,email,phone,password,created_on, enabled)
 VALUES
-  (1,'Siva','K','pi-ls@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (2,'Siva1','K','pi-ls-1@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (3,'Siva2','K','pi-ls-2@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (4,'Siva3','K','pi-ls-3@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (5,'Siva4','K','pi-ls-4@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (6,'Siva5','K','pi-ls-5@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (7,'Siva6','K','pi-ls-6@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (8,'Siva7','K','pi-ls-7@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (9,'Siva8','K','pi-ls-8@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (10,'Siva9','K','pi-ls-9@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now()),
-  (11,'Siva10','K','pi-ls-10@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now())
+  (1,'Siva','K','pi-ls@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (2,'Siva1','K','pi-ls-1@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (3,'Siva2','K','pi-ls-2@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (4,'Siva3','K','pi-ls-3@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (5,'Siva4','K','pi-ls-4@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (6,'Siva5','K','pi-ls-5@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (7,'Siva6','K','pi-ls-6@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (8,'Siva7','K','pi-ls-7@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (9,'Siva8','K','pi-ls-8@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (10,'Siva9','K','pi-ls-9@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true),
+  (11,'Siva10','K','pi-ls-10@mail.ru','999999999','$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi',now(), true)
   ;
 
 insert into addresses (id, address_line1, address_line2, city, state, zip_code, country) values

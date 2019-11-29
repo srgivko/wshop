@@ -1,4 +1,4 @@
-package by.lodochkina.wshop.admin.utils;
+package by.lodochkina.wshop.site.utils;
 
 import javax.servlet.http.HttpServletRequest;
 

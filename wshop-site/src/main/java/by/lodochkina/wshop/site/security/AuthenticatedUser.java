@@ -1,11 +1,13 @@
 package by.lodochkina.wshop.site.security;
 
 import by.lodochkina.wshop.entities.Customer;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.util.Collection;
 
+@EqualsAndHashCode
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = -2958119023444212887L;
@@ -24,5 +26,10 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
     private static Collection<? extends GrantedAuthority> getAuthorities(Customer customer) {
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_USER");
         return authorities;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return customer.getEnabled();
     }
 }

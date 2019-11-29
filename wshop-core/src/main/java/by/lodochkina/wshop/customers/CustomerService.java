@@ -11,7 +11,7 @@ import java.util.Set;
 public interface CustomerService {
     Optional<Customer> findCustomerByEmail(String email);
 
-    Customer createCustomer(Customer customer);
+    Customer createCustomer(Customer customer, String urlHostname);
 
     List<Customer> getAllCustomers();
 
@@ -22,4 +22,12 @@ public interface CustomerService {
     Set<Product> addProductToWishList(Long customerId, Long productId);
 
     Set<Product> removeProductFromWishList(Long customerId, Long productId);
+
+    void activateCustomer(String code);
+
+    Customer restorePassword(String email, String urlHostname);
+
+    Optional<Customer> findCustomerByActivationCode(String code);
+
+    void newPassword(String code, String password);
 }

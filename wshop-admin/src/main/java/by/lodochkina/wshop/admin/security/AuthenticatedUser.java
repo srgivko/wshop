@@ -3,11 +3,13 @@ package by.lodochkina.wshop.admin.security;
 import by.lodochkina.wshop.entities.Permission;
 import by.lodochkina.wshop.entities.Role;
 import by.lodochkina.wshop.entities.User;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.*;
 
+@EqualsAndHashCode
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = 3953275838457016803L;
@@ -39,17 +41,4 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
         return authorities;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        AuthenticatedUser that = (AuthenticatedUser) o;
-        return Objects.equals(user, that.user);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), user);
-    }
 }

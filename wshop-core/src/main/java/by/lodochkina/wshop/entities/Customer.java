@@ -48,6 +48,12 @@ public class Customer implements Serializable {
     @Column(name = "created_on")
     private Date createdOn = new Date();
 
+    @Column
+    private String activationCode;
+
+    @Column
+    private Boolean enabled = false;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "customer_product_wishlist",

@@ -5,6 +5,7 @@ import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.entities.Product;
 import by.lodochkina.wshop.orders.OrderRepository;
+import by.lodochkina.wshop.services.EmailService;
 import by.lodochkina.wshop.shop.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -23,11 +25,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final ProductRepository productRepository;
 
+    private final EmailService emailService;
+
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository, ProductRepository productRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository, ProductRepository productRepository, EmailService emailService) {
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -37,8 +42,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer createCustomer(Customer customer, String urlHostname) {
+        customer.setActivationCode(UUID.randomUUID().toString());
+        customerRepository.save(customer);
+        this.emailService.sendRegistrationMessage(customer, urlHostname);
+        return customer;
     }
 
     @Override
@@ -72,5 +80,35 @@ public class CustomerServiceImpl implements CustomerService {
         Product product = this.productRepository.findById(productId).orElseThrow(WShopException::new);
         customer.removeProductToWishList(product);
         return customer.getWishList();
+    }
+
+    @Transactional
+    @Override
+    public void activateCustomer(String code) {
+        Customer customer = this.customerRepository.findByActivationCode(code).orElseThrow(WShopException::new);
+        customer.setActivationCode(null);
+        customer.setEnabled(true);
+    }
+
+    @Transactional
+    @Override
+    public Customer restorePassword(String email, String urlHostname) {
+        Customer customer = this.findCustomerByEmail(email).orElseThrow(WShopException::new);
+        customer.setActivationCode(UUID.randomUUID().toString());
+        this.emailService.sendRestorePassword(customer, urlHostname);
+        return customer;
+    }
+
+    @Override
+    public Optional<Customer> findCustomerByActivationCode(String code) {
+        return this.customerRepository.findByActivationCode(code);
+    }
+
+    @Transactional
+    @Override
+    public void newPassword(String code, String password) {
+        Customer customer = this.customerRepository.findByActivationCode(code).orElseThrow(WShopException::new);
+        customer.setPassword(password);
+        customer.setActivationCode(null);
     }
 }

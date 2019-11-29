@@ -1177,3 +1177,8 @@ div.single-promo > a {
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
 }
+
+.product-upper {
+    display: flex;
+    justify-content: center;
+}
