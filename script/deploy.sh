@@ -10,7 +10,7 @@ echo 'Run admin'
 
 ssh pilsik@193.187.174.247<< EOF
     pgrep java | xargs kill -9
-    nohup java -jar -Dspring.profiles.active=prod wshop-admin-1.0-SNAPSHOT.jar > admin.txt &
+    nohup java -jar "-Dspring.profiles.active=default, prod" wshop-admin-1.0-SNAPSHOT.jar > admin.txt &
 EOF
 
 echo 'Copy site wshop'
@@ -20,7 +20,7 @@ scp wshop-site/target/wshop-site-1.0-SNAPSHOT.jar pilsik@193.187.174.247:/home/p
 echo 'Run site'
 
 ssh pilsik@193.187.174.247<< EOF
-   nohup java -jar -Dspring.profiles.active=prod wshop-site-1.0-SNAPSHOT.jar > site.txt &
+   nohup java -jar "-Dspring.profiles.active=default, prod" wshop-site-1.0-SNAPSHOT.jar > site.txt &
 EOF
 
 echo 'Bye'

@@ -7,7 +7,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.util.Collection;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = -2958119023444212887L;

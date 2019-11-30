@@ -11,7 +11,6 @@ import java.util.Date;
 @EqualsAndHashCode
 @Entity
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
 @Table(name = "posts")
 public class Post {
