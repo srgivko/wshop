@@ -679,7 +679,11 @@ width: 10px;
   margin: 10px 0 0;
 }
 
-.product-big-title-area {background: url(img/crossword.png) repeat scroll 0 0 #5a88ca}
+.product-big-title-area {
+    overflow: hidden;
+    position: relative;
+    background: url(img/crossword.png) repeat scroll 0 0 #5a88ca;
+}
 
 .product-bit-title h2 {
   font-family: raleway;
@@ -1153,6 +1157,7 @@ div.single-promo > a {
 }
 
 .product-option-shop a {
+    width: 100%;
     cursor: pointer;
 }
 
@@ -1181,4 +1186,78 @@ div.single-promo > a {
 .product-upper {
     display: flex;
     justify-content: center;
+}
+
+.product-option-shop {
+    display: flex;
+    justify-content: center;
+}
+
+#cart-item-amount {
+    position: relative;
+}
+
+.animate {
+    animation: animate 1.5s alternate ease-in;
+}
+
+@keyframes animate {
+    0% {
+        transform: scale(1.0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1.0);
+    }
+}
+
+.animate-top {
+    animation: animate-top 1.5s alternate ease-in;
+}
+
+@keyframes animate-top {
+    0% {
+        top: 0;
+    }
+    50% {
+        top: -5px;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+.moving-clouds {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    animation: c 80s linear infinite;
+    width: 250.625em;
+    height: 43.75em;
+}
+
+@keyframes c {
+    0% {
+        transform: translateZ(0)
+    }
+    to {
+        transform: translate3d(-50%, 0, 0)
+    }
+}
+
+.fog-low {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: -35%;
+    margin-bottom: -50px;
+    opacity: .85;
+}
+
+.fog-low.right {
+    margin-left: 30%;
+    opacity: 1;
 }

@@ -1,29 +1,26 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 mvn clean package
 
-echo 'Copy files...'
+echo 'Copy admin wshop'
 
-scp -i ~/.ssh/id_rsa_drucoder \
-    target/sweater-1.0-SNAPSHOT.jar \
-    dru@192.168.0.107:/home/dru/
+scp wshop-admin/target/wshop-admin-1.0-SNAPSHOT.jar pilsik@193.187.174.247:/home/pilsik/
 
-echo 'Restart server...'
+echo 'Run admin'
 
-ssh -i ~/.ssh/id_rsa_drucoder dru@192.168.0.107 << EOF
+ssh pilsik@193.187.174.247<< EOF
+    pgrep java | xargs kill -9
+    nohup java -jar -Dspring.profiles.active=prod wshop-admin-1.0-SNAPSHOT.jar > admin.txt &
+EOF
 
-pgrep java | xargs kill -9
-nohup java -jar sweater-1.0-SNAPSHOT.jar > log.txt &
+echo 'Copy site wshop'
 
+scp wshop-site/target/wshop-site-1.0-SNAPSHOT.jar pilsik@193.187.174.247:/home/pilsik/
+
+echo 'Run site'
+
+ssh pilsik@193.187.174.247<< EOF
+   nohup java -jar -Dspring.profiles.active=prod wshop-site-1.0-SNAPSHOT.jar > site.txt &
 EOF
 
 echo 'Bye'
-
-#scp wshop-admin/target/wshop-admin-1.0-SNAPSHOT.jar pilsik@193.187.174.247:/home/pilsik/
-#scp wshop-site/target/wshop-site-1.0-SNAPSHOT.jar pilsik@193.187.174.247:/home/pilsik/
-#ssh pilsik@193.187.174.247 << EOF
-#
-#pgrep java | xargs kill -9
-#nohup java -jar wshop-admin-1.0-SNAPSHOT.jar > admin.txt &
-#nohup java -jar wshop-site-1.0-SNAPSHOT.jar > site.txt &
-#EOF
