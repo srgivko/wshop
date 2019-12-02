@@ -1261,3 +1261,7 @@ div.single-promo > a {
     margin-left: 30%;
     opacity: 1;
 }
+
+.button-form {
+    width: 100%;
+}

@@ -1,4 +1,5 @@
 $(function () {
+    chooseLanguage();
     updateCartItemCount();
 });
 
@@ -88,6 +89,15 @@ function addProductToWishlist(id, target) {
             target.style.display = 'none';
             target.nextElementSibling.style.display = '';
             console.log('Success add product with id = '+ id);
+        }
+    });
+}
+
+function chooseLanguage() {
+    $("#locales").on("change", function () {
+        var selectedOption = $('#locales').val();
+        if (selectedOption != '') {
+            window.location.replace('?lang=' + selectedOption);
         }
     });
 }

@@ -7,7 +7,7 @@
             <li class="page-item"
                 th:classappend="${0==page.number || page.totalPages<1} ? disabled">
                 <a class="page-link" tabindex="-1"
-                   th:href="@{${url}(size=${page.size}, page=${page.number}-1, sort=${sort})}">Предыдущая</a>
+                   th:href="@{${url}(size=${page.size}, page=${page.number}-1, sort=${sort})}" th:text="#{label.pager.previous}">Предыдущая</a>
             </li>
             <li class="page-item" th:if="${page.totalPages > 0}"
                 th:each="i : ${#numbers.sequence( 1, page.totalPages, 1)}"
@@ -19,7 +19,7 @@
             <li class="page-item"
                 th:classappend="${page.totalPages==page.number+1 || page.totalPages==1} ? disabled">
                 <a class="page-link"
-                   th:href="@{${url}(size=${page.size}, page=${page.number}+1)}">Следующая</a>
+                   th:href="@{${url}(size=${page.size}, page=${page.number}+1)}" th:text="#{label.pager.next}">Следующая</a>
             </li>
         </ul>
         <ul class="pagination col-md-4">

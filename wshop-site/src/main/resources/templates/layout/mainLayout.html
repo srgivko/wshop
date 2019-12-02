@@ -8,7 +8,7 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">QuilCart</title>
+        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE" th:text="#{label.shop.name}">Wshop</title>
 
         <!-- Google Fonts -->
         <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'/>
@@ -23,16 +23,23 @@
     </head>
     <body>
 
+        <span th:text="#{lang.change}"></span>:
+        <select id="locales">
+            <option value=""></option>
+            <option value="en" th:text="#{lang.eng}"></option>
+            <option value="ru" th:text="#{lang.ru}"></option>
+        </select>
+
         <div class="header-area">
             <div class="container">
                 <div class="row">
                     <div class="col-md-offset-8 col-md-4">
                         <div class="header-right">
                             <ul class="list-unstyled list-inline">
-                                <li sec:authorize="${!isAuthenticated()}"><a href="#" th:href="@{/login}"><i class="fa fa-user"></i> Login</a></li>
-                                <li sec:authorize="${!isAuthenticated()}"><a href="#" th:href="@{/register}"><i class="fa fa-user"></i> Register</a></li>
-                                <li sec:authorize="${isAuthenticated()}"><a href="#" th:href="@{/myAccount}"><i class="fa fa-user"></i> My Account</a></li>
-                                <li sec:authorize="${isAuthenticated()}"><a href="#" th:href="@{/logout}"><i class="fa fa-user"></i> Logout</a></li>
+                                <li sec:authorize="${!isAuthenticated()}"><a href="#" th:href="@{/login}"><i class="fa fa-user"></i> <span th:text="#{label.login}">Login</span></a></li>
+                                <li sec:authorize="${!isAuthenticated()}"><a href="#" th:href="@{/register}"><i class="fa fa-user"></i> <span th:text="#{label.register}">Register</span></a></li>
+                                <li sec:authorize="${isAuthenticated()}"><a href="#" th:href="@{/myAccount}"><i class="fa fa-user"></i> <span th:text="#{label.my.account}">Register</span></a></li>
+                                <li sec:authorize="${isAuthenticated()}"><a href="#" th:href="@{/logout}"><i class="fa fa-user"></i> <span th:text="#{label.my.logout}">Logout</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -67,34 +74,33 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li th:classappend="${CURRENT_MENU == 'Home'}? 'active'"><a href="#" th:href="@{/}">Home</a></li>
-                            <li th:classappend="${CURRENT_MENU == 'Wishlist'}? 'active'"><a href="#" th:href="@{/wishlist}">Wishlist</a></li>
-                            <li th:classappend="${CURRENT_MENU == 'Posts'}? 'active'"><a href="#" th:href="@{/posts}">Posts</a></li>
+                            <li th:classappend="${CURRENT_MENU == 'Home'}? 'active'"><a href="#" th:href="@{/}" th:text="#{label.home}">Home</a></li>
+                            <li th:classappend="${CURRENT_MENU == 'Wishlist'}? 'active'"><a href="#" th:href="@{/wishlist}" th:text="#{label.wishlist}">Wishlist</a></li>
+                            <li th:classappend="${CURRENT_MENU == 'Posts'}? 'active'"><a href="#" th:href="@{/posts}" th:text="#{label.posts}">Posts</a></li>
                             <!--  <li><a th:href="@{/}">New Arrivals</a></li>
                              <li><a th:href="@{/}">Best Sellers</a></li> -->
                         </ul>
 
                         <div class="shopping-item navbar-right">
-                            <a href="#" th:href="@{/cart}">Cart <span id="cart-item-amount" class="cart-amunt"></span>
+                            <a href="#" th:href="@{/cart}"><span th:text="#{label.cart}">Cart</span> <span id="cart-item-amount" class="cart-amunt"></span>
                                 <i class="fa fa-shopping-cart"></i>
                                 <span id="cart-item-count" class="product-count">(0)</span></a>
                         </div>
                         <form class="navbar-form navbar-right" action="#" th:action="@{/products}">
-                            <input type="text" name="q" placeholder="Search products..."/>
-                            <input type="submit" value="Search"/>
+                            <input type="text" name="q" th:placeholder="#{label.search.placeholder}"/>
+                            <input type="submit" th:value="#{label.search}"/>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-<!--        https://demos.creative-tim.com/paper-kit-2/index.html-->
         <div class="product-big-title-area">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="product-bit-title text-center">
-                            <h2>Shop</h2>
+                            <h2 th:text="#{label.shop.name}">Shop</h2>
                         </div>
                     </div>
                     <div class="fog-low">

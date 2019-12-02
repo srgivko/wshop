@@ -5,7 +5,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Cart</title>
+    <title th:text="#{label.cart}">Cart</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="woocommerce-info col-md-11" th:if="${#lists.isEmpty(cart.items)}">
-                    <h2>Cart is Empty</h2>
+                    <h2 th:text="#{label.cart.empty}">Cart is Empty</h2>
                 </div>
                 <div class="col-md-11" th:unless="${#lists.isEmpty(cart.items)}">
                     <div class="product-content-right">
@@ -26,10 +26,10 @@
                                     <tr>
                                         <th class="product-remove">&nbsp;</th>
                                         <th class="product-thumbnail">&nbsp;</th>
-                                        <th class="product-name">Product</th>
-                                        <th class="product-price">Price</th>
-                                        <th class="product-quantity">Quantity</th>
-                                        <th class="product-subtotal">Total</th>
+                                        <th class="product-name" th:text="#{label.product}">Product</th>
+                                        <th class="product-price" th:text="#{label.price}">Price</th>
+                                        <th class="product-quantity" th:text="#{label.quantity}">Quantity</th>
+                                        <th class="product-subtotal" th:text="#{label.total}">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -69,7 +69,7 @@
                                     </tr>
                                     <tr>
                                         <td class="actions" colspan="6">
-                                            <a class="add_to_cart_button" href="#" th:href="@{/checkout}">CHECKOUT</a>
+                                            <a class="add_to_cart_button" href="#" th:href="@{/checkout}" th:text="#{label.checkout}">CHECKOUT</a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -78,22 +78,22 @@
 
                             <div class="cart-collaterals">
                                 <div class="cart_totals ">
-                                    <h2>Cart Totals</h2>
+                                    <h2 th:text="#{label.cart.total}">Cart Totals</h2>
 
                                     <table cellspacing="0">
                                         <tbody>
                                         <tr class="cart-subtotal">
-                                            <th>Cart Subtotal</th>
+                                            <th th:text="#{label.cart.subtotal}">Cart Subtotal</th>
                                             <td><span class="amount" th:text="${cart.totalAmount}">$15.00</span></td>
                                         </tr>
 
                                         <tr class="shipping">
-                                            <th>Shipping and Handling</th>
+                                            <th th:text="#{label.shipping.and.handling}">Shipping and Handling</th>
                                             <td>Free Shipping</td>
                                         </tr>
 
                                         <tr class="order-total">
-                                            <th>Order Total</th>
+                                            <th th:text="#{label.order.total}">Order Total</th>
                                             <td><strong><span class="amount" th:text="${cart.totalAmount}">$15.00</span></strong> </td>
                                         </tr>
                                         </tbody>

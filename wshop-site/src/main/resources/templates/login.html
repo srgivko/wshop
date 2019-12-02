@@ -5,7 +5,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Login</title>
+    <title th:text="#{label.login}">Login</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,25 +17,24 @@
                     <form id="login-form-wrap" th:action="@{/login}" method="post">
                         <div class="form-group">
                             <div class="control-group">
-                                <label for="username">Email <span class="required">*</span></label>
-                                <input type="text" id="username" name="username" placeholder="Email"
+                                <label for="username"><span th:text="#{label.email}">Email</span> <span class="required">*</span></label>
+                                <input type="text" id="username" name="username" th:placeholder="#{label.email}" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="control-group">
+                                <label for="password"><span th:text="#{label.password}">Password</span> <span class="required">*</span></label>
+                                <input type="password" id="password" name="password" th:placeholder="#{label.password}"
                                        class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="control-group">
-                                <label for="password">Password <span class="required">*</span></label>
-                                <input type="password" id="password" name="password" placeholder="Password"
-                                       class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="control-group">
-                                <input type="submit" value="Login" class="button"/>
+                                <input type="submit" th:value="#{label.login}" class="button button-form"/>
                             </div>
                         </div>
                         <div th:if="${param.error}" class="alert alert-danger alert-dismissable">
-                            <p><i class="icon fa fa-ban"></i> <span th:text="#{error.login_failed}">Invalid Email and Password.</span>
+                            <p><i class="icon fa fa-ban"></i> <span th:text="#{error.login_failed}">Invalid Email and Password</span>
                             </p>
                         </div>
                         <div th:if="${param.logout}" class="alert alert-info alert-dismissable">
@@ -45,8 +44,8 @@
                         <div th:if="${info!=null}" class="alert alert-warning alert-dismissable">
                             <p><i class="icon fa fa-warning"></i> <span th:text="${info}"></span></p>
                         </div>
-                        <p>New Customer? <a href="#" th:href="@{/register}" th:text="#{label.register}">Register</a></p>
-                        <p>Forget password? <a href="#" th:href="@{/forgetPwd}" th:text="#{label.forgetPwd}">New password</a></p>
+                        <p><span th:text="#{label.newCustomer}">New Customer?</span> <a href="#" th:href="@{/register}" th:text="#{label.register}">Register</a></p>
+                        <p><span th:text="#{label.forgetPassword}">Forget password?</span> <a href="#" th:href="@{/forgetPwd}" th:text="#{label.forgetPwd}">New password</a></p>
                         <div class="clear"></div>
                     </form>
                 </div>

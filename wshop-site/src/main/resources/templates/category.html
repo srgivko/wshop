@@ -2,11 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Category</title>
+    <title th:text="#{label.category}">Category</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,51 +16,30 @@
             <div th:replace="fragments/childCategories :: childCategories (childCategories=${category.childCategories})"></div>
             <div class="row" th:if="${productPage.content!=null && !productPage.content.isEmpty()}">
                 <div class="col-md-12">
-                    <label for="sorting">Сортировка</label>
+                    <label for="sorting" th:text="#{label.sorting}">Сортировка</label>
                     <select id="sorting" onchange="location = this.value;" class="form-control"
                             style="margin-bottom: 10px; width: auto;">
-                        <option value="?sort=name" th:selected="${sort=='name'}">По названию (возрастанию)</option>
-                        <option value="?sort=name_desc" th:selected="${sort=='name_desc'}">По названию (убыванию)</option>
-                        <option value="?sort=price" th:selected="${sort=='price'}">Сначала дешевые</option>
-                        <option value="?sort=price_desc" th:selected="${sort=='price_desc'}">Сначала дорогие</option>
-                        <option value="?sort=oldest" th:selected="${sort=='oldest'}">Сначала старые</option>
-                        <option value="?sort=newest" th:selected="${sort=='newest'}">Сначала новые</option>
+                        <option value="?sort=name" th:selected="${sort=='name'}" th:text="#{label.sorting.name}">По
+                            названию (возрастанию)
+                        </option>
+                        <option value="?sort=name_desc" th:selected="${sort=='name_desc'}"
+                                th:text="#{label.sorting.name_desc}">По названию (убыванию)
+                        </option>
+                        <option value="?sort=price" th:selected="${sort=='price'}" th:text="#{label.sorting.price}">
+                            Сначала дешевые
+                        </option>
+                        <option value="?sort=price_desc" th:selected="${sort=='price_desc'}"
+                                th:text="#{label.sorting.price_desc}">Сначала дорогие
+                        </option>
+                        <option value="?sort=oldest" th:selected="${sort=='oldest'}" th:text="#{label.sorting.oldest}">
+                            Сначала старые
+                        </option>
+                        <option value="?sort=newest" th:selected="${sort=='newest'}" th:text="#{label.sorting.newest}">
+                            Сначала новые
+                        </option>
                     </select>
                 </div>
-                <div class="col-md-3 col-sm-6" th:each="product : ${productPage.content}">
-                    <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
-                    <div class="single-shop-product">
-                        <div class="product-upper">
-                            <img src="assets/img/products/2.jpg" alt=""
-                                 th:src="@{'/images/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
-                        </div>
-                        <h2><a href="#" th:href="@{/products/{id}(id=${product.id})}"
-                               th:text="${product.name}">Product name</a></h2>
-                        <div class="product-carousel-price">
-                            <ins th:text="${product.price}">$9.00</ins>
-                        </div>
-                        <div class="product-option-shop container-fluid">
-                            <div class="row">
-                                <a class="add_to_cart_button col-md-8" data-quantity="1" data-product_sku=""
-                                   data-product_id="70"
-                                   rel="nofollow" th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'">Add
-                                    to cart</a>
-                                <a th:style="${wishList.contains(product) ? 'display:none' : ''}"
-                                   sec:authorize="hasRole('ROLE_USER')" th:sec class="add_to_cart_button col-md-4"
-                                   data-quantity="1" data-product_sku=""
-                                   data-product_id="70" rel="nofollow"
-                                   th:onclick="'javascript:addProductToWishlist(\'' + ${product.id} + '\',this);'"><i
-                                        class="fa fa-heart-o" aria-hidden="true"></i></a>
-                                <a th:style="${!wishList.contains(product) ? 'display:none' : ''}"
-                                   sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button col-md-4"
-                                   data-quantity="1" data-product_sku=""
-                                   data-product_id="70" rel="nofollow"
-                                   th:onclick="'javascript:removeProductFromWishlist(\'' + ${product.id} + '\',this);'"><i
-                                        class="fa fa-heart" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="fragments/productColumns :: productColumns (products=${productPage.content})"></div>
             </div>
             <div th:replace="fragments/pager :: pager (page = ${productPage})"></div>
         </div>
