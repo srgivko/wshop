@@ -5,7 +5,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title th:text="#{label.category}">Category</title>
+    <title th:text="#{label.category(${category.name})}">Category</title>
 </head>
 <body>
 <div layout:fragment="content">

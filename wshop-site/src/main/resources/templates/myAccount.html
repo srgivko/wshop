@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>My Account</title>
+    <title th:text="#{label.my.account}">My Account</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -15,49 +15,49 @@
                 <ul class="customer-tab" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#profile"
-                           aria-controls="profile" role="tab" data-toggle="tab">
+                           aria-controls="profile" role="tab" data-toggle="tab" th:text="#{label.customerInfo}">
                             Customer Info</a></li>
                     <li role="presentation">
                         <a href="#orders"
-                           aria-controls="orders" role="tab" data-toggle="tab">Orders</a>
+                           aria-controls="orders" role="tab" data-toggle="tab" th:text="#{label.orders}">Orders</a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="profile">
-                        <h2>Customer Info</h2>
+                        <h2 th:text="#{label.customerInfo}">Customer Info</h2>
                         <form role="form" action="#" th:object="${customer}"
                               method="post">
                             <div class="form-group">
-                                <label>FirstName</label>
+                                <label th:text="#{label.firstName}">FirstName</label>
                                 <input type="text"
                                        class="form-control" th:field="*{firstName}"
                                        readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label>LastName</label>
+                                <label th:text="#{label.lastName}">LastName</label>
                                 <input type="text" class="form-control"
                                        th:field="*{lastName}" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
+                                <label th:text="#{label.email}">Email</label>
                                 <input type="email" class="form-control"
                                        th:field="*{email}" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label>Phone</label>
+                                <label th:text="#{label.phone}">Phone</label>
                                 <input type="text" class="form-control"
                                        th:field="*{phone}" readonly="readonly"/>
                             </div>
                         </form>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="orders">
-                        <h2>Orders</h2>
+                        <h2 th:text="#{label.orders}">Orders</h2>
                         <table cellspacing="0" class="shop_table cart">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Order Number</th>
-                                <th>Status</th>
+                                <th th:text="#{label.order.number}">Order Number</th>
+                                <th th:text="#{label.order.status}">Status</th>
                             </tr>
                             </thead>
                             <tbody>

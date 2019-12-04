@@ -14,9 +14,9 @@
         </div>
         <div class="product-option-shop container-fluid">
             <div class="row">
-                <a class="add_to_cart_button col-md-8" data-quantity="1" data-product_sku=""
+                <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
                    data-product_id="70"
-                   rel="nofollow" th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'">Add
+                   rel="nofollow" th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'" th:text="#{label.cart.add}">Add
                     to cart</a>
                 <a th:style="${wishList.contains(product) ? 'display:none' : ''}"
                    sec:authorize="hasRole('ROLE_USER')" th:sec class="add_to_cart_button col-md-4"

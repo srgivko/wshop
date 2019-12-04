@@ -23,19 +23,19 @@
     </head>
     <body>
 
-        <span th:text="#{lang.change}"></span>:
-        <select id="locales">
-            <option value=""></option>
-            <option value="en" th:text="#{lang.eng}"></option>
-            <option value="ru" th:text="#{lang.ru}"></option>
-        </select>
-
         <div class="header-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-offset-8 col-md-4">
+                    <div class="col-md-offset-6 col-md-6">
                         <div class="header-right">
                             <ul class="list-unstyled list-inline">
+                                <li class="dropdown dropdown-small">
+                                    <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key" th:text="#{lang.change}+' : '">language : </span><span class="value" th:if="${#httpSession!=null}" th:text="${#httpSession.getAttribute('org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE')}"></span><b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a th:href="@{'?lang=eng'}" th:text="#{lang.eng}">English</a></li>
+                                        <li><a th:href="@{'?lang=ru'}" th:text="#{lang.ru}">Russian</a></li>
+                                    </ul>
+                                </li>
                                 <li sec:authorize="${!isAuthenticated()}"><a href="#" th:href="@{/login}"><i class="fa fa-user"></i> <span th:text="#{label.login}">Login</span></a></li>
                                 <li sec:authorize="${!isAuthenticated()}"><a href="#" th:href="@{/register}"><i class="fa fa-user"></i> <span th:text="#{label.register}">Register</span></a></li>
                                 <li sec:authorize="${isAuthenticated()}"><a href="#" th:href="@{/myAccount}"><i class="fa fa-user"></i> <span th:text="#{label.my.account}">Register</span></a></li>

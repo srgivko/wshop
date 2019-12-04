@@ -15,7 +15,7 @@
             <div class="row" th:each="cat : ${categories}">
                 <div class="woocommerce-info">
                     <a class="" th:href="@{/categories/{id}(id=${cat.id})}"
-                       th:text="#{label.category(${' '+cat.name})}">Category Name</a>
+                       th:text="#{label.category(${cat.name})}">Category Name</a>
                 </div>
                 <div th:replace="fragments/productColumns :: productColumns (products=${cat.getProducts()})"></div>
             </div>

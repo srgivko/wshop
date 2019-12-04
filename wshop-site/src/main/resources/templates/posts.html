@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>Posts</title>
+    <title th:text="#{label.posts}">Posts</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -28,12 +28,11 @@
                             class="heading_color">
                         Continue Reading</a></p>
                     <hr>
-                    <p><span>Share :
+                    <p><span><span th:text="#{label.share}">Share</span> :
 				<a href="javascript::;"><i class="fa fa-facebook margin_left10" aria-hidden="true"></i></a>
 				<a href="javascript::;"><i class="fa fa-twitter margin_left10" aria-hidden="true"></i></a>
 				<a href="javascript::;"><i class="fa fa-google-plus margin_left10" aria-hidden="true"></i></a>
-				 </span>
-                        <span class="pull-right">By : <strong>Blogger</strong></span></p>
+				 </span></p>
                 </div>
             </div>
         </div>

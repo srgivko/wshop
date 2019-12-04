@@ -8,6 +8,7 @@
     <title th:text="#{label.cart}">Cart</title>
 </head>
 <body>
+<!-- todo https://bootsnipp.com/snippets/84KX-->
 <div layout:fragment="content">
 
     <div class="single-product-area">
@@ -15,7 +16,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="woocommerce-info col-md-11" th:if="${#lists.isEmpty(cart.items)}">
-                    <h2 th:text="#{label.cart.empty}">Cart is Empty</h2>
+                    <h2 th:text="#{label.cart.empty}" class="text-center">Cart is Empty</h2>
                 </div>
                 <div class="col-md-11" th:unless="${#lists.isEmpty(cart.items)}">
                     <div class="product-content-right">
@@ -89,7 +90,7 @@
 
                                         <tr class="shipping">
                                             <th th:text="#{label.shipping.and.handling}">Shipping and Handling</th>
-                                            <td>Free Shipping</td>
+                                            <td th:text="#{label.freeShipping}">Free Shipping</td>
                                         </tr>
 
                                         <tr class="order-total">

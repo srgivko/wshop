@@ -5,7 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>Order Confirmation</title>
+    <title th:text="#{label.orderConfirmation}">Order Confirmation</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -16,19 +16,19 @@
 
                 <div class="woocommerce-info col-md-offset-2 col-md-8">
                     <div th:unless="${order}" >
-                        <h2>No order found</h2>
+                        <h2 th:text="#{label.order.notFound}">No order found</h2>
                     </div>
                     <div th:if="${order}" >
-                        <h2>Your order has been placed successfully.</h2>
+                        <h2 th:text="#{label.order.placedSuccess}">Your order has been placed successfully.</h2>
                         <h2>
-                            Order Number : <span th:text="${order.orderNumber}">Number</span>
+                            <span th:text="#{label.order.number}">Order Number</span> : <span th:text="${order.orderNumber}">Number</span>
                         </h2>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Cost</th>
+                                <th th:text="#{label.name}">Name</th>
+                                <th th:text="#{label.quantity}">Quantity</th>
+                                <th th:text="#{label.cost}">Cost</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,18 +40,18 @@
                             </tbody>
                             <tfoot>
                             <tr class="cart-subtotal">
-                                <th>Order Subtotal</th>
+                                <th th:text="#{label.cart.subtotal}">Order Subtotal</th>
                                 <td><span class="amount" th:text="${order.totalAmount}">£15.00</span>
                                 </td>
                             </tr>
 
                             <tr class="shipping">
-                                <th>Shipping and Handling</th>
-                                <td>Free Shipping</td>
+                                <th th:text="#{label.shipping.and.handling}">Shipping and Handling</th>
+                                <td th:text="#{label.freeShipping}">Free Shipping</td>
                             </tr>
 
                             <tr class="order-total">
-                                <th>Order Total</th>
+                                <th th:text="#{label.order.total}">Order Total</th>
                                 <td><strong><span class="amount" th:text="${order.totalAmount}">£15.00</span></strong> </td>
                             </tr>
 

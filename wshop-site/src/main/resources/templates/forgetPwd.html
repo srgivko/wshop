@@ -5,7 +5,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Login</title>
+    <title th:text="#{label.forgetPwd}">Forget password</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,17 +17,17 @@
                     <form id="login-form-wrap" th:action="@{/forgetPwd}" method="post">
                         <div class="form-group">
                             <div class="control-group">
-                                <label for="email">Email <span class="required">*</span></label>
-                                <input type="email" id="email" name="email" placeholder="Email" class="form-control"/>
+                                <label for="email"><span th:text="#{label.email}">Email</span> <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" th:placeholder="#{label.email}" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="control-group">
-                                <input type="submit" value="Restore" class="button"/>
+                                <input type="submit" th:value="#{label.restore}" class="button"/>
                             </div>
                         </div>
-                        <p>New Customer? <a href="#" th:href="@{/register}" th:text="#{label.register}">Register</a></p>
-                        <p>To login page <a href="#" th:href="@{/forgetPwd}" th:text="#{label.login}">New password</a>
+                        <p><span th:text="#{label.newCustomer}">New Customer?</span> <a href="#" th:href="@{/register}" th:text="#{label.register}">Register</a></p>
+                        <p><span th:text="#{label.forgetPassword}">Forget password?</span> <a href="#" th:href="@{/forgetPwd}" th:text="#{label.forgetPwd}">New password</a></p>
                         </p>
                         <div class="clear"></div>
                     </form>

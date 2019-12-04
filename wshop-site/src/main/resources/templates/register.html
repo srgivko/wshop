@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Register</title>
+    <title th:text="#{label.register}">Register</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,7 +17,7 @@
 
                         <div class="form-group">
                             <div class="control-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error' : ''">
-                                <label for="firstName">FirstName <span class="required">*</span></label>
+                                <label for="firstName"><span th:text="#{label.firstName}">FirstName</span> <span class="required">*</span></label>
                                 <input type="text" th:field="*{firstName}" id="firstName" class="form-control"/>
                                 <label class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Incorrect
                                     data</label>
@@ -26,7 +26,7 @@
 
                         <div class="form-group">
                             <div class="control-group" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error' : ''">
-                                <label for="lastName">LastName <span class="required">*</span></label>
+                                <label for="lastName"><span th:text="#{label.lastName}">LastName</span> <span class="required">*</span></label>
                                 <input type="text" th:field="*{lastName}" id="lastName" class="form-control"/>
                                 <label class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Incorrect
                                     data</label>
@@ -35,7 +35,7 @@
 
                         <div class="form-group">
                             <div class="control-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error' : ''">
-                                <label for="email">Email <span class="required">*</span></label>
+                                <label for="email"><span th:text="#{label.email}">Email</span> <span class="required">*</span></label>
                                 <input type="email" th:field="*{email}" id="email" class="form-control"/>
                                 <label class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect data</label>
                             </div>
@@ -43,7 +43,7 @@
 
                         <div class="form-group">
                             <div class="control-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error' : ''">
-                                <label for="password">Password <span class="required">*</span></label>
+                                <label for="password"><span th:text="#{label.password}">Password</span> <span class="required">*</span></label>
                                 <input type="password" th:field="*{password}" id="password" class="form-control"/>
                                 <label class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect
                                     data</label>
@@ -52,7 +52,7 @@
 
                         <div class="form-group">
                             <div class="control-group" th:classappend="${#fields.hasErrors('phone')} ? 'has-error' : ''">
-                                <label for="phone">Phone <span class="required">*</span></label>
+                                <label for="phone"><span th:text="#{label.phone}">Phone</span> <span class="required">*</span></label>
                                 <input type="text" th:field="*{phone}" id="phone" class="form-control"/>
                                 <label class="help-block" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Incorrect data</label>
                             </div>
@@ -68,7 +68,7 @@
 
                         <div class="form-group">
                             <div class="control-group">
-                                <input type="submit" value="Login" class="button"/>
+                                <input type="submit" th:value="#{label.register}" class="button button-form"/>
                             </div>
                         </div>
 
@@ -77,7 +77,7 @@
                         </div>
 
                         <p class="lost_password">
-                            Existing Customer? <a href="#" th:href="@{/login}" th:text="#{label.login}">Login</a>
+                            <a href="#" th:href="@{/login}" th:text="#{label.login}">Login</a>
                         </p>
 
                         <div class="clear"></div>
