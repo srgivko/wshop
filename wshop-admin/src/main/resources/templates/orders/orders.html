@@ -5,7 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>Orders</title>
+    <title th:text="#{label.orders}">Orders</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -13,16 +13,16 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List of Orders</h3>
+                    <h3 class="box-title" th:text="#{label.orders}">Orders</h3>
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Order Number</th>
-                            <th>Customer Name</th>
-                            <th>Email</th>
-                            <th>Edit</th>
+                            <th th:text="#{label.orderNumber}">Order Number</th>
+                            <th th:text="#{label.customerName}">Customer Name</th>
+                            <th th:text="#{label.email}">Email</th>
+                            <th th:text="#{label.edit}">Edit</th>
                         </tr>
                         <tr th:each="order,iterStat : ${orders}">
                             <td><span th:text="${iterStat.count}">1</span></td>
@@ -30,7 +30,7 @@
                             <td th:text="${order.customer.firstName}">Customer Name</td>
                             <td th:text="${order.customer.email}">Customer Email</td>
                             <td><a th:href="@{/orders/{id}(id=${order.id})}"
-                                   class="btn btn-sm btn-default"><i class="fa fa-edit"></i> Edit</a></td>
+                                   class="btn btn-sm btn-default"><i class="fa fa-edit"></i> <span th:text="#{label.edit}">Edit</span></a></td>
                         </tr>
                     </table>
                 </div>

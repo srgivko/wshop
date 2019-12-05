@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Permissions</title>
+    <title th:text="#{label.permissions}">Permissions</title>
 </head>
 <body>
 
@@ -14,14 +15,14 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List of Permissions</h3>
+                    <h3 class="box-title" th:text="#{label.permissions}">Permissions</h3>
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Name</th>
-                            <th>Description</th>
+                            <th th:text="#{label.name}">Name</th>
+                            <th th:text="#{label.description}">Description</th>
                         </tr>
                         <tr th:each="perm,iterStat : ${permissions}">
                             <td th:text="${iterStat.count}">1</td>

@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Posts - New</title>
+    <title th:text="#{label.post}">Posts - New</title>
 </head>
 <body>
 
@@ -12,32 +12,30 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title" th:if="${post.id==null}">Create New Post</h3>
-            <h3 class="box-title" th:if="${post.id!=null}">Edit Post</h3>
+            <h3 class="box-title" th:if="${post.id==null}" th:text="#{label.newPost}">New Post</h3>
+            <h3 class="box-title" th:if="${post.id!=null}"><span th:text="#{label.edit}">Edit</span> <span th:text="#{label.post}">Post</span></h3>
         </div>
         <div class="box-body">
             <form post="form" th:action="@{/posts/{id}(id=${post.id})}" th:object="${post}" method="post">
                 <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error'">
-                    <label>Title</label>
-                    <input type="text" class="form-control" name="title" th:field="*{title}"
-                           placeholder="Enter Post Title"/>
+                    <label th:text="#{label.title}">Title</label>
+                    <input type="text" class="form-control" name="title" th:field="*{title}"/>
                     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-                    <label>Description</label>
-                    <input type="text" class="form-control" name="description" th:field="*{description}"
-                           placeholder="Enter Post Description"/>
+                    <label th:text="#{label.description}">Description</label>
+                    <input type="text" class="form-control" name="description" th:field="*{description}"/>
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:class="text-red">
                         Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('imgTitle')}? 'has-error'">
-                    <label>Title Image</label>
+                    <label th:text="#{label.image}">Title Image</label>
                     <div class="input-group">
-                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup">Browse Server</span>
+                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup" th:text="#{label.browseServer}">Browse Server</span>
                         <input readonly type="text" class="form-control" th:field="*{imgTitle}">
                         <span id="ckfinder-popup-1-delete" class="input-group-addon ckfinder-popup"
                               th:style="${post.imgTitle!=null && post.imgTitle!=''  ? 'color:red' : 'display:none; color:red'}"><i
@@ -52,20 +50,19 @@
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('createOn')}? 'has-error'">
-                    <label>Date</label>
-                    <input type="datetime-local" class="form-control" name="createOn" th:field="*{createOn}"
-                           placeholder="Enter Post createOn"/>
+                    <label th:text="#{label.date}">Date</label>
+                    <input type="datetime-local" class="form-control" name="createOn" th:field="*{createOn}"/>
                     <p th:if="${#fields.hasErrors('createOn')}" th:errors="*{createOn}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error'">
-                    <label>Content</label>
+                    <label th:text="#{label.content}">Content</label>
                     <textarea name="content" id="editor" rows="10" cols="80" th:field="*{content}"></textarea>
                     <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>

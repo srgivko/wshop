@@ -4,9 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>
-        Домашнаяя страница
-    </title>
+    <title th:text="#{label.dashboard}">Dashboard</title>
 </head>
 <body>
 
@@ -18,7 +16,7 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Count of Orders</span>
+                        <span class="info-box-text" th:text="#{label.count.orders}">Count of Orders</span>
                         <span class="info-box-number" th:text="${orderCount}">90</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -31,7 +29,7 @@
                     <span class="info-box-icon bg-red"><i class="ion ion-ios-cart-outline"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Count of products</span>
+                        <span class="info-box-text" th:text="#{label.count.products}">Count of products</span>
                         <span class="info-box-number" th:text="${productCount}">41,410</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -48,7 +46,7 @@
                     <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Count of customers</span>
+                        <span class="info-box-text" th:text="#{label.count.customers}">Count of customers</span>
                         <span class="info-box-number" th:text="${customerCount}">760</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -61,7 +59,7 @@
                     <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Count of Users</span>
+                        <span class="info-box-text" th:text="#{label.count.users}">Count of Users</span>
                         <span class="info-box-number" th:text="${userCount}">2,000</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -220,7 +218,8 @@
                         <!-- PRODUCT LIST -->
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Recently Added Products</h3>
+                                <h3 class="box-title" th:text="#{label.recentlyAddedProducts}">Recently Added
+                                    Products</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -250,7 +249,8 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer text-center">
-                                <a th:href="@{/products}" class="uppercase">View All Products</a>
+                                <a th:href="@{/products}" class="uppercase" th:text="#{label.viewAllProducts}">View All
+                                    Products</a>
                             </div>
                             <!-- /.box-footer -->
                         </div>
@@ -261,9 +261,9 @@
                         <!-- Customer LIST -->
                         <div class="box box-danger">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Latest Customers</h3>
+                                <h3 class="box-title" th:text="#{label.latestCustomers}">Latest Customers</h3>
                                 <div class="box-tools pull-right">
-                                    <span class="label label-danger" th:text="${customerCount+' Customers'}">8 New Members</span>
+                                    <span class="label label-danger" th:text="${customerCount}">8 New Members</span>
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                             class="fa fa-minus"></i>
                                     </button>
@@ -288,7 +288,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer text-center">
-                                <a th:href="@{/customers}" class="uppercase">View All Users</a>
+                                <a th:href="@{/customers}" class="uppercase" th:text="#{label.viewAllUsers}">View All Users</a>
                             </div>
                             <!-- /.box-footer -->
                         </div>
@@ -301,7 +301,7 @@
                 <!-- TABLE: LATEST ORDERS -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Latest Orders</h3>
+                        <h3 class="box-title" th:text="#{label.latestOrders}">Latest Orders</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -317,10 +317,10 @@
                             <table class="table no-margin">
                                 <thead>
                                 <tr>
-                                    <th>Order ID</th>
-                                    <th>Items count</th>
-                                    <th>Status</th>
-                                    <th>Total price</th>
+                                    <th th:text="#{label.orderNumber}">Order ID</th>
+                                    <th th:text="#{label.itemCount}">Items count</th>
+                                    <th th:text="#{label.orderStatus}">Status</th>
+                                    <th th:text="#{label.orderTotal}">Total price</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -353,7 +353,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        <a th:href="@{/orders}" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                        <a th:href="@{/orders}" class="btn btn-sm btn-default btn-flat pull-right" th:text="#{label.viewAllOrders}">View All Orders</a>
                     </div>
                     <!-- /.box-footer -->
                 </div>

@@ -3,14 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>Products - New</title>
+    <title th:text="#{label.newProduct}">Products - New</title>
 </head>
 <body>
 <div layout:fragment="content">
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title">Create New Product</h3>
+            <h3 class="box-title"><span th:text="#{label.create}">Create</span> <span th:text="#{label.newProduct}">New Product</span></h3>
         </div>
         <div class="box-body">
             <form role="form" th:action="@{/products}" th:object="${product}"
@@ -19,40 +19,37 @@
                    th:class="text-red">Incorrect data</p>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" th:field="*{name}"
-                           placeholder="Enter Product Name"/>
+                    <label th:text="#{label.name}">Name</label>
+                    <input type="text" class="form-control" name="name" th:field="*{name}"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                        th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('sku')}? 'has-error'">
-                    <label>SKU</label>
-                    <input type="text" class="form-control" name="sku"
-                           th:field="*{sku}" placeholder="Enter Product SKU"/>
+                    <label th:text="#{label.sku}">SKU</label>
+                    <input type="text" class="form-control" name="sku" th:field="*{sku}"/>
                     <p th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"
                        th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('price')}? 'has-error'">
-                    <label>Price</label>
-                    <input type="text" class="form-control" name="price"
-                           th:field="*{price}" placeholder="Enter Product Price"/>
+                    <label th:text="#{label.price}">Price</label>
+                    <input type="text" class="form-control" name="price" th:field="*{price}"/>
                     <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
                        th:class="text-red">Incorrect data</p>
                 </div>
 
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-                    <label>Description</label>
+                    <label th:text="#{label.description}">Description</label>
                     <textarea name="description" id="editor" rows="10" cols="80" th:field="*{description}"></textarea>
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{content}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('imageUrl')}? 'has-error'">
-                    <label>Image</label>
+                    <label th:text="#{label.image}">Image</label>
                     <div class="input-group">
-                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup">Browse Server</span>
+                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup" th:text="#{label.browseServer}">Browse Server</span>
                         <input readonly type="text" class="form-control" th:field="*{imageUrl}"/>
                         <span id="ckfinder-popup-1-delete" class="input-group-addon ckfinder-popup"
                               th:style="${product.imageUrl!=null && product.imageUrl!=''  ? 'color:red' : 'display:none; color:red'}"><i
@@ -67,10 +64,10 @@
                 </div>
 
                 <div class="form-group"  th:if="${categoriesList!=null && !categoriesList.isEmpty()}">
-                    <label>Category</label>
+                    <label th:text="#{label.parentCategory}">Category</label>
                     <div>
                         <select class="form-control" th:field="*{category}">
-                            <option th:value="0">Choose category</option>
+                            <option th:value="0" th:text="#{label.choseCategory}">Choose category</option>
                             <option th:each="cat : ${categoriesList}"
                                     th:value="${cat.id}"
                                     th:text="${cat.name}">Category
@@ -80,10 +77,10 @@
                 </div>
 
                 <div class="form-group" th:if="${producerList!=null && !producerList.isEmpty()}">
-                    <label>Producer</label>
+                    <label th:text="#{label.producer}">Producer</label>
                     <div>
                         <select class="form-control" th:field="*{producer}">
-                            <option th:value="0">Choose producer</option>
+                            <option th:value="0" th:text="#{label.chooseProducer}">Choose producer</option>
                             <option th:each="producer : ${producerList}"
                                     th:value="${producer.id}"
                                     th:text="${producer.name}">Producer
@@ -93,10 +90,10 @@
                 </div>
 
                 <div class="form-group" th:if="${unitList!=null && !unitList.isEmpty()}">
-                    <label>Unit</label>
+                    <label th:text="#{label.unit}">Unit</label>
                     <div>
                         <select class="form-control" th:field="*{unit}">
-                            <option th:value="0">Choose unit</option>
+                            <option th:value="0" th:text="#{label.chooseUnit}">Choose unit</option>
                             <option th:each="un : ${unitList}"
                                     th:value="${un.id}"
                                     th:text="${un.name}">Unit
@@ -106,7 +103,7 @@
                 </div>
 
                 <div class="form-group" th:if="${tagList!=null && !tagList.isEmpty()}">
-                    <label>Tags</label>
+                    <label th:text="#{label.tags}">Tags</label>
                     <select class="form-control" th:field="*{tags}" multiple="multiple">
                         <option th:each="tag : ${tagList}" th:value="${tag.id}" th:text="${tag.name}">Tag name
                         </option>
@@ -114,7 +111,7 @@
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>

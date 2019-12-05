@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>Orders - Edit</title>
+    <title><span th:text="#{label.edit}">Edit</span> <span th:text="#{label.order}">Order</span></title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title">Edit Order</h3>
+            <h3 class="box-title"><span th:text="#{label.edit}">Edit</span> <span th:text="#{label.order}">Order</span></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -21,19 +21,19 @@
                    th:class="text-red">Incorrect data</p>
                 <div>
                     <div th:unless="${order}">
-                        <h2>No order found</h2>
+                        <h2 th:text="#{label.noOrderFound}">No order found</h2>
                     </div>
                     <div th:if="${order}">
                         <h3>
-                            Order Number : <span th:text="${order.orderNumber}">Number</span>
+                            <span th:text="#{label.orderNumber}">Order Number</span> : <span th:text="${order.orderNumber}">Number</span>
                         </h3>
-                        <h3>Order Item Details</h3>
+                        <h3 th:text="#{label.orderDetails}">Order Details</h3>
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Cost</th>
+                                <th th:text="#{label.name}">Name</th>
+                                <th th:text="#{label.quantity}">Quantity</th>
+                                <th th:text="#{label.cost}">Cost</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -46,18 +46,18 @@
                             <tfoot>
 
                             <tr class="cart-subtotal">
-                                <th>Order Subtotal</th>
+                                <th th:text="#{label.orderSubtotal}">Order Subtotal</th>
                                 <td><span class="amount" th:text="${order.totalAmount}">£15.00</span>
                                 </td>
                             </tr>
 
                             <tr class="shipping">
-                                <th>Shipping and Handling</th>
-                                <td>Free Shipping</td>
+                                <th th:text="#{label.shippingAndHandling}">Shipping and Handling</th>
+                                <td th:text="#{label.freeShipping}">Free Shipping</td>
                             </tr>
 
                             <tr class="order-total">
-                                <th>Order Total</th>
+                                <th th:text="#{label.orderTotal}">Order Total</th>
                                 <td><strong><span class="amount"
                                                   th:text="${order.totalAmount}">£15.00</span></strong></td>
                             </tr>
@@ -65,7 +65,7 @@
                             </tfoot>
                         </table>
                         <div>
-                            <label>Order Status</label> <select th:field="*{status}">
+                            <label th:text="#{label.orderStatus}">Order Status</label> <select th:field="*{status}">
                             <option
                                     th:each="status: ${T(by.lodochkina.wshop.entities.OrderStatus).values()}"
                                     th:value="${status}" th:text="${status}">Status
@@ -75,9 +75,9 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                     <div class="inline margin">
-                        <input type="checkbox" name="send-email">Send email
+                        <input type="checkbox" name="send-email"/> <span th:text="#{label.sendEmail}">Send email</span>
                     </div>
                 </div>
             </form>

@@ -5,7 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title>Customers</title>
+    <title th:text="#{label.customers}">Customers</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -13,22 +13,22 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List of Customers</h3>
+                    <h3 class="box-title" th:text="#{label.customers}">Customers</h3>
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Customer Name</th>
-                            <th>Email</th>
-                            <th>View</th>
+                            <th th:text="#{label.name}">Name</th>
+                            <th th:text="#{label.email}">Email</th>
+                            <th th:text="#{label.view}">View</th>
                         </tr>
                         <tr th:each="customer,iterStat : ${customers}">
                             <td><span th:text="${iterStat.count}">1</span></td>
                             <td th:text="${customer.firstName}">Customer Name</td>
                             <td th:text="${customer.email}">Customer Email</td>
                             <td><a th:href="@{/customers/{id}(id=${customer.id})}"
-                                   class="btn btn-sm btn-default"><i class="fa fa-search"></i> View</a></td>
+                                   class="btn btn-sm btn-default"><i class="fa fa-search"></i> <span th:text="#{label.view}">View</span></a></td>
                         </tr>
                     </table>
                 </div>

@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Producers - New</title>
+    <title th:text="#{label.producers}">Producers - New</title>
 </head>
 <body>
 
@@ -12,29 +12,29 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title" th:if="${producer.id==null}">Create New Producer</h3>
-            <h3 class="box-title" th:if="${producer.id!=null}">Edit Producer</h3>
+            <h3 class="box-title" th:if="${producer.id==null}" th:text="#{label.newProducer}">Create New Producer</h3>
+            <h3 class="box-title" th:if="${producer.id!=null}"><span th:text="#{label.edit}">Edit</span> <span
+                    th:text="#{label.producer}">Producer</span></h3>
         </div>
         <div class="box-body">
             <form producer="form" th:action="@{/producers/{id}(id=${producer.id})}" th:object="${producer}" method="post">
                 <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" th:field="*{name}"
-                           placeholder="Enter Producer Name"/>
+                    <label th:text="#{label.name}">Name</label>
+                    <input type="text" class="form-control" name="name" th:field="*{name}"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-                    <label>Description</label>
+                    <label th:text="#{label.description}">Description</label>
                     <textarea class="form-control" rows="3" name="description"
-                              th:field="*{description}" placeholder="Enter Producer Description"></textarea>
+                              th:field="*{description}"></textarea>
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                        th:class="text-red">Incorrect data</p>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>

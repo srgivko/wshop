@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Roles - Edit</title>
+    <title th:text="#{label.editRole}">Roles - Edit</title>
 </head>
 <body>
 
@@ -12,24 +12,24 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title">Edit Role</h3>
+            <h3 class="box-title" th:text="#{label.editRole}">Edit Role</h3>
         </div>
         <div class="box-body">
             <form role="form" th:action="@{/roles/{id}(id=${role.id})}" th:object="${role}" method="post">
                 <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
 
                 <div class="form-group">
-                    <label>Name</label>
+                    <label th:text="#{label.name}">Name</label>
                     <input type="text" class="form-control" name="name" th:field="*{name}" readonly="readonly"/>
                 </div>
 
                 <div class="form-group">
-                    <label>Description</label>
-                    <textarea class="form-control" rows="3" name="description" th:field="*{description}" placeholder="Enter Role Description"></textarea>
+                    <label th:text="#{label.description}">Description</label>
+                    <textarea class="form-control" rows="3" name="description" th:field="*{description}"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Permissions</label>
+                    <label th:text="#{label.permissions}">Permissions</label>
                     <div>
                         <p th:each="permission,rowStat : ${permissionsList}">
                             <input type="checkbox" th:field="*{permissions[__${rowStat.index}__].id}" th:value="${permission.id}" />
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>

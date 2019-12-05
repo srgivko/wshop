@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/guestLayout">
 <head>
-    <title>Reset Password</title>
+    <title th:text="#{lable.resetPassword}">Reset Password</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -11,8 +11,8 @@
         <input type="hidden" name="email" th:value="${email}"/>
         <input type="hidden" name="token" th:value="${token}"/>
 
-        <input type="password" class="form-control" name="password" placeholder="New Password"/>
-        <input type="password" class="form-control" name="confPassword" placeholder="Confirm Password"/>
+        <input type="password" class="form-control" name="password" th:placeholder="#{label.newPassword}"/>
+        <input type="password" class="form-control" name="confPassword" th:placeholder="#{label.confirm}"/>
         <button type="submit" class="btn btn-primary btn-block btn-flat" th:text="#{label.submit}">Submit</button>
     </form>
 </div>

@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Units - New</title>
+    <title th:text="#{label.newTag}">Units - New</title>
 </head>
 <body>
 
@@ -12,21 +12,21 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title" th:if="unit.id==null">Create New Unit</h3>
-            <h3 class="box-title" th:if="unit.id!=null">Edit Unit</h3>
+            <h3 class="box-title" th:if="unit.id==null" th:text="#{label.newTag}">Create New Unit</h3>
+            <h3 class="box-title" th:if="unit.id!=null" th:text="#{label.editTag}">Edit Unit</h3>
         </div>
         <div class="box-body">
             <form unit="form" th:action="@{/units/{id}(id=${unit.id})}" th:object="${unit}" method="post">
                 <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" th:field="*{name}" placeholder="Enter Unit Name"/>
+                    <label th:text="#{label.name}">Name</label>
+                    <input type="text" class="form-control" name="name" th:field="*{name}"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-red">Incorrect data</p>
                 </div>
                 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>

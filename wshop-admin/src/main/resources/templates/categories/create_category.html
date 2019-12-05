@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Categories - New</title>
+    <title th:text="#{label.category.new}">Categories - New</title>
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title">Create New Category</h3>
+            <h3 class="box-title"><span th:text="#{label.create}">Create</span> <span th:text="#{label.category.new}">New Category</span></h3>
         </div>
         <div class="box-body">
             <form role="form" th:action="@{/categories}" th:object="${category}" method="post">
@@ -20,17 +20,15 @@
                    th:class="text-red">Incorrect data</p>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" th:field="*{name}"
-                           placeholder="Enter Category Name"/>
-                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                       th:class="text-red">Incorrect data</p>
+                    <label th:text="#{label.name}">Name</label>
+                    <input type="text" class="form-control" name="name" th:field="*{name}"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('imageUrl')}? 'has-error'">
-                    <label>Image</label>
+                    <label th:text="#{label.image}">Image</label>
                     <div class="input-group">
-                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup">Browse Server</span>
+                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup" th:text="#{label.browseServer}">Browse Server</span>
                         <input readonly type="text" class="form-control" th:field="*{imageUrl}"/>
                         <span id="ckfinder-popup-1-delete" class="input-group-addon ckfinder-popup"
                               th:style="${category.imageUrl!=null && category.imageUrl!=''  ? 'color:red' : 'display:none; color:red'}"><i
@@ -45,18 +43,17 @@
                 </div>
                 
                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-                    <label>Description</label>
+                    <label th:text="#{label.description}">Description</label>
                     <textarea class="form-control" rows="3" name="description"
-                              th:field="*{description}" placeholder="Enter Category Description"></textarea>
-                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
-                       th:class="text-red">Incorrect data</p>
+                              th:field="*{description}"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="form-group"  th:if="${categoriesList!=null && !categoriesList.isEmpty()}">
-                    <label>Parent category</label>
+                    <label th:text="#{label.parentCategory}">Parent category</label>
                     <div>
                         <select class="form-control" th:field="*{parentCategory}">
-                            <option th:value="0">Choose category</option>
+                            <option th:value="0" th:text="#{label.choseCategory}">Choose category</option>
                             <option th:each="cat : ${categoriesList}"
                                     th:value="${cat.id}"
                                     th:text="${cat.name}">Category
@@ -66,15 +63,14 @@
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('displayOrder')}? 'has-error'">
-                    <label>Display Order</label>
-                    <input type="number" class="form-control" name="displayOrder"
-                           th:field="*{displayOrder}" placeholder="Enter display order number"/>
+                    <label th:text="#{label.displayOrder}">Display Order</label>
+                    <input type="number" class="form-control" name="displayOrder" th:field="*{displayOrder}"/>
                     <p th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}"
                        th:class="text-red">Incorrect data</p>
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>

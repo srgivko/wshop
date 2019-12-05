@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Tags</title>
+    <title th:text="#{label.tags}">Tags</title>
 </head>
 <body>
 
@@ -13,11 +13,11 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List of Tags</h3>
+                    <h3 class="box-title" th:text="#{label.tags}">List of Tags</h3>
                     <div class="box-tools">
                         <div class="input-group" style="width: 150px;">
                             <a class="btn btn-sm btn-default" th:href="@{/tags/new}"><i
-                                    class="fa fa-plus-circle"></i> New Tag</a>
+                                    class="fa fa-plus-circle"></i> <span th:text="#{label.newTag}">New Tag</span></a>
                         </div>
                     </div>
                 </div>
@@ -25,8 +25,8 @@
                     <table class="table table-hover">
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Name</th>
-                            <th>Edit</th>
+                            <th th:text="#{label.name}">Name</th>
+                            <th th:text="#{label.edit}">Edit</th>
                         </tr>
                         <tr th:each="tag,iterStat : ${tags}">
                             <td><a th:href="@{/tags/{id}(id=${tag.id})}"><span
@@ -34,7 +34,7 @@
                             <td th:text="${tag.name}">Tag Name</td>
                             <td><a th:href="@{/tags/{id}(id=${tag.id})}"
                                    class="btn btn-sm btn-default">
-                                <i class="fa fa-edit"></i>Edit
+                                <i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span>
                             </a>
                             </td>
                         </tr>

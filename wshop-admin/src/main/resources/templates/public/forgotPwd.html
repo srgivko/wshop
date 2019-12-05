@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/guestLayout">
 <head>
-    <title>Forgot Password</title>
+    <title th:text="#{label.forgot_password}">Forgot Password</title>
 </head>
 <body>
 <div layout:fragment="content">
 
     <form action="forgotPwd" th:action="@{/forgotPwd}" method="post">
-        <input type="email" class="form-control" name="email" placeholder="Email"/>
+        <input type="email" class="form-control" name="email" th:placeholder="#{label.email}"/>
         <button type="submit" class="btn btn-primary btn-block btn-flat" th:text="#{label.submit}">Submit</button>
     </form>
 </div>

@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">JCart Admin</title>
+        <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE" th:text="#{label.logo}">JCart Admin</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" th:href="@{/assets/bootstrap/css/bootstrap.min.css}"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
@@ -37,9 +37,13 @@
                 <!-- Logo -->
                 <a href="#" th:href="@{/dashboard}" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>JC</b></span>
+                    <span class="logo-mini">
+                        <b th:text="#{label.logo.mini}">JC</b>
+                    </span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><b>JCart Admin</b></span>
+                    <span class="logo-lg">
+                        <b th:text="#{label.logo}">JCart Admin</b>
+                    </span>
                 </a>
 
                 <!-- Header Navbar -->
@@ -51,6 +55,24 @@
                     <!-- Navbar Right Menu -->
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
+
+                            <!-- todo change language-->
+                            <li class="dropdown dropdown-small">
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="key" th:text="#{lang.change}+' : '">language :</span>
+                                    <span class="value" th:if="${#httpSession!=null}"
+                                          th:text="${#httpSession.getAttribute('org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE')}"></span>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a th:href="@{'?lang=eng'}" th:text="#{lang.eng}">English</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{'?lang=ru'}" th:text="#{lang.ru}">Russian</a>
+                                    </li>
+                                </ul>
+                            </li>
 
                             <!-- User Account Menu -->
                             <li class="dropdown user user-menu">
@@ -73,10 +95,14 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="#" th:href="@{/myAccount}" class="btn btn-default btn-flat">Profile</a>
+                                            <a href="#" th:href="@{/myAccount}" class="btn btn-default btn-flat"
+                                               th:text="#{label.profile}">Profile
+                                            </a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="logout" th:href="@{/logout}" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="logout" th:href="@{/logout}" class="btn btn-default btn-flat"
+                                               th:text="#{label.signOut}">Sign out
+                                            </a>
                                         </div>
                                     </li>
                                 </ul>
@@ -100,7 +126,10 @@
                         <div class="pull-left info">
                             <p><span sec:authentication="principal.user.name">User</span></p>
                             <!-- Status -->
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                            <a href="#">
+                                <i class="fa fa-circle text-success"></i>
+                                <span th:text="#{label.online}">Online</span>
+                            </a>
                         </div>
                     </div>
 
@@ -109,18 +138,90 @@
                         <!-- <li class="header">HEADER</li> -->
                         <!-- Optionally, you can add icons to the links -->
                         <!--/*@thymesVar id="CURRENT_MENU" type="java.lang.String"*/-->
-                        <li th:class="${CURRENT_MENU == 'Dashboard'}? 'active' : ''" sec:authorize="hasRole('ROLE_MANAGE_DASHBOARD')"><a href="#" th:href="@{'/dashboard'}"><i class="fa fa-dashboard" aria-hidden="true"></i> <span>Dashboard</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Posts'}? 'active' : ''" sec:authorize="hasRole('ROLE_MANAGE_POSTS')"><a href="#" th:href="@{'/posts'}"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <span>Posts</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Categories'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_CATEGORIES')"><a href="#" th:href="@{'/categories'}"><i class="fa fa-folder-open" aria-hidden="true"></i> <span>Categories</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Products'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')"><a href="#" th:href="@{'/products'}"><i class="fa fa-file" aria-hidden="true"></i> <span>Products</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Tags'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')"><a href="#" th:href="@{'/tags'}"><i class="fa fa-tags" aria-hidden="true"></i> <span>Tags</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Units'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')"><a href="#" th:href="@{'/units'}"><i class="fa fa-cogs" aria-hidden="true"></i> <span>Units</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'producers'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')"><a href="#" th:href="@{'/producers'}"><i class="fa fa-industry" aria-hidden="true"></i> <span>Producers</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Orders'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_ORDERS')"><a href="#" th:href="@{'/orders'}"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> <span>Orders</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Customers'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_CUSTOMERS')"><a href="#" th:href="@{'/customers'}"><i class="fa fa-smile-o" aria-hidden="true"></i> <span>Customers</span></a></li>
-                        <li th:class="${CURRENT_MENU == 'Users'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_USERS')"><a href="#" th:href="@{'/users'}"><i class="fa fa-users" aria-hidden="true"></i> Users</a></li>
-                        <li th:class="${CURRENT_MENU == 'Roles'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_ROLES')"><a href="#" th:href="@{'/roles'}"><i class="fa fa-user" aria-hidden="true"></i> Roles</a></li>
-                        <li th:class="${CURRENT_MENU == 'Permissions'}? 'active' : ''"  sec:authorize="hasRole('ROLE_MANAGE_PERMISSIONS')"><a href="#" th:href="@{'/permissions'}"><i class="fa fa-shield" aria-hidden="true"></i> Permissions</a></li>
+                        <li th:class="${CURRENT_MENU == 'Dashboard'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_DASHBOARD')">
+                            <a href="#" th:href="@{'/dashboard'}">
+                                <i class="fa fa-dashboard" aria-hidden="true"></i>
+                                <span th:text="#{label.dashboard}">Dashboard</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Posts'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_POSTS')">
+                            <a href="#" th:href="@{'/posts'}">
+                                <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                                <span th:text="#{label.posts}">Posts</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Categories'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_CATEGORIES')">
+                            <a href="#" th:href="@{'/categories'}">
+                                <i class="fa fa-folder-open" aria-hidden="true"></i>
+                                <span th:text="#{label.categories}">Categories</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Products'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')">
+                            <a href="#" th:href="@{'/products'}">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                                <span th:text="#{label.products}">Products</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Tags'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')">
+                            <a href="#" th:href="@{'/tags'}">
+                                <i class="fa fa-tags" aria-hidden="true"></i>
+                                <span th:text="#{label.tags}">Tags</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Units'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')">
+                            <a href="#" th:href="@{'/units'}">
+                                <i class="fa fa-cogs" aria-hidden="true"></i>
+                                <span th:text="#{label.units}">Units</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'producers'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PRODUCTS')">
+                            <a href="#" th:href="@{'/producers'}">
+                                <i class="fa fa-industry" aria-hidden="true"></i>
+                                <span th:text="#{label.producers}">Producers</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Orders'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_ORDERS')">
+                            <a href="#" th:href="@{'/orders'}">
+                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                <span th:text="#{label.orders}">Orders</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Customers'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_CUSTOMERS')">
+                            <a href="#" th:href="@{'/customers'}">
+                                <i class="fa fa-smile-o" aria-hidden="true"></i>
+                                <span th:text="#{label.customers}">Customers</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Users'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_USERS')">
+                            <a href="#" th:href="@{'/users'}">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                                <span th:text="#{label.users}">Users</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Roles'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_ROLES')">
+                            <a href="#" th:href="@{'/roles'}">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span th:text="#{label.roles}">Roles</span>
+                            </a>
+                        </li>
+                        <li th:class="${CURRENT_MENU == 'Permissions'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PERMISSIONS')">
+                            <a href="#" th:href="@{'/permissions'}">
+                                <i class="fa fa-shield" aria-hidden="true"></i>
+                                <span th:text="#{label.permissions}">Permissions</span>
+                            </a>
+                        </li>
 
                     </ul><!-- /.sidebar-menu -->
                 </section>
@@ -158,6 +259,7 @@
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
+            <!--todo change footer-->
             <!-- Main Footer -->
             <footer class="main-footer">
                 <!-- To the right -->

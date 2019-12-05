@@ -4,7 +4,7 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title>Tags - New</title>
+    <title th:text="#{label.newTag}">Tags - New</title>
 </head>
 <body>
 
@@ -12,21 +12,21 @@
 
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title" th:if="${tag.id==null}">Create New Tag</h3>
-            <h3 class="box-title" th:if="${tag.id!=null}">Edit Tag</h3>
+            <h3 class="box-title" th:if="${tag.id==null}"><span th:text="#{label.create}">Create</span> <span th:text="#{label.newTag}">New Tag</span></h3>
+            <h3 class="box-title" th:if="${tag.id!=null}"><span th:text="#{label.edit}">Edit</span> <span th:text="#{label.tag}">Tag</span></h3>
         </div>
         <div class="box-body">
             <form tag="form" th:action="@{/tags/{id}(id=${tag.id})}" th:object="${tag}" method="post">
                 <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" th:field="*{name}" placeholder="Enter Tag Name"/>
+                    <label th:text="#{label.name}">Name</label>
+                    <input type="text" class="form-control" name="name" th:field="*{name}"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-red">Incorrect data</p>
                 </div>
                 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
         </div>
