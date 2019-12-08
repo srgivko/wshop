@@ -69,14 +69,14 @@ public class WebConfig implements WebMvcConfigurer {
         return new SpringSecurityDialect();
     }
 
-    //solve this http://stackoverflow.com/questions/25957879/filter-order-in-spring-boot
-    @Bean
-    public FilterRegistrationBean<Filter> securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
-        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>(securityFilter);
-        registration.setOrder(Integer.MAX_VALUE - 1);
-        registration.setName(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME);
-        return registration;
-    }
+//    //solve this http://stackoverflow.com/questions/25957879/filter-order-in-spring-boot
+//    @Bean
+//    public FilterRegistrationBean<Filter> securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
+//        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>(securityFilter);
+//        registration.setOrder(Integer.MAX_VALUE - 1);
+//        registration.setName(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME);
+//        return registration;
+//    }
 
     @Bean
     public FilterRegistrationBean<PostAuthorizationFilter> postAuthorizationFilterRegistrationBean(PostAuthorizationFilter postAuthorizationFilter) {

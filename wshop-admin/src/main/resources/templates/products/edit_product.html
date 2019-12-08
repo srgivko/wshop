@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
@@ -9,6 +8,7 @@
 <body>
 
 <div layout:fragment="content">
+    <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
     <div class="box box-warning">
         <div class="box-header with-border">
             <h3 class="box-title"><span th:text="#{label.products}">Products</span> - <span th:text="#{label.edit}">Edit</span></h3>
@@ -29,6 +29,11 @@
                     <input type="text" class="form-control" name="sku" th:field="*{sku}" readonly="readonly"/>
                 </div>
 
+                <div class="form-group">
+                    <label th:text="#{label.disabled}">Disabled</label>
+                    <input type="checkbox" th:field="*{disabled}"/>
+                </div>
+
                 <div class="form-group" th:classappend="${#fields.hasErrors('price')}? 'has-error'">
                     <label th:text="#{label.price}">Price</label>
                     <input type="text" class="form-control" name="price" th:field="*{price}"/>
@@ -39,7 +44,8 @@
                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
                     <label th:text="#{label.description}">Description</label>
                     <textarea name="description" id="editor" rows="10" cols="80" th:field="*{description}"></textarea>
-                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{content}" th:class="text-red">Incorrect data</p>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:class="text-red">
+                        Incorrect data</p>
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('imageUrl')}? 'has-error'">
@@ -141,14 +147,14 @@
                         var output = document.getElementById(elementId);
                         output.value = file.getUrl().substr(file.getUrl().indexOf('/img/')+5);
                         document.getElementById('ckfinder-popup-1-delete').style.display = '';
-                        document.getElementById('prev').src = file.getUrl();
+                        document.getElementById('prev').src = '/img/'.concat(output.value);
                         document.getElementById('prev').hidden = false;
                     });
 
                     finder.on('file:choose:resizedImage', function (evt) {
                         var output = document.getElementById(elementId);
                         output.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/')+5);
-                        document.getElementById('prev').src = evt.data.resizedUrl;
+                        document.getElementById('prev').src = '/img/'.concat(output.value);
                         document.getElementById('prev').hidden = false;
                     });
                 }

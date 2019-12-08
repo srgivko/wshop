@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -56,4 +57,7 @@ public class Category {
     private Set<Category> childCategories = new HashSet<>();
 
 
+    public Set<Product> getProductsNotDisable() {
+        return this.getProducts().stream().filter(product -> !product.isDisabled()).collect(Collectors.toSet());
+    }
 }

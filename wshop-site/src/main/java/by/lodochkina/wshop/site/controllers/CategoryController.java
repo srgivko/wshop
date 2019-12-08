@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class CategoryController extends WShopSiteBaseController {
@@ -37,10 +38,10 @@ public class CategoryController extends WShopSiteBaseController {
 
         Collections.reverse(categoryPath);
 
-        List<Product> products = category.getProducts().stream().sorted(SortUtils.getComparator(sort))
+        List<Product> products = category.getProductsNotDisable().stream().sorted(SortUtils.getComparator(sort))
                 .skip(pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize()).collect(Collectors.toList());
-        PageImpl<Product> productPage = new PageImpl<>(products, pageable, category.getProducts().size());
+        PageImpl<Product> productPage = new PageImpl<>(products, pageable, category.getProductsNotDisable().size());
 
         model.addAttribute("categoryPath", categoryPath);
         model.addAttribute("productPage", productPage);

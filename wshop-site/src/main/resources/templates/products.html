@@ -5,24 +5,25 @@
       layout:decorate="layout/mainLayout">
 
 <head>
-    <title th:text="#{label.productSearch}">Product Search Results</title>
+    <title th:text="#{label.productSearch}">Product search</title>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container-fluid">
-
-            <div class="row">
-                <div class="woocommerce-info">
-                    <span th:text="#{label.productSearch}">Product Search Results</span>
-                </div>
-                <div th:replace="fragments/productColumns :: productColumns (products=${products})"></div>
+            <div class="row" th:unless="${productPage.content!=null && !productPage.content.isEmpty()}">
+                <h3 style="text-align: center" th:label="#{label.productSearchIsEmpty}">Product search is empty</h3>
             </div>
-
+            <div class="row" th:if="${productPage.content!=null && !productPage.content.isEmpty()}">
+                <div th:replace="fragments/sorting ::  sorting (sort)"></div>
+                <div th:replace="fragments/productColumns :: productColumns (products=${productPage.content})"></div>
+            </div>
         </div>
+        <div th:replace="fragments/pager :: pager (page = ${productPage})"></div>
     </div>
 </div>
 
 </body>
+
 </html>

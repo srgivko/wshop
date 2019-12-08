@@ -98,14 +98,14 @@
                         var output = document.getElementById(elementId);
                         output.value = file.getUrl().substr(file.getUrl().indexOf('/img/')+5);
                         document.getElementById('ckfinder-popup-1-delete').style.display = '';
-                        document.getElementById('prev').src = file.getUrl();
+                        document.getElementById('prev').src = '/img/'.concat(output.value);
                         document.getElementById('prev').hidden = false;
                     });
 
                     finder.on('file:choose:resizedImage', function (evt) {
                         var output = document.getElementById(elementId);
                         output.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/')+5);
-                        document.getElementById('prev').src = evt.data.resizedUrl;
+                        document.getElementById('prev').src = '/img/'.concat(output.value);
                         document.getElementById('prev').hidden = false;
                     });
                 }

@@ -3,7 +3,11 @@ package by.lodochkina.wshop.site.controllers;
 import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Product;
 import by.lodochkina.wshop.services.CatalogService;
+import by.lodochkina.wshop.site.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProductController extends WShopSiteBaseController {
@@ -32,9 +37,21 @@ public class ProductController extends WShopSiteBaseController {
     }
 
     @GetMapping("/products")
-    public String searchProducts(@RequestParam(name = "q", defaultValue = "") String query, Model model) {
-        List<Product> products = super.catalogService.searchProducts(query);
-        model.addAttribute("products", products);
+    public String searchProducts(
+            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(value = "sort", defaultValue = "newest", required = false) String sort,
+            @PageableDefault Pageable pageable,
+            Model model
+    ) {
+        List<Product> productsSearch = super.catalogService.searchProducts(query);
+        List<Product> products = productsSearch.stream().sorted(SortUtils.getComparator(sort))
+                .skip(pageable.getPageSize() * pageable.getPageNumber())
+                .limit(pageable.getPageSize()).collect(Collectors.toList());
+        PageImpl<Product> productPage = new PageImpl<>(products, pageable, productsSearch.size());
+
+        model.addAttribute("productPage", productPage);
+        model.addAttribute("sort", sort);
+
         return "products";
     }
 

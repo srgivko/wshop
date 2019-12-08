@@ -12,7 +12,7 @@ backends:
   - name: 'default'
     adapter: 'local'
     baseUrl: 'https://localhost:9443/img'
-    root: '/ssd2/java_projects/wshop/upload'
+    root: '{upload.path}'
     disallowUnsafeCharacters: true
     forceAscii: false
     hideFolders: ['.*', 'CVS', '__thumbs']

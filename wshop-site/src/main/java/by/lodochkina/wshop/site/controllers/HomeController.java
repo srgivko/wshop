@@ -22,7 +22,7 @@ public class HomeController extends WShopSiteBaseController {
         List<Category> previewCategories = new ArrayList<>();
         List<Category> categories = super.catalogService.getAllCategories();
         for (Category category : categories) {
-            Set<Product> products = category.getProducts();
+            Set<Product> products = category.getProductsNotDisable();
             Set<Product> previewProducts = new HashSet<>();
             int noOfProductsToDisplay = 4;
             if (products.size() > noOfProductsToDisplay) {

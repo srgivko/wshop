@@ -1,0 +1,24 @@
+<div class="col-md-12" xmlns:th="http://www.thymeleaf.org" th:fragment="sorting (sort)">
+    <label for="sorting" th:text="#{label.sorting}">Сортировка</label>
+    <select id="sorting" onchange="location = this.value;" class="form-control"
+            style="margin-bottom: 10px; width: auto;">
+        <option value="?sort=name" th:selected="${sort=='name'}" th:text="#{label.sorting.name}">По
+            названию (возрастанию)
+        </option>
+        <option value="?sort=name_desc" th:selected="${sort=='name_desc'}"
+                th:text="#{label.sorting.name_desc}">По названию (убыванию)
+        </option>
+        <option value="?sort=price" th:selected="${sort=='price'}" th:text="#{label.sorting.price}">
+            Сначала дешевые
+        </option>
+        <option value="?sort=price_desc" th:selected="${sort=='price_desc'}"
+                th:text="#{label.sorting.price_desc}">Сначала дорогие
+        </option>
+        <option value="?sort=oldest" th:selected="${sort=='oldest'}" th:text="#{label.sorting.oldest}">
+            Сначала старые
+        </option>
+        <option value="?sort=newest" th:selected="${sort=='newest'}" th:text="#{label.sorting.newest}">
+            Сначала новые
+        </option>
+    </select>
+</div>

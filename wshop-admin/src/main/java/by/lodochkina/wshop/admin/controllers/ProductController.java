@@ -97,7 +97,7 @@ public class ProductController extends WShopAdminBaseController {
     }
 
     @PostMapping("/products/{id}")
-    public String updateProduct(/*@RequestParam(value = "file") MultipartFile file,*/ @Valid Product product, BindingResult result, RedirectAttributes redirectAttributes) throws Exception {
+    public String updateProduct(@Valid Product product, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return VIEW_PREFIX + "edit_product";
         }
