@@ -35,6 +35,9 @@
                     <label th:text="#{label.phone}">Phone</label> <input type="text" class="form-control"
                                                 th:field="*{phone}" readonly="readonly" />
                 </div>
+                <div class="form-group">
+                    <label th:text="#{label.subscribe}">Subscribe</label> <input type="checkbox" th:checked="*{subscribe}" onclick="return false;"/>
+                </div>
             </form>
         </div>
     </div>

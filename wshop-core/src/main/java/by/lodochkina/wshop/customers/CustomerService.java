@@ -30,4 +30,6 @@ public interface CustomerService {
     Optional<Customer> findCustomerByActivationCode(String code);
 
     void newPassword(String code, String password);
+
+    void subscribe(Long id, Boolean subscribe);
 }

@@ -53,7 +53,7 @@ public class OrderController extends WShopAdminBaseController {
     }
 
     @PostMapping("/orders/{id}")
-    public String updateOrder(@ModelAttribute("order") Order order, @RequestParam(value = "send-email", required = false) Boolean isSendEmail, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String updateOrder(@ModelAttribute("order") Order order, @RequestParam(value = "send-email", required = false, defaultValue = "false") Boolean isSendEmail, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         Order persistedOrder = this.orderService.updateOrder(order);
         if (isSendEmail) {
             this.sendOrderStatusUpdateEmail(persistedOrder);

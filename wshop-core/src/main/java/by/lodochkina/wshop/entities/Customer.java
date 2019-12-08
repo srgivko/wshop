@@ -54,6 +54,9 @@ public class Customer implements Serializable {
     @Column
     private Boolean enabled = false;
 
+    @Column
+    private Boolean subscribe;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "customer_product_wishlist",

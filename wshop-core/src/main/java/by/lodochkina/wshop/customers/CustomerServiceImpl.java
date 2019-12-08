@@ -111,4 +111,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(password);
         customer.setActivationCode(null);
     }
+
+    @Transactional
+    @Override
+    public void subscribe(Long id, Boolean subscribe) {
+        Customer customer = this.customerRepository.findById(id).orElseThrow(WShopException::new);
+        customer.setSubscribe(subscribe);
+    }
 }

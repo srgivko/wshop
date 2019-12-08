@@ -151,6 +151,13 @@
                                 <span th:text="#{label.posts}">Posts</span>
                             </a>
                         </li>
+                        <li th:class="${CURRENT_MENU == 'Promotions'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PROMOTIONS')">
+                            <a href="#" th:href="@{'/promotions'}">
+                                <i class="fa fa-television" aria-hidden="true"></i>
+                                <span th:text="#{label.promotions}">Promotions</span>
+                            </a>
+                        </li>
                         <li th:class="${CURRENT_MENU == 'Categories'}? 'active' : ''"
                             sec:authorize="hasRole('ROLE_MANAGE_CATEGORIES')">
                             <a href="#" th:href="@{'/categories'}">

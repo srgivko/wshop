@@ -1,3 +1,4 @@
+// todo show event message
 $(function () {
     updateCartItemCount();
 });
@@ -77,7 +78,6 @@ function removeProductFromWishlist(id,target) {
 }
 
 function addProductToWishlist(id, target) {
-    // todo show event message
     $.ajax({
         url: '/wishlist/products',
         type: 'POST',
@@ -88,6 +88,24 @@ function addProductToWishlist(id, target) {
             target.style.display = 'none';
             target.nextElementSibling.style.display = '';
             console.log('Success add product with id = '+ id);
+        }
+    });
+}
+
+function subscribe(value, target) {
+    $.ajax({
+        url: '/myAccount/subscribe',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: '{"subscribe":"' + value + '"}"',
+        complete: function (responseData, status, xhttp) {
+            if (value) {
+                alert('you are subscribed');
+            } else {
+                alert('you are unsubscribed');
+            }
+            target.checked = value;
         }
     });
 }

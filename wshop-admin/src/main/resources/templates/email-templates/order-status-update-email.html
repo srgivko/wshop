@@ -5,10 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="${'Hello '+order.customer.firstName}">
+<p th:text="${'Hello '+order.customer.firstName}" style="color: red">
     Hello Customer
 </p>
 <p>
+    <span th:text="#{label.logo}"></span>
     Order Number : <span th:text="${order.orderNumber}">Number</span><br/>
     Status: <span th:text="${order.status}">Status</span>
 </p>

@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
-
 <head>
     <title th:text="#{label.post}">Posts - New</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-
+    <!--/*@thymesVar id="post" type="by.lodochkina.wshop.entities.Post"*/-->
     <div class="box box-warning">
         <div class="box-header with-border">
+
             <h3 class="box-title" th:if="${post.id==null}" th:text="#{label.newPost}">New Post</h3>
             <h3 class="box-title" th:if="${post.id!=null}"><span th:text="#{label.edit}">Edit</span> <span th:text="#{label.post}">Post</span></h3>
         </div>

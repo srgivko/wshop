@@ -32,6 +32,11 @@
                        th:class="text-red">Incorrect data</p>
                 </div>
 
+                <div class="form-group">
+                    <label th:text="#{label.disabled}">Disabled</label>
+                    <input type="checkbox" th:field="*{disabled}" />
+                </div>
+
                 <div class="form-group" th:classappend="${#fields.hasErrors('price')}? 'has-error'">
                     <label th:text="#{label.price}">Price</label>
                     <input type="text" class="form-control" name="price" th:field="*{price}"/>

@@ -22,6 +22,7 @@ class MenuConfiguration {
         MENU_URL_PATTERN_MAP.put("/producers", "Producers");
         MENU_URL_PATTERN_MAP.put("/dashboard", "Dashboard");
         MENU_URL_PATTERN_MAP.put("/posts", "Posts");
+        MENU_URL_PATTERN_MAP.put("/promotions", "Promotions");
     }
 
     private MenuConfiguration() {

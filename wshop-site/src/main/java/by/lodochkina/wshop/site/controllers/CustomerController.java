@@ -4,6 +4,7 @@ import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.site.dto.CaptchaResponseDto;
+import by.lodochkina.wshop.site.dto.SubscribeDto;
 import by.lodochkina.wshop.site.security.CaptchaService;
 import by.lodochkina.wshop.site.utils.WebUtils;
 import by.lodochkina.wshop.validators.CustomerValidator;
@@ -83,6 +84,12 @@ public class CustomerController extends WShopSiteBaseController {
         List<Order> orders = super.customerService.getCustomerOrders(customer.getId());
         model.addAttribute("orders", orders);
         return "myAccount";
+    }
+
+    @PostMapping("/myAccount/subscribe")
+    @ResponseBody
+    public void subscribe(@RequestBody SubscribeDto subscribe) {
+        super.customerService.subscribe(getCurrentUser().getCustomer().getId(), subscribe.getSubscribe());
     }
 
     @GetMapping("/activate/{code}")

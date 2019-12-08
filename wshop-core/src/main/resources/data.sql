@@ -55,7 +55,8 @@ INSERT INTO permissions (id, name) VALUES
 (8, 'MANAGE_PERMISSIONS'),
 (9, 'MANAGE_SETTINGS'),
 (10, 'MANAGE_POSTS'),
-(11, 'MANAGE_DASHBOARD')
+(11, 'MANAGE_DASHBOARD'),
+(12, 'MANAGE_PROMOTIONS')
 ;
 
 INSERT INTO roles (id, name) VALUES
@@ -69,7 +70,7 @@ INSERT INTO users (id, email, password, name) VALUES
 (1, 'pi-ls@mail.ru', '$2a$10$dYp/P1HXW181/0/Eqwadt.4oeSz0R/20bVL0AKL06ZKFPTyLnMDNi', 'Super Admin');
 
 insert into role_permission(role_id, perm_id) values
-(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),
+(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),
 (2,1),(2,2),(2,3),(2,4),(2,5),(2,9),(2,11),
 (3,1),(3,2),(3,11)
 ;

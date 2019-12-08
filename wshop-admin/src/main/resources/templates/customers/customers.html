@@ -21,12 +21,15 @@
                             <th style="width: 10px">#</th>
                             <th th:text="#{label.name}">Name</th>
                             <th th:text="#{label.email}">Email</th>
+                            <th th:text="#{label.subscribe}">Subscribed</th>
                             <th th:text="#{label.view}">View</th>
                         </tr>
                         <tr th:each="customer,iterStat : ${customers}">
+                            <!--/*@thymesVar id="customer" type="by.lodochkina.wshop.entities.Customer"*/-->
                             <td><span th:text="${iterStat.count}">1</span></td>
                             <td th:text="${customer.firstName}">Customer Name</td>
                             <td th:text="${customer.email}">Customer Email</td>
+                            <td th:text="${customer.subscribe}? #{label.subscribe} : #{label.unsubscribe}">Subscribed</td>
                             <td><a th:href="@{/customers/{id}(id=${customer.id})}"
                                    class="btn btn-sm btn-default"><i class="fa fa-search"></i> <span th:text="#{label.view}">View</span></a></td>
                         </tr>
