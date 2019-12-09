@@ -5,7 +5,7 @@
     <div class="single-shop-product">
         <div class="product-upper">
             <img src="assets/img/products/2.jpg" alt=""
-                 th:src="@{'/images/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
+                 th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
         </div>
         <h2><a href="#" th:href="@{/products/{id}(id=${product.id})}"
                th:text="${product.name}">Product name</a></h2>

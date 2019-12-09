@@ -32,4 +32,6 @@ public interface CustomerService {
     void newPassword(String code, String password);
 
     void subscribe(Long id, Boolean subscribe);
+
+    List<Customer> getAllSubscribers();
 }

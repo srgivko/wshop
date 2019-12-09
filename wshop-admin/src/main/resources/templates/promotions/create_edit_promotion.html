@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+<head>
+    <title th:text="#{label.promotions}">Promotions - New</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!--/*@thymesVar id="promotion" type="by.lodochkina.wshop.entities.Promotion"*/-->
+    <div class="box box-warning">
+        <div class="box-header with-border">
+
+            <h3 class="box-title" th:if="${promotion.id==null}" th:text="#{label.newPromotion}">New Promotion</h3>
+            <h3 class="box-title" th:if="${promotion.id!=null}"><span th:text="#{label.edit}">Edit</span> <span
+                    th:text="#{label.promotion}">Promotion</span></h3>
+        </div>
+        <div class="box-body">
+            <form post="form" th:action="@{/promotions/{id}(id=${promotion.id})}" th:object="${promotion}"
+                  method="post">
+                <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('subject')}? 'has-error'">
+                    <label th:text="#{label.subject}">Subject</label>
+                    <input type="text" class="form-control" th:field="*{subject}"
+                           th:readonly="${promotion.getSendOn()}"/>
+                    <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('createdOn')}? 'has-error'">
+                    <label th:text="#{label.createdOn}">Date</label>
+                    <input type="datetime-local" class="form-control" th:field="*{createdOn}"
+                           th:readonly="${promotion.getSendOn()}"/>
+                    <p th:if="${#fields.hasErrors('createdOn')}" th:errors="*{createdOn}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('sendOn')}? 'has-error'">
+                    <label th:text="#{label.sendOn}">Date</label>
+                    <input type="datetime-local" class="form-control" th:field="*{sendOn}" readonly="readonly"/>
+                    <p th:if="${#fields.hasErrors('sendOn')}" th:errors="*{sendOn}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <h3 th:text="#{label.useOnlyAbsolutePath}" style="color: red"></h3>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error'">
+                    <label th:text="#{label.content}">Content</label>
+                    <textarea id="editor" rows="10" cols="80" th:field="*{content}"
+                              th:readonly="${promotion.getSendOn()}"></textarea>
+                    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}"
+                            th:disabled="${promotion.getSendOn()}">Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+        var editor = CKEDITOR.replace('editor', {
+            height: 600
+        });
+        CKFinder.setupCKEditor(editor);
+    </script>
+</th:block>
+
+</body>
+</html>

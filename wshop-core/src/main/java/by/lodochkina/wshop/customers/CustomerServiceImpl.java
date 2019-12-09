@@ -118,4 +118,9 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = this.customerRepository.findById(id).orElseThrow(WShopException::new);
         customer.setSubscribe(subscribe);
     }
+
+    @Override
+    public List<Customer> getAllSubscribers() {
+        return this.customerRepository.findAllBySubscribeIsTrue();
+    }
 }

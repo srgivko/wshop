@@ -13,7 +13,7 @@
         <div class="row blog-row">
             <div class="col-md-6 col-sm-6 col-xs-12 margin_bottom30" th:each="post : ${postPage.content}">
                 <a th:href="@{/posts/{id}(id=${post.id})}">
-                    <img class="img-responsive center-block" th:src="@{'/images/{imgTitle}'(imgTitle=${post.imgTitle})}"
+                    <img class="img-responsive center-block" th:src="@{'/img/{imgTitle}'(imgTitle=${post.imgTitle})}"
                          height="250">
                 </a>
                 <div class="blog-content bg-white">

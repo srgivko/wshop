@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-// TODO: 12/8/19 add quantity in stock and some types of products with didfferent prices 
+// TODO: 12/8/19 add quantity in stock and some types of products with different prices
 @Data
 @NoArgsConstructor
 @Entity
