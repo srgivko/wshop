@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="layout/mainLayout">
 <head>
     <title th:text="#{label.home}">Home</title>
 </head>
 <body>
 <div layout:fragment="content">
+    <div th:replace="fragments/slider :: slider (products=${top5Products})"></div>
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container-fluid">

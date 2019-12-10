@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 // TODO: 12/8/19 add quantity in stock and some types of products with different prices
@@ -66,4 +67,19 @@ public class Product implements Serializable {
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "ID")})
     private Set<Tag> tags;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<Rating> rating;
+
+    public long getTotalCountRate() {
+        return this.rating.stream().count();
+    }
+
+    public double getAvgRating() {
+        return this.rating.stream().mapToInt(Rating::getRate).summaryStatistics().getAverage();
+    }
+
+    public double getPositivePercentOfCustomers() {
+        return this.getTotalCountRate() == 0 ? 100 : (double) this.rating.stream().mapToInt(Rating::getRate).filter(value -> value > 2).count() / this.getTotalCountRate() * 100;
+    }
 }

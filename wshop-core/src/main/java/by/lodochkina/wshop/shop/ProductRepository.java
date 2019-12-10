@@ -23,4 +23,11 @@ public interface ProductRepository extends JpaRepositoryImplementation<Product, 
     List<Product> search(@Param("query") String query);
 
     List<Product> findTop5ByOrderByIdDesc();
+
+    @Query("select pr " +
+            "from OrderItem oi " +
+            "inner join  oi.product pr " +
+            "group by pr " +
+            "order by sum(oi.quantity) desc")
+    List<Product> findAllOrderByPopular();
 }

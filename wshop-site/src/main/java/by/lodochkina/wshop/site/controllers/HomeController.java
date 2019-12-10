@@ -5,8 +5,8 @@ import by.lodochkina.wshop.entities.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
@@ -15,6 +15,11 @@ public class HomeController extends WShopSiteBaseController {
     @Override
     protected String getHeaderTitle() {
         return "Главная страница";
+    }
+
+    @ModelAttribute("top5Products")
+    public List<Product> getTop5Products() {
+        return this.catalogService.getTopPopularProduct(5);
     }
 
     @GetMapping("/home")

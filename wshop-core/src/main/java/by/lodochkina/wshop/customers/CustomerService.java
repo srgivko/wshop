@@ -3,6 +3,7 @@ package by.lodochkina.wshop.customers;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.entities.Product;
+import by.lodochkina.wshop.entities.Rating;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,4 +35,6 @@ public interface CustomerService {
     void subscribe(Long id, Boolean subscribe);
 
     List<Customer> getAllSubscribers();
+
+    Rating setRate(Long productId, Long customerId, int rate);
 }

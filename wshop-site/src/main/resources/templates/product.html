@@ -5,61 +5,144 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 
-<!--todo change view for product https://bootsnipp.com/snippets/56bAW-->
-<!--https://bootsnipp.com/snippets/4xOj2-->
-
 <head>
     <title>Product</title>
 </head>
 <body>
 <div layout:fragment="content">
 
-    <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container-fluid">
-            <div class="row">
-                <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=${product})"></div>
-                <div th:replace="fragments/tags :: tags (tags=${product.tags})"></div>
-                <div class="col-md-offset-2 col-md-8">
-                    <div class="product-content-right">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="product-images">
-                                    <div class="product-main-img">
-                                        <img src="assets/img/product-2.jpg" alt=""
-                                             th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-sm-6">
-                                <div class="product-inner">
-                                    <h2 class="product-name" th:text="${product.name}">ProductName</h2>
-                                    <div class="product-inner-price">
-                                        <ins th:text="${product.price}">$9.00</ins>
-                                    </div>
+    <div class="container">
+        <div class="card">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-6">
 
-                                    <div>
-                                        <button class="add_to_cart_button" type="submit"
-                                                th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'">Add to cart</button>
-                                    </div>
-
-                                    <div class="product-inner-category">
-                                        <h2>Product Description</h2>
-                                        <p th:text="${product.description}">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </div>
+                        <div class="preview-pic tab-content">
+                            <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252"/></div>
+                            <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252"/></div>
+                            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"/></div>
+                            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252"/></div>
+                            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252"/></div>
                         </div>
+                        <ul class="preview-thumbnail nav nav-tabs">
+                            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
+                                    src="http://placekitten.com/200/126"/></a></li>
+                            <li><a data-target="#pic-2" data-toggle="tab"><img
+                                    src="http://placekitten.com/200/126"/></a></li>
+                            <li><a data-target="#pic-3" data-toggle="tab"><img
+                                    src="http://placekitten.com/200/126"/></a></li>
+                            <li><a data-target="#pic-4" data-toggle="tab"><img
+                                    src="http://placekitten.com/200/126"/></a></li>
+                            <li><a data-target="#pic-5" data-toggle="tab"><img
+                                    src="http://placekitten.com/200/126"/></a></li>
+                        </ul>
 
+                    </div>
+                    <div class="details col-md-6">
+                        <h3 class="product-title" th:text="${product.name}">men's shoes fashion</h3>
+                        <div class="rating" sec:authorize="hasRole('ROLE_USER')">
+                            <div class="stars">
+                                <th:block th:each="i: ${#numbers.sequence(1, 5, 1)}">
+                                    <span th:if="${product.avgRating - i >= -0.2}" class="fa fa-star checked"
+                                          th:data-product-id="${product.id}" th:data-rate="${i}"></span>
+                                    <span th:if="${(product.avgRating - i <= -0.2) && (product.avgRating - i >= - 0.65)}"
+                                          class="fa fa-star-half-o" th:data-product-id="${product.id}"
+                                          th:data-rate="${i}"></span>
+                                    <span th:if="${product.avgRating - i <= -0.65}" class="fa fa-star-o"
+                                          th:data-product-id="${product.id}" th:data-rate="${i}"></span>
+                                </th:block>
+                            </div>
+                            <span class="review-no"
+                                  th:text="#{label.reviews(${product.totalCountRate})}">41 reviews</span>
+                        </div>
+                        <p class="product-description" th:utext="${product.description}">Suspendisse quos? Tempus cras
+                            iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim
+                            sociosqu delectus posuere.</p>
+                        <h4 class="price"><span th:text="#{label.currentPrice}">current price</span>: <span
+                                th:text="${product.price}">$180</span></h4>
+                        <p class="vote"
+                           th:utext="#{label.positiveCustomers(${product.positivePercentOfCustomers}, ${product.totalCountRate})}"></p>
+                        <h5 class="sizes">sizes:
+                            <span class="size" data-toggle="tooltip" title="small">s</span>
+                            <span class="size" data-toggle="tooltip" title="medium">m</span>
+                            <span class="size" data-toggle="tooltip" title="large">l</span>
+                            <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+                        </h5>
+                        <h5 class="colors">colors:
+                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                            <span class="color green"></span>
+                            <span class="color blue"></span>
+                        </h5>
+                        <div class="action">
+                            <button class="add-to-cart btn btn-default" type="button"
+                                    th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'"
+                                    th:text="#{label.cart.add}">add to cart
+                            </button>
+                            <button th:style="${wishList.contains(product) ? 'display:none' : ''}"
+                                    class="like btn btn-default" type="button"
+                                    sec:authorize="hasRole('ROLE_USER')"
+                                    th:onclick="'javascript:addProductToWishlist(\'' + ${product.id} + '\',this);'"><i
+                                    class="fa fa-heart-o" aria-hidden="true"></i></button>
+                            <button th:style="${!wishList.contains(product) ? 'display:none' : ''}"
+                                    class="like btn btn-default" type="button"
+                                    sec:authorize="hasRole('ROLE_USER')"
+                                    th:onclick="'javascript:removeProductFromWishlist(\'' + ${product.id} + '\',this);'">
+                                <i
+                                        class="fa fa-heart" aria-hidden="true"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script>
+        $('div.stars').on('mouseover', paintOverRating);
+
+        $('div.stars').on('mouseleave', eraseRating);
+
+        $('div.stars').on('click', setRating);
+
+        function paintOverRating(event) {
+            'use strict';
+            const targetElement = event.target;
+            if (targetElement.tagName === 'SPAN') {
+                // const rate = targetElement.dataset.rate;
+                // console.log(rate);
+                let prevElement = targetElement;
+                while (prevElement !== null) {
+                    prevElement.classList.add('red-star');
+                    prevElement = prevElement.previousElementSibling
+                }
+                let nextElement = targetElement.nextElementSibling;
+                while (nextElement !== null) {
+                    nextElement.classList.remove('red-star');
+                    nextElement = nextElement.nextElementSibling
+                }
+            }
+        }
+
+        function eraseRating() {
+            'use strict';
+            Array.from(this.children).forEach((elem) => elem.classList.remove('red-star'));
+        }
+
+        function setRating(event) {
+            'use strict';
+            const targetElement = event.target;
+
+            if (targetElement.tagName === 'SPAN') {
+                const rate = targetElement.dataset.rate;
+                const productId = targetElement.dataset.productId;
+                 postData(`/products/${productId}/rating`, {rate: rate})
+                     .then(data => console.log(JSON.stringify(data))) // JSON-строка полученная после вызова `response.json()`
+                     .catch(error => console.error(error));
+            }
+        }
+    </script>
+</th:block>
 </body>
 </html>

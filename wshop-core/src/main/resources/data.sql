@@ -6,6 +6,7 @@ delete from  roles;
 delete from  users;
 delete from  posts;
 delete from  promotions;
+delete from  rating;
 
 delete from  product_tag;
 delete from  category_tag;

@@ -4,9 +4,12 @@ import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.entities.Product;
+import by.lodochkina.wshop.entities.Rating;
 import by.lodochkina.wshop.orders.OrderRepository;
 import by.lodochkina.wshop.services.EmailService;
 import by.lodochkina.wshop.shop.ProductRepository;
+import by.lodochkina.wshop.shop.RatingRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +28,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final ProductRepository productRepository;
 
+    private final RatingRepository ratingRepostory;
+
     private final EmailService emailService;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository, ProductRepository productRepository, EmailService emailService) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository, ProductRepository productRepository, RatingRepository ratingRepostory, EmailService emailService) {
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.ratingRepostory = ratingRepostory;
         this.emailService = emailService;
     }
 
@@ -122,5 +128,27 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAllSubscribers() {
         return this.customerRepository.findAllBySubscribeIsTrue();
+    }
+
+    @Transactional
+    @Override
+    public Rating setRate(Long productId, Long customerId, int rate) {
+        Rating rating;
+        Customer customer = this.customerRepository.findById(customerId).orElseThrow(WShopException::new);
+        Product product = this.productRepository.findById(productId).orElseThrow(WShopException::new);
+        Optional<Rating> optionalRating = this.ratingRepostory.findByCustomerAndProduct(customer, product);
+        if (optionalRating.isPresent()) {
+            rating = optionalRating.get();
+            rating.setRate(rate);
+            this.ratingRepostory.save(rating);
+        } else {
+            rating = new Rating();
+
+            rating.setRate(rate);
+            rating.setCustomer(customer);
+            rating.setProduct(product);
+            this.ratingRepostory.save(rating);
+        }
+        return rating;
     }
 }

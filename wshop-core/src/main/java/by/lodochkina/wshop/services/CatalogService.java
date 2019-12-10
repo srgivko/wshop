@@ -62,5 +62,5 @@ public interface CatalogService {
 
     List<Category> getRootCategories();
 
-
+    List<Product> getTopPopularProduct(int limit);
 }

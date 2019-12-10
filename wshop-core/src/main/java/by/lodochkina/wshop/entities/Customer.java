@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -63,6 +64,9 @@ public class Customer implements Serializable {
             joinColumns = {@JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")})
     private Set<Product> wishList;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Rating> rating;
 
     public void addProductToWishList(Product product) {
         if (this.wishList == null) {
