@@ -1,18 +1,19 @@
 package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.WShopException;
+import by.lodochkina.wshop.entities.Producer;
 import by.lodochkina.wshop.entities.Product;
-import by.lodochkina.wshop.services.CatalogService;
 import by.lodochkina.wshop.site.models.Cart;
 import by.lodochkina.wshop.site.models.LineItem;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class CartController extends WShopSiteBaseController {
@@ -26,6 +27,7 @@ public class CartController extends WShopSiteBaseController {
     @ResponseBody
     public Map<String, Object> getCartItemCount(HttpServletRequest request) {
         Cart cart = getOrCreateCart(request);
+        updateLineItems(cart);
         int itemCount = cart.getItemCount();
         Map<String, Object> map = new HashMap<>();
         map.put("count", itemCount);
@@ -44,6 +46,7 @@ public class CartController extends WShopSiteBaseController {
     @GetMapping("/cart")
     public String showCart(HttpServletRequest request, Model model) {
         Cart cart = getOrCreateCart(request);
+        updateLineItems(cart);
         model.addAttribute("cart", cart);
         return "cart";
     }
@@ -67,4 +70,23 @@ public class CartController extends WShopSiteBaseController {
         cart.removeItem(id);
     }
 
+    /**
+     * Обновляет цены на товары в корзине
+     * Проблема (В сессии созранялась корзина с продуктами, и с истекщими скидками)
+     * Решение (Обновлять продукты при изменение корзины)
+     * @param cart Корзина пользователя
+     */
+    private void updateLineItems(Cart cart) {
+        Iterator<LineItem> iterator = cart.getItems().iterator();
+        while (iterator.hasNext()) {
+            LineItem lineItem = iterator.next();
+            Optional<Product> productById = super.catalogService.findProductById(lineItem.getProduct().getId());
+            if (!productById.isPresent()) {
+                iterator.remove();
+                continue;
+            }
+
+            lineItem.setProduct(productById.get());
+        }
+    }
 }

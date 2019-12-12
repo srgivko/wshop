@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+// TODO: 12/12/19 add delete sale
 @Service
 public class SaleServiceImpl implements SaleService {
 
@@ -54,5 +55,21 @@ public class SaleServiceImpl implements SaleService {
         sale.addSaleProduct(saleProduct);
         this.saleRepository.save(sale);
         return saleProduct;
+    }
+
+    @Transactional
+    @Override
+    public SaleProduct removeSaleProduct(Long saleId, Long saleProductId) {
+        Sale sale = this.findSaleById(saleId).orElseThrow(WShopException::new);
+        SaleProduct saleProduct = sale.getSaleProductList().stream().filter(sp -> sp.getId().equals(saleProductId)).findFirst().orElseThrow(WShopException::new);
+        sale.getSaleProductList().remove(saleProduct);
+        this.saleRepository.save(sale);
+        return saleProduct;
+    }
+
+    @Transactional
+    @Override
+    public void removeSale(Sale sale) {
+        this.saleRepository.delete(sale);
     }
 }

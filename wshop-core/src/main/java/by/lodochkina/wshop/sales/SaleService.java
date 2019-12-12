@@ -17,4 +17,8 @@ public interface SaleService {
     Sale updateSale(Sale Sale);
 
     SaleProduct addSaleProduct(Long saleId, SaleProduct saleProduct);
+
+    SaleProduct removeSaleProduct(Long saleId, Long saleProductId);
+
+    void removeSale(Sale sale);
 }

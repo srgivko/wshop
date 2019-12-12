@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -79,7 +77,14 @@ public class SaleController extends WShopAdminBaseController {
         return VIEW_PREFIX.concat("add_sale_product.html");
     }
 
-    // TODO: 12/12/19 add edit?
+    @GetMapping({"/sales/{id}/delete"})
+    public String deleteSale(@PathVariable(name = "id") Sale sale) {
+        this.saleService.removeSale(sale);
+        return "redirect:/sales";
+    }
+
+
+    // TODO: 12/12/19 add edit? and add check if exist another sale with this project between begin and end sale dates
     @PostMapping({"/sales/{saleId}/addSaleProduct"})
     public String addSaleProduct(@PathVariable Long saleId, @Valid SaleProduct saleProduct, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -88,4 +93,11 @@ public class SaleController extends WShopAdminBaseController {
         this.saleService.addSaleProduct(saleId, saleProduct);
         return String.format("redirect:/sales/%d", saleId);
     }
+
+    @DeleteMapping({"/sales/{saleId}/saleProduct/{saleProductId}"})
+    @ResponseBody
+    public void addSaleProduct(@PathVariable Long saleId, @PathVariable Long saleProductId) {
+        this.saleService.removeSaleProduct(saleId, saleProductId);
+    }
+
 }

@@ -72,6 +72,7 @@
                                 <th th:text="#{label.discountPrice}">Discount price</th>
                                 <th th:text="#{label.parentCategory}">Parent category</th>
                                 <th th:text="#{label.edit}">Edit</th>
+                                <th th:text="#{label.delete}">Delete</th>
                             </tr>
                             <tr th:each="saleProduct,iterStat : ${sale.saleProductList}">
                                 <!--/*@thymesVar id="saleProduct" type="by.lodochkina.wshop.entities.SaleProduct"*/-->
@@ -87,6 +88,9 @@
                                 <td><a th:href="@{/products/{id}(id=${saleProduct.product.id})}"
                                        class="btn btn-sm btn-default"><i class="fa fa-edit"></i><span
                                         th:text="#{label.edit}">Edit</span></a>
+                                </td>
+                                <td><a th:onclick="'javascript:removeSaleProduct(' + ${sale.id} + ', '+${saleProduct.id}+');'" class="btn btn-sm btn-default"><i class="fa fa-trash-o" aria-hidden="true"></i><span
+                                        th:text="#{label.delete}">Delete</span></a>
                                 </td>
                             </tr>
 

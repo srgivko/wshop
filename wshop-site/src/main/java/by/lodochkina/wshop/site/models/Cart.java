@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Cart {
+
     private List<LineItem> items = new ArrayList<>();
     private Customer customer = new Customer();
     private Address deliveryAddress = new Address();
