@@ -2,15 +2,21 @@ package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Product;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 
 @Controller
 public class HomeController extends WShopSiteBaseController {
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     protected String getHeaderTitle() {

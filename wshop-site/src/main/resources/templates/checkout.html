@@ -37,7 +37,9 @@
                                             <span th:text="${item.product.name}">Product Name</span>
                                             <strong class="product-quantity" th:text="'× '+${item.quantity}">× 1</strong> </td>
                                         <td class="product-total">
-                                            <span class="amount" th:text="${item.product.price * item.quantity}">£15.00</span> </td>
+                                            <span class="amount" th:unless="${item.product.discountPrice}" th:text="${item.product.price * item.quantity}">£15.00</span>
+                                            <span class="amount" th:if="${item.product.discountPrice}" th:text="${item.product.discountPrice * item.quantity}">$150.00</span>
+                                        </td>
                                     </tr>
                                     </tbody>
                                     <tfoot>

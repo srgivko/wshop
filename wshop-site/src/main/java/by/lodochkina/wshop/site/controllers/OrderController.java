@@ -83,7 +83,11 @@ public class OrderController extends WShopSiteBaseController {
             OrderItem item = new OrderItem();
             item.setProduct(lineItem.getProduct());
             item.setQuantity(lineItem.getQuantity());
-            item.setPrice(lineItem.getProduct().getPrice());
+            if (lineItem.getProduct().getDiscountPrice() != null) {
+                item.setPrice(lineItem.getProduct().getDiscountPrice());
+            } else {
+                item.setPrice(lineItem.getProduct().getPrice());
+            }
             item.setOrder(newOrder);
             orderItems.add(item);
         }

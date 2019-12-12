@@ -1443,3 +1443,31 @@ a.caption.button-radius.animated.fadeInRight {
 .red-star {
     color: red;
 }
+
+ins.discount_price {
+    color: red;
+    font-size: 1.5em;
+    margin-top: -6px;
+    position: absolute;
+}
+
+h4.discount_price span {
+    color: red;
+    font-size: 1.2em;
+}
+
+.special-item {
+    background-image: url(/assets/img/special_item.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    z-index: 1;
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    top: 0;
+    right: 0;
+}
+
+.img-wrapper {
+    position: relative;
+}

@@ -59,10 +59,19 @@
                         <p class="product-description" th:utext="${product.description}">Suspendisse quos? Tempus cras
                             iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim
                             sociosqu delectus posuere.</p>
-                        <h4 class="price"><span th:text="#{label.currentPrice}">current price</span>: <span
+                        <h4 class="price" th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">
+                            <span th:text="#{label.currentPrice}">current price</span>: <span
                                 th:text="${product.price}">$180</span></h4>
+                        <h4 class="price discount_price" th:if="${product.discountPrice}"><span
+                                th:text="#{label.currentPrice}">current price</span>: <span
+                                th:text="${product.discountPrice}">$180</span><br><span
+                                th:text="#{label.discountPrecent(${(product.price - product.discountPrice)/product.price*100})}">Discount 30%</span>
+                        </h4>
                         <p class="vote"
                            th:utext="#{label.positiveCustomers(${product.positivePercentOfCustomers}, ${product.totalCountRate})}"></p>
+
+                        <!-- todo add types-->
+                        <!--
                         <h5 class="sizes">sizes:
                             <span class="size" data-toggle="tooltip" title="small">s</span>
                             <span class="size" data-toggle="tooltip" title="medium">m</span>
@@ -74,6 +83,8 @@
                             <span class="color green"></span>
                             <span class="color blue"></span>
                         </h5>
+                        -->
+
                         <div class="action">
                             <button class="add-to-cart btn btn-default" type="button"
                                     th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'"

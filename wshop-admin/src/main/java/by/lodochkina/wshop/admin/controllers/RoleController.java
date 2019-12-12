@@ -35,6 +35,18 @@ public class RoleController extends WShopAdminBaseController {
     private final SecurityService securityService;
     private final RoleValidator roleValidator;
 
+
+    @Autowired
+    public RoleController(SecurityService securityService, RoleValidator roleValidator) {
+        this.securityService = securityService;
+        this.roleValidator = roleValidator;
+    }
+
+    @Override
+    protected String getHeaderTitle() {
+        return "Управление ролями";
+    }
+
     @ModelAttribute("permissionsList")
     public List<Permission> permissionsList() {
         return this.securityService.getAllPermissions();
@@ -58,17 +70,6 @@ public class RoleController extends WShopAdminBaseController {
         log.debug("Created new role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
         redirectAttributes.addFlashAttribute("info", "Role created successfully"); //TODO; i18n
         return "redirect:/roles";
-    }
-
-    @Autowired
-    public RoleController(SecurityService securityService, RoleValidator roleValidator) {
-        this.securityService = securityService;
-        this.roleValidator = roleValidator;
-    }
-
-    @Override
-    protected String getHeaderTitle() {
-        return "Управление ролями";
     }
 
     @GetMapping(value = "/roles")

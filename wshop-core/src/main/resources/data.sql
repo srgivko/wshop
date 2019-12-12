@@ -8,6 +8,9 @@ delete from  posts;
 delete from  promotions;
 delete from  rating;
 
+delete from  sale_products;
+delete from  sales;
+
 delete from  product_tag;
 delete from  category_tag;
 delete from  order_items;
@@ -176,6 +179,20 @@ insert into posts(id, content, created_on, description, img_title, title) values
 <p><iframe align="middle" frameborder="0" height="360" scrolling="no" src="https://www.youtube.com/embed/8pBkz_MBx00" width="640"></iframe></p>', now(), 'description3', 'Adopt-a-cat-or-kitten-from-RSPCA.jpg', 'titl3')
 ;
 
+
+insert into sales(id, begin_date, end_date, name, promo_code) values
+(1,now(),now() + INTERVAL '3 DAY','name sale 1', 'sale1')
+;
+
+insert into sale_products(id, discount_price, product_id, sale_id) values
+(1,20,1,1),
+(2,250,2,1),
+(3,30,3,1),
+(4,40,4,1),
+(5,50,5,1),
+(6,60,6,1)
+;
+
 ALTER SEQUENCE addresses_id_seq RESTART WITH 100;
 ALTER SEQUENCE categories_id_seq RESTART WITH 100;
 ALTER SEQUENCE customers_id_seq RESTART WITH 100;
@@ -191,3 +208,5 @@ ALTER SEQUENCE users_id_seq RESTART WITH 100;
 ALTER SEQUENCE producers_id_seq RESTART WITH 100;
 ALTER SEQUENCE posts_id_seq RESTART WITH 100;
 ALTER SEQUENCE promotions_id_seq RESTART WITH 100;
+ALTER SEQUENCE sales_id_seq RESTART WITH 100;
+ALTER SEQUENCE sale_products_id_seq RESTART WITH 100;

@@ -36,6 +36,10 @@ public class OrderItem implements Serializable {
     private Order order;
 
     public BigDecimal getSubTotal() {
-        return product.getPrice().multiply(new BigDecimal(quantity));
+        if (this.product.getDiscountPrice() != null) {
+            return this.product.getDiscountPrice().multiply(new BigDecimal(quantity));
+        } else {
+            return this.product.getPrice().multiply(new BigDecimal(quantity));
+        }
     }
 }

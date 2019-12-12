@@ -14,6 +14,7 @@ public class LineItem {
     private int quantity;
 
     public BigDecimal getSubTotal() {
+        if(product.getDiscountPrice()!=null) return product.getDiscountPrice().multiply(new BigDecimal(quantity));
         return product.getPrice().multiply(new BigDecimal(quantity));
     }
 }

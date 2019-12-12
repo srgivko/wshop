@@ -158,6 +158,13 @@
                                 <span th:text="#{label.promotions}">Promotions</span>
                             </a>
                         </li>
+                        <li th:class="${CURRENT_MENU == 'Sales'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PROMOTIONS')">
+                            <a href="#" th:href="@{'/sales'}">
+                                <i class="fa fa-bookmark" aria-hidden="true"></i>
+                                <span th:text="#{label.sales}">Sales</span>
+                            </a>
+                        </li>
                         <li th:class="${CURRENT_MENU == 'Categories'}? 'active' : ''"
                             sec:authorize="hasRole('ROLE_MANAGE_CATEGORIES')">
                             <a href="#" th:href="@{'/categories'}">

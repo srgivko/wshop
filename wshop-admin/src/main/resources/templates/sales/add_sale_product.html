@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+<head>
+    <title th:text="#{label.addSaleProduct}">SaleProduct - New</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--/*@thymesVar id="saleProduct" type="by.lodochkina.wshop.entities.SaleProduct"*/-->
+    <!--/*@thymesVar id="products" type="List<by.lodochkina.wshop.entities.Product>"*/-->
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title" th:text="#{label.addSaleProduct}">New sale product</span></h3>
+        </div>
+        <div class="box-body">
+            <!--/*@thymesVar id="saleId" type="java.lang.Long"*/-->
+            <form role="form" th:action="@{/sales/{saleId}/addSaleProduct(saleId=${saleId})}" th:object="${saleProduct}"
+                  method="post" enctype="multipart/form-data">
+
+                <div class="form-group" th:if="${products!=null && !products.isEmpty()}"
+                     th:classappend="${#fields.hasErrors('product')}? 'has-error'">
+                    <label th:text="#{label.products}">Product</label>
+                    <div>
+                        <select class="form-control" th:field="*{product}">
+                            <option th:value="0" th:text="#{label.chooseProduct}">Choose product</option>
+                            <!--/*@thymesVar id="pr" type="by.lodochkina.wshop.entities.Product"*/-->
+                            <option th:each="pr : ${products}"
+                                    th:value="${pr.id}"
+                                    th:text="${#strings.concat(pr.name, '-', pr.price)}">Product
+                            </option>
+                        </select>
+                    </div>
+                    <p th:if="${#fields.hasErrors('product')}" th:errors="*{product}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('discountPrice')}? 'has-error'">
+                    <label th:text="#{label.discountPrice}">DiscountPrice</label>
+                    <input type="text" class="form-control" name="discountPrice" th:field="*{discountPrice}"/>
+                    <p th:if="${#fields.hasErrors('discountPrice')}" th:errors="*{discountPrice}"
+                       th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 // TODO: 12/8/19 add quantity in stock and some types of products with different prices
@@ -41,6 +42,7 @@ public class Product implements Serializable {
     @NotNull(message = "price cannot be empty")
     private BigDecimal price = new BigDecimal("0.00");
 
+    // TODO: 12/12/19 add more images 
     private String imageUrl;
 
     private boolean disabled;
@@ -71,6 +73,9 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Rating> rating;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<SaleProduct> saleProductSet;
+
     public long getTotalCountRate() {
         return this.rating.stream().count();
     }
@@ -81,5 +86,13 @@ public class Product implements Serializable {
 
     public double getPositivePercentOfCustomers() {
         return this.getTotalCountRate() == 0 ? 100 : (double) this.rating.stream().mapToInt(Rating::getRate).filter(value -> value > 2).count() / this.getTotalCountRate() * 100;
+    }
+
+    public BigDecimal getDiscountPrice(){
+        if (this.saleProductSet == null) {
+            return null;
+        }
+        Optional<SaleProduct> saleProductOptional = this.saleProductSet.stream().filter(saleProduct -> saleProduct.getSale().isActive()).findFirst();
+        return saleProductOptional.isPresent() ? saleProductOptional.get().getDiscountPrice() : null;
     }
 }

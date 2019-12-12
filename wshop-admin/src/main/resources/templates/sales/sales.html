@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+
+<head>
+    <title th:text="#{label.sales}">Roles</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!--/*@thymesVar id="sales" type="List<by.lodochkina.wshop.entities.Sale>"*/-->
+    <!--/*@thymesVar id="sale" type="by.lodochkina.wshop.entities.Sale"*/-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title" th:text="#{label.sales}">List of Sale</h3>
+                    <div class="box-tools">
+                        <div class="input-group" style="width: 150px;">
+                            <a class="btn btn-sm btn-default" th:href="@{/sales/new}"><i
+                                    class="fa fa-plus-circle"></i> <span th:text="#{label.newSale}">New sale</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th th:text="#{label.name}">Name</th>
+                            <th th:text="#{label.beginDate}">Description</th>
+                            <th th:text="#{label.endDate}">Description</th>
+                            <th th:text="#{label.edit}">Edit</th>
+                        </tr>
+                        <tr th:each="sale,iterStat : ${sales}">
+                            <td>
+                            <a th:href="@{/sales/{id}(id=${sale.id})}"><span
+                                    th:text="${iterStat.count}">1</span></a></td>
+                            <td th:text="${sale.name}">Sale Name</td>
+                            <td th:text="${#dates.format(sale.beginDate, 'dd-mm-yyyy hh:mm')}">Sale begin date</td>
+                            <td th:text="${#dates.format(sale.endDate, 'dd-mm-yyyy hh:mm')}">Sale end date</td>
+                            <td><a th:href="@{/sales/{id}(id=${sale.id})}"
+                                   class="btn btn-sm btn-default">
+                                <i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span>
+                            </a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
