@@ -12,6 +12,7 @@
 <div layout:fragment="content">
 
 <!--todo add producer, unit, бр-->
+<!--todo rating ajax-->
     <div class="container">
         <div class="container-fluid">
             <div class="row">
@@ -21,34 +22,40 @@
         <div class="card">
             <div class="container-fliud">
                 <div class="wrapper row">
-                    <div class="preview col-md-6">
-                        <div class="preview-pic tab-content">
-                            <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252"/></div>
-                            <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252"/></div>
-                            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"/></div>
-                            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252"/></div>
-                            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252"/></div>
+                    <div class="preview col-md-4">
+                        <div style="position: relative;">
+                            <img src="assets/img/products/2.jpg" alt=""
+                                 th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
+                            <div class="special-item" th:if="${product.discountPrice}"></div>
                         </div>
-                        <ul class="preview-thumbnail nav nav-tabs">
-                            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                    src="http://placekitten.com/200/126"/></a></li>
-                            <li><a data-target="#pic-2" data-toggle="tab"><img
-                                    src="http://placekitten.com/200/126"/></a></li>
-                            <li><a data-target="#pic-3" data-toggle="tab"><img
-                                    src="http://placekitten.com/200/126"/></a></li>
-                            <li><a data-target="#pic-4" data-toggle="tab"><img
-                                    src="http://placekitten.com/200/126"/></a></li>
-                            <li><a data-target="#pic-5" data-toggle="tab"><img
-                                    src="http://placekitten.com/200/126"/></a></li>
-                        </ul>
-
+                        <!--todo add many photos for product-->
+                        <!-- <div class="preview-pic tab-content">
+                             <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252"/></div>
+                             <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252"/></div>
+                             <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"/></div>
+                             <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252"/></div>
+                             <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252"/></div>
+                         </div>
+                         <ul class="preview-thumbnail nav nav-tabs">
+                             <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
+                                     src="http://placekitten.com/200/126"/></a></li>
+                             <li><a data-target="#pic-2" data-toggle="tab"><img
+                                     src="http://placekitten.com/200/126"/></a></li>
+                             <li><a data-target="#pic-3" data-toggle="tab"><img
+                                     src="http://placekitten.com/200/126"/></a></li>
+                             <li><a data-target="#pic-4" data-toggle="tab"><img
+                                     src="http://placekitten.com/200/126"/></a></li>
+                             <li><a data-target="#pic-5" data-toggle="tab"><img
+                                     src="http://placekitten.com/200/126"/></a></li>
+                         </ul>
+ -->
                     </div>
-                    <div class="details col-md-6">
+                    <div class="details col-md-8">
                         <h3 class="product-title" th:text="${product.name}">men's shoes fashion</h3>
                         <div class="row">
                             <div th:replace="fragments/tags :: tags (tags=${product.tags})"></div>
                         </div>
-                        <div class="row" th:if="roduct.producer!=null">
+                        <div class="row" th:if="${product.producer}">
                             <div class="producer-wrapper">
                                 <a th:href="@{/products?q={name}(name=${product.producer.name})}"><span th:text="#{label.producer(${product.producer.name})}"></span></a>
                             </div>
