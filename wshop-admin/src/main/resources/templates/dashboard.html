@@ -240,8 +240,8 @@
                                             <a th:href="@{/products/{id}(id=${product.id})}" class="product-title"><span
                                                     th:text="${product.name}">Samsung TV</span>
                                                 <span class="label pull-right" th:text="${product.price}"
-                                                      th:classappend="${product.price gt 1000} ? 'label-warning' : 'label-info'">$1800</span></a>
-                                            <span class="product-description" th:text="${product.description}">Samsung 32" 1080p 60Hz LED Smart HDTV.</span>
+                                                      th:classappend="${product.price gt 50} ? 'label-warning' : 'label-info'">$1800</span></a>
+                                            <span class="product-description" th:with="descripionWithoutTags=${product.description.replaceAll('<[^>]*>','')}" th:text="${descripionWithoutTags}">Samsung 32" 1080p 60Hz LED Smart HDTV.</span>
                                         </div>
                                     </li>
                                     <!-- /.item -->

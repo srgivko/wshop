@@ -54,6 +54,7 @@
                 </div>
             </form>
         </div>
+        <div th:with="${#}" th:replace="fragments/product_table :: productTable (products=${products})"></div>
     </div>
     <div class="container-fluid" th:if="${sale.saleProductList!=null && !sale.saleProductList.isEmpty()}">
         <div class="row">
@@ -67,25 +68,34 @@
                             <tr>
                                 <th style="width: 10px">#</th>
                                 <th th:text="#{label.name}">Name</th>
-                                <th th:text="#{label.name}">Description</th>
-                                <th th:text="#{label.price}">Price</th>
+                                <th th:text="#{label.sku}">SKU</th>
+                                <th th:text="#{label.image}">Image</th>
+                                <th th:text="#{label.description}">Description</th>
+                                <th th:text="#{label.firstPrice}">Price</th>
                                 <th th:text="#{label.discountPrice}">Discount price</th>
                                 <th th:text="#{label.parentCategory}">Parent category</th>
-                                <th th:text="#{label.edit}">Edit</th>
+                                <th><span th:text="#{label.edit}" >Edit</span> <span th:text="#{label.discountPrice}"></span></span></th>
                                 <th th:text="#{label.delete}">Delete</th>
                             </tr>
                             <tr th:each="saleProduct,iterStat : ${sale.saleProductList}">
                                 <!--/*@thymesVar id="saleProduct" type="by.lodochkina.wshop.entities.SaleProduct"*/-->
-                                <td th:text="${iterStat.count}">1</td>
+                                <td><a th:href="@{/products/{id}(id=${saleProduct.product.id})}"><span th:text="${iterStat.count}">1</span></a></td>
                                 <td th:text="${saleProduct.product.name}">Product Name</td>
-                                <td th:text="${saleProduct.product.description}">Product Description</td>
+                                <td th:text="${saleProduct.product.sku}">Product Name</td>
+                                <td><img style="max-height: 50px;"
+                                         th:src="@{'/img/{imageUrl}'(imageUrl=${saleProduct.product.imageUrl})}"/></td>
+                                <td th:with="descripionWithoutTags=${saleProduct.product.description.replaceAll('<[^>]*>','')}"
+                                    th:text="${descripionWithoutTags.substring(0, descripionWithoutTags.length() > 30 ? 30 : descripionWithoutTags.length())}">
+                                    Product Description
+                                </td>
                                 <td th:text="${saleProduct.product.price}">Price</td>
                                 <td th:text="${saleProduct.discountPrice}">Discount price</td>
                                 <td>
                                     <a th:href="@{/categories/{id}(id=${saleProduct.product.category?.id})}"
                                        th:text="${saleProduct.product.category?.name}">Parent category name</a>
                                 </td>
-                                <td><a th:href="@{/products/{id}(id=${saleProduct.product.id})}"
+                                <td>
+                                    <a th:href="@{/sales/{saleId}/saleProduct/{saleProductId}(saleId=${sale.id}, saleProductId=${saleProduct.id})}"
                                        class="btn btn-sm btn-default"><i class="fa fa-edit"></i><span
                                         th:text="#{label.edit}">Edit</span></a>
                                 </td>

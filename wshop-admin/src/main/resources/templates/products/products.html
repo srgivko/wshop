@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
@@ -22,31 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th th:text="#{label.name}">Name</th>
-                            <th th:text="#{label.name}">Description</th>
-                            <th th:text="#{label.parentCategory}">Parent category</th>
-                            <th th:text="#{label.edit}">Edit</th>
-                        </tr>
-                        <tr th:each="product,iterStat : ${products}">
-                            <td th:text="${iterStat.count}">1</td>
-                            <td th:text="${product.name}">Product Name</td>
-                            <td th:text="${product.description}">Product Description</td>
-                            <td>
-                                <a th:href="@{/categories/{id}(id=${product.category?.id})}"
-                                   th:text="${product.category?.name}">Parent category name</a>
-                            </td>
-                            <td><a th:href="@{/products/{id}(id=${product.id})}"
-                                   class="btn btn-sm btn-default"><i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span></a>
-                            </td>
-                        </tr>
-
-                    </table>
-                </div>
-
+                <div th:replace="fragments/product_table :: productTable (products=${products})"></div>
             </div>
         </div>
     </div>

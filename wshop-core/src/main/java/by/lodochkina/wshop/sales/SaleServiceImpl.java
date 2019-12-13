@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: 12/12/19 add delete sale
 @Service
 public class SaleServiceImpl implements SaleService {
 
     private final SaleRepository saleRepository;
+
 
     public SaleServiceImpl(SaleRepository saleRepository) {
         this.saleRepository = saleRepository;

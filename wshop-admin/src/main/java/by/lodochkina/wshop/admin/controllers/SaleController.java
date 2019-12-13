@@ -1,5 +1,6 @@
 package by.lodochkina.wshop.admin.controllers;
 
+import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Sale;
 import by.lodochkina.wshop.entities.SaleProduct;
 import by.lodochkina.wshop.sales.SaleService;
@@ -67,12 +68,17 @@ public class SaleController extends WShopAdminBaseController {
         return "redirect:/sales";
     }
 
-
-    // TODO: 12/12/19 add edit?
-    @GetMapping({"/sales/{saleId}/addSaleProduct"})
-    public String showAddSaleProduct(@PathVariable Long saleId, Model model) {
+    @GetMapping({"/sales/{saleId}/addSaleProduct", "/sales/{saleId}/saleProduct/{saleProductId}"})
+    public String showAddSaleProduct(
+            @PathVariable Long saleId,
+            @PathVariable(value = "saleProductId", required = false) SaleProduct saleProduct,
+            Model model
+    ) {
+        if (saleProduct == null) {
+            saleProduct = new SaleProduct();
+        }
         model.addAttribute("products", this.catalogService.getAllProducts());
-        model.addAttribute("saleProduct", new SaleProduct());
+        model.addAttribute("saleProduct", saleProduct);
         model.addAttribute("saleId", saleId);
         return VIEW_PREFIX.concat("add_sale_product.html");
     }
@@ -83,8 +89,7 @@ public class SaleController extends WShopAdminBaseController {
         return "redirect:/sales";
     }
 
-
-    // TODO: 12/12/19 add edit? and add check if exist another sale with this project between begin and end sale dates
+    // TODO: 12/12/19 heck if exist another sale with this project between begin and end sale dates
     @PostMapping({"/sales/{saleId}/addSaleProduct"})
     public String addSaleProduct(@PathVariable Long saleId, @Valid SaleProduct saleProduct, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {

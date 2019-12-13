@@ -1,0 +1,36 @@
+<div xmlns:th="http://www.thymeleaf.org" class="box-body table-responsive no-padding" th:fragment="productTable (products)" th:if="${products!=null && !products.isEmpty()}">
+    <!--/*@thymesVar id="products" type="List<by.lodochkina.wshop.entities.Product>"*/-->
+    <table class="table table-hover">
+        <tr>
+            <th style="width: 10px">#</th>
+            <th th:text="#{label.name}">Name</th>
+            <th th:text="#{label.sku}">SKU</th>
+            <th th:text="#{label.description}">Description</th>
+            <th th:text="#{label.image}">Image</th>
+            <th th:text="#{label.price}">Price</th>
+            <th th:text="#{label.discountPrice}">Discount price</th>
+            <th th:text="#{label.parentCategory}">Parent category</th>
+            <th th:text="#{label.edit}">Edit</th>
+        </tr>
+        <tr th:each="product,iterStat : ${products}">
+            <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
+            <td th:text="${iterStat.count}">1</td>
+            <td th:text="${product.name}">Product Name</td>
+            <td th:text="${product.sku}">Product SKU</td>
+            <td style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; display: block; width: 400px;" th:with="descripionWithoutTags=${product.description.replaceAll('<[^>]*>','')}"
+                th:text="${descripionWithoutTags}">
+                Product Description
+            </td>
+            <td><img style="max-height: 50px;" th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/></td>
+            <td th:text="${product.price}">Product Price</td>
+            <td th:text="${product.discountPrice}">Discount Price</td>
+            <td>
+                <a th:href="@{/categories/{id}(id=${product.category?.id})}"
+                   th:text="${product.category?.name}">Parent category name</a>
+            </td>
+            <td><a th:href="@{/products/{id}(id=${product.id})}"
+                   class="btn btn-sm btn-default"><i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span></a>
+            </td>
+        </tr>
+    </table>
+</div>

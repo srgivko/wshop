@@ -71,6 +71,7 @@
                     <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                 </div>
             </form>
+            <div th:replace="fragments/product_table :: productTable (products=${category.products})"></div>
         </div>
     </div>
 </div>
