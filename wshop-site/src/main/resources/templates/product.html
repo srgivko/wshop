@@ -11,13 +11,17 @@
 <body>
 <div layout:fragment="content">
 
-
+<!--todo add producer, unit, бр-->
     <div class="container">
+        <div class="container-fluid">
+            <div class="row">
+                <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=${product})"></div>
+            </div>
+        </div>
         <div class="card">
             <div class="container-fliud">
                 <div class="wrapper row">
                     <div class="preview col-md-6">
-
                         <div class="preview-pic tab-content">
                             <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252"/></div>
                             <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252"/></div>
@@ -41,6 +45,14 @@
                     </div>
                     <div class="details col-md-6">
                         <h3 class="product-title" th:text="${product.name}">men's shoes fashion</h3>
+                        <div class="row">
+                            <div th:replace="fragments/tags :: tags (tags=${product.tags})"></div>
+                        </div>
+                        <div class="row" th:if="roduct.producer!=null">
+                            <div class="producer-wrapper">
+                                <a th:href="@{/products?q={name}(name=${product.producer.name})}"><span th:text="#{label.producer(${product.producer.name})}"></span></a>
+                            </div>
+                        </div>
                         <div class="rating" sec:authorize="hasRole('ROLE_USER')">
                             <div class="stars">
                                 <th:block th:each="i: ${#numbers.sequence(1, 5, 1)}">
@@ -61,10 +73,10 @@
                             sociosqu delectus posuere.</p>
                         <h4 class="price" th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">
                             <span th:text="#{label.currentPrice}">current price</span>: <span
-                                th:text="${product.price}">$180</span></h4>
+                                th:text="${#strings.concat(product.price,' б.р./',product.getUnit().name)}">$180</span></h4>
                         <h4 class="price discount_price" th:if="${product.discountPrice}"><span
                                 th:text="#{label.currentPrice}">current price</span>: <span
-                                th:text="${product.discountPrice}">$180</span><br><span
+                                th:text="${#strings.concat(product.discountPrice,' б.р./',product.getUnit().name)}">$180</span><br><span
                                 th:text="#{label.discountPrecent(${(product.price - product.discountPrice)/product.price*100})}">Discount 30%</span>
                         </h4>
                         <p class="vote"

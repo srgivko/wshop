@@ -1111,6 +1111,7 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 }
 
 .single-shop-product h2 {
+    height: 170px;
     font-size: 20px;
     margin: 10px 0;
 }
@@ -1118,7 +1119,14 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     margin-top: 15px;
 }
 
-.single-shop-product {margin-bottom: 50px}
+.single-shop-product {
+    display: flex;
+    height: 350px;
+    margin-bottom: 50px;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
 
 .pagination > li > a, .pagination > li > span {
   color: #5a88ca;
@@ -1138,7 +1146,7 @@ div.single-promo > a {
     margin-bottom: 15px;
 }
 
-.tags {
+.tags, .producer-wrapper {
     width: 100%;
     background-color: #f5f5f5;
     padding: 10px;
@@ -1182,8 +1190,10 @@ div.single-promo > a {
 }
 
 .product-upper {
+    height: 250px;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 .product-option-shop {
@@ -1271,6 +1281,7 @@ div.single-promo > a {
 }
 
 .product-option-shop > .row {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     text-align: center;
@@ -1446,8 +1457,6 @@ a.caption.button-radius.animated.fadeInRight {
 
 ins.discount_price {
     color: red;
-    font-size: 1.5em;
-    margin-top: -6px;
     position: absolute;
 }
 
@@ -1470,4 +1479,10 @@ h4.discount_price span {
 
 .img-wrapper {
     position: relative;
+}
+
+.img-wrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
 }

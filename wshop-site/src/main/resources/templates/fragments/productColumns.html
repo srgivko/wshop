@@ -13,12 +13,12 @@
         <h2><a href="#" th:href="@{/products/{id}(id=${product.id})}"
                th:text="${product.name}">Product name</a></h2>
         <div class="product-carousel-price">
-            <ins th:text="${product.price}"
+            <ins th:text="${#strings.concat(product.price,' б.р./',product.getUnit().name)}"
                  th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">$9.00
             </ins>
-            <ins th:if="${product.discountPrice}" th:text="${product.discountPrice}" class="discount_price">$9.00</ins>
+            <ins th:if="${product.discountPrice}" th:text="${#strings.concat(product.discountPrice,' б.р./',product.getUnit().name)}" class="discount_price">$9.00</ins>
         </div>
-        <div class="product-option-shop container-fluid">
+        <div class="product-option-shop">
             <div class="row">
                 <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
                    data-product_id="70"

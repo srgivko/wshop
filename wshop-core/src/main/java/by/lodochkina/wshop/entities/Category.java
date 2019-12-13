@@ -34,7 +34,6 @@ public class Category {
     private Integer displayOrder;
 
     @Column
-    @NotEmpty(message = "imageUrl cannot be empty")
     private String imageUrl;
 
     private boolean disabled;

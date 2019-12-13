@@ -36,6 +36,6 @@ public class Post {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date createOn = new Date();
 
-    @Column(columnDefinition="text")
+    @Column(columnDefinition="TEXT")
     private String content;
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+// TODO: 12/13/19 description must be text 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

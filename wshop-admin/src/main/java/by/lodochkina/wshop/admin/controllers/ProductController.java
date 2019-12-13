@@ -18,6 +18,7 @@ import java.util.List;
 
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 
+// TODO: 12/13/19 add sku validator
 @Slf4j
 @Controller
 @Secured(MANAGE_PRODUCTS)

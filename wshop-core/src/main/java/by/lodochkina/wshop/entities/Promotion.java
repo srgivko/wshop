@@ -31,6 +31,6 @@ public class Promotion {
     @Column
     private String subject;
 
-    @Column(columnDefinition="text")
+    @Column(columnDefinition="TEXT")
     private String content;
 }
