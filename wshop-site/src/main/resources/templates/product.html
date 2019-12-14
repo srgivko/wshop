@@ -168,7 +168,10 @@
                 const rate = targetElement.dataset.rate;
                 const productId = targetElement.dataset.productId;
                  postData(`/products/${productId}/rating`, {rate: rate})
-                     .then(data => console.log(JSON.stringify(data))) // JSON-строка полученная после вызова `response.json()`
+                     .then(data => {
+                         console.log(JSON.stringify(data));
+                         window.location.reload();
+                     }) // JSON-строка полученная после вызова `response.json()`
                      .catch(error => console.error(error));
             }
         }

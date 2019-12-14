@@ -65,7 +65,7 @@
                     </p>
                     <img th:hidden="${(product.imageUrl==null || #strings.isEmpty(product.imageUrl))}" id="prev"
                          th:src="${(product.imageUrl !=null && !#strings.isEmpty(product.imageUrl)) ? #strings.concat('/img/', product.imageUrl) : ''}"
-                         height="100" width="100" style="margin-top: 5px;"/>
+                          />
                 </div>
 
                 <div class="form-group"  th:if="${categoriesList!=null && !categoriesList.isEmpty()}">

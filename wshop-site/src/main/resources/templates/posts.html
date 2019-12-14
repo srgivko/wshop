@@ -8,10 +8,10 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <!--/*@thymesVar id="post" type="by.lodochkina.wshop.entities.Post"*/-->
     <div class="container-fluid">
         <div class="row blog-row">
             <div class="col-md-6 col-sm-6 col-xs-12 margin_bottom30" th:each="post : ${postPage.content}">
+                <!--/*@thymesVar id="post" type="by.lodochkina.wshop.entities.Post"*/-->
                 <a th:href="@{/posts/{id}(id=${post.id})}">
                     <img class="img-responsive center-block" th:src="@{'/img/{imgTitle}'(imgTitle=${post.imgTitle})}"
                          height="250">
@@ -28,8 +28,10 @@
                             class="heading_color">
                         Continue Reading</a></p>
                     <hr>
-                    <p><span><span th:text="#{label.share}">Share</span> :
-				<a href="javascript::;"><i class="fa fa-facebook margin_left10" aria-hidden="true"></i></a>
+<!--                    todo add share liinks-->
+                    <p><span th:with="baseUrl=${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.serverPort}"><span th:text="#{label.share}">Share</span> :
+				<a th:href="@{http://www.fb.com/sharer.php?s=100&p[title]={pTitle}&p[url]={pUrl}&p[images][0]={pImage}(pTitle=${post.title}, pUrl=@{__${baseUrl}__/posts/{id}(id=${post.id})}, pImage=@{__${baseUrl}__/img/{imgTitle}(imgTitle=${post.imgTitle})})}"><i
+                        class="fa fa-facebook margin_left10" aria-hidden="true"></i></a>
 				<a href="javascript::;"><i class="fa fa-twitter margin_left10" aria-hidden="true"></i></a>
 				<a href="javascript::;"><i class="fa fa-google-plus margin_left10" aria-hidden="true"></i></a>
 				 </span></p>

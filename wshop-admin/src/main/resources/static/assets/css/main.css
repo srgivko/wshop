@@ -1,3 +1,8 @@
 .ckfinder-popup {
     cursor: pointer;
 }
+
+img#prev {
+    margin-top: 5px;
+    max-height: 50px;
+}

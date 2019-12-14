@@ -46,7 +46,7 @@
                     </p>
                     <img th:hidden="${(post.imgTitle==null || #strings.isEmpty(post.imgTitle))}" id="prev"
                          th:src="${(post.imgTitle !=null && !#strings.isEmpty(post.imgTitle)) ? #strings.concat('/img/', post.imgTitle) : ''}"
-                         height="100" width="100" style="margin-top: 5px;"/>
+                          />
                 </div>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('createOn')}? 'has-error'">

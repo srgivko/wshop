@@ -39,7 +39,7 @@
                     </p>
                     <img th:hidden="${(category.imageUrl==null || #strings.isEmpty(category.imageUrl))}" id="prev"
                          th:src="${(category.imageUrl !=null && !#strings.isEmpty(category.imageUrl)) ? #strings.concat('/img/', category.imageUrl) : ''}"
-                         height="100" width="100" style="margin-top: 5px;"/>
+                          />
                 </div>
 
                 <div class="form-group">
