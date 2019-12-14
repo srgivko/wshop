@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController extends WShopSiteBaseController {
@@ -31,7 +32,9 @@ public class HomeController extends WShopSiteBaseController {
     @GetMapping("/home")
     public String home(Model model) {
         List<Category> previewCategories = new ArrayList<>();
-        List<Category> categories = super.catalogService.getAllCategories();
+        List<Category> categories = super.catalogService.getAllCategories().stream()
+                .filter(category -> category.getProducts()!=null && !category.getProducts().isEmpty())
+                .collect(Collectors.toList());
         for (Category category : categories) {
             Set<Product> products = category.getProductsNotDisable();
             Set<Product> previewProducts = new HashSet<>();

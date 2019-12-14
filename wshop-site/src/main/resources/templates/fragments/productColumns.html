@@ -5,8 +5,7 @@
     <div class="single-shop-product">
         <div class="product-upper">
             <div class="img-wrapper">
-                <img src="assets/img/products/2.jpg" alt=""
-                     th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
+                <img th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
                 <div class="special-item" th:if="${product.discountPrice}"></div>
             </div>
         </div>

@@ -149,7 +149,10 @@ z-index: 999;}
 .mainmenu-area ul.navbar-nav li:hover a, .mainmenu-area ul.navbar-nav li.active a {background: #5a88ca; color:#FFF;}
 .mainmenu-area .nav > li > a:focus {color: #FFF;}
 
-.slider-area {position:relative; margin:10px auto;}
+.slider-area {
+    position: relative;
+    margin: 10px 0 30px 0;
+}
 /*-------------------------
 [9. Block slider]
 ---------------------------*/
@@ -1457,7 +1460,8 @@ a.caption.button-radius.animated.fadeInRight {
 
 ins.discount_price {
     color: red;
-    position: absolute;
+    display: block;
+    /*position: absolute;*/
 }
 
 h4.discount_price span {
@@ -1485,4 +1489,38 @@ h4.discount_price span {
     max-height: 100%;
     max-width: 100%;
     height: auto;
+}
+
+.carousel-inner > .item {
+    height: 200px;
+}
+
+img.carousel-inner-img {
+    max-height: 200px;
+}
+
+.col-md-7.carousel-caption {
+    position: initial;
+    max-height: 200px;
+}
+
+@media screen and (max-width: 992px) {
+    #carousel-example-captions {
+        display: none;
+    }
+}
+
+.carousel-indicators li {
+    display: inline-block;
+    background-color: #5a88ca;
+    border: 1px solid #ffc808;
+    border-radius: 10px;
+}
+
+.carousel-indicators li.active {
+    background-color: #c9302c;
+}
+
+.carousel-indicators {
+    bottom: -40px;
 }
