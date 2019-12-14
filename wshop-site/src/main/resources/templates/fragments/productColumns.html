@@ -2,39 +2,41 @@
      th:each="product : ${products}" xmlns:sec="http://www.w3.org/1999/xhtml">
     <!--/*@thymesVar id="products" type="java.util.List<by.lodochkina.wshop.entities.Product>"*/-->
     <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
-    <div class="single-shop-product">
-        <div class="product-upper">
-            <div class="img-wrapper">
-                <img th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
-                <div class="special-item" th:if="${product.discountPrice}"></div>
+    <div class="single-shop-product-wrapper">
+        <div class="single-shop-product">
+            <div class="special-item" th:if="${product.discountPrice}"></div>
+            <div class="product-upper">
+                <div class="img-wrapper">
+                    <img th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
+                </div>
             </div>
-        </div>
-        <h2><a href="#" th:href="@{/products/{id}(id=${product.id})}"
-               th:text="${product.name}">Product name</a></h2>
-        <div class="product-carousel-price">
-            <ins th:text="${#strings.concat(product.price,' б.р./',product.getUnit().name)}"
-                 th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">$9.00
-            </ins>
-            <ins th:if="${product.discountPrice}" th:text="${#strings.concat(product.discountPrice,' б.р./',product.getUnit().name)}" class="discount_price">$9.00</ins>
-        </div>
-        <div class="product-option-shop">
-            <div class="row">
-                <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                   data-product_id="70"
-                   rel="nofollow" th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'" th:text="#{label.cart.add}">Add
-                    to cart</a>
-                <a th:style="${wishList.contains(product) ? 'display:none' : ''}"
-                   sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button col-md-4"
-                   data-quantity="1" data-product_sku=""
-                   data-product_id="70" rel="nofollow"
-                   th:onclick="'javascript:addProductToWishlist(\'' + ${product.id} + '\',this);'"><i
-                        class="fa fa-heart-o" aria-hidden="true"></i></a>
-                <a th:style="${!wishList.contains(product) ? 'display:none' : ''}"
-                   sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button col-md-4"
-                   data-quantity="1" data-product_sku=""
-                   data-product_id="70" rel="nofollow"
-                   th:onclick="'javascript:removeProductFromWishlist(\'' + ${product.id} + '\',this);'"><i
-                        class="fa fa-heart" aria-hidden="true"></i></a>
+            <h2><a href="#" th:href="@{/products/{id}(id=${product.id})}"
+                   th:text="${product.name}">Product name</a></h2>
+            <div class="product-carousel-price">
+                <ins th:text="${#strings.concat(product.price,' б.р./',product.getUnit().name)}"
+                     th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">$9.00
+                </ins>
+                <ins th:if="${product.discountPrice}" th:text="${#strings.concat(product.discountPrice,' б.р./',product.getUnit().name)}" class="discount_price">$9.00</ins>
+            </div>
+            <div class="product-option-shop">
+                <div class="row">
+                    <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                       data-product_id="70"
+                       rel="nofollow" th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'" th:text="#{label.cart.add}">Add
+                        to cart</a>
+                    <a th:style="${wishList.contains(product) ? 'display:none' : ''}"
+                       sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button col-md-4"
+                       data-quantity="1" data-product_sku=""
+                       data-product_id="70" rel="nofollow"
+                       th:onclick="'javascript:addProductToWishlist(\'' + ${product.id} + '\',this);'"><i
+                            class="fa fa-heart-o" aria-hidden="true"></i></a>
+                    <a th:style="${!wishList.contains(product) ? 'display:none' : ''}"
+                       sec:authorize="hasRole('ROLE_USER')" class="add_to_cart_button col-md-4"
+                       data-quantity="1" data-product_sku=""
+                       data-product_id="70" rel="nofollow"
+                       th:onclick="'javascript:removeProductFromWishlist(\'' + ${product.id} + '\',this);'"><i
+                            class="fa fa-heart" aria-hidden="true"></i></a>
+                </div>
             </div>
         </div>
     </div>
