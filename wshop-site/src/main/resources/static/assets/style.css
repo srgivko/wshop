@@ -1127,10 +1127,10 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .single-shop-product {
     position: relative;
     display: flex;
-    height: 350px;
+    height: 380px;
     margin-bottom: 50px;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-around;
     overflow: hidden;
     padding: 5px;
 }
@@ -1198,10 +1198,10 @@ div.single-promo > a {
 }
 
 .product-upper {
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
+    height: 200px;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*overflow: hidden;*/
 }
 
 .product-option-shop {
@@ -1487,13 +1487,16 @@ h4.discount_price span {
 }
 
 .img-wrapper {
-    position: relative;
+    /*position: relative;*/
 }
 
 .img-wrapper img {
-    max-height: 100%;
-    max-width: 100%;
-    height: auto;
+    display: block;
+    margin: 0 auto;
+    height: 170px;
+    /*max-height: 100%;*/
+    /*max-width: 100%;*/
+    /*height: auto;*/
 }
 
 .carousel-inner > .item {
@@ -1538,4 +1541,11 @@ img.carousel-inner-img {
 
 .single-shop-product-wrapper {
     box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+.product-definition-wrapper {
+    min-height: 115px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

@@ -10,13 +10,15 @@
                     <img th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
                 </div>
             </div>
-            <h2><a href="#" th:href="@{/products/{id}(id=${product.id})}"
-                   th:text="${product.name}">Product name</a></h2>
+            <div class="product-definition-wrapper">
+                <h5><a href="#" th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}">Product name</a>
+                </h5>
             <div class="product-carousel-price">
                 <ins th:text="${#strings.concat(product.price,' б.р./',product.getUnit().name)}"
                      th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">$9.00
                 </ins>
                 <ins th:if="${product.discountPrice}" th:text="${#strings.concat(product.discountPrice,' б.р./',product.getUnit().name)}" class="discount_price">$9.00</ins>
+            </div>
             </div>
             <div class="product-option-shop">
                 <div class="row">
