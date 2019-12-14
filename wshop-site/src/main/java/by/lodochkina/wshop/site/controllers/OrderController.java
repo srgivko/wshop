@@ -99,6 +99,8 @@ public class OrderController extends WShopSiteBaseController {
         payment.setCvv(order.getCvv());
 
         newOrder.setPayment(payment);
+        newOrder.setStatus(OrderStatus.NEW);
+
         Order savedOrder = this.orderService.createOrder(newOrder);
 
         this.sendOrderConfirmationEmail(savedOrder);

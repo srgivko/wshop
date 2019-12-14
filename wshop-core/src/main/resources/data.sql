@@ -2741,12 +2741,34 @@ INSERT INTO public.product_tag (product_id, tag_id) VALUES (40, 1);
 INSERT INTO public.customers (id, activation_code, created_on, email, enabled, firstname, lastname, password, phone, subscribe) VALUES (15, null, '2019-12-13 17:29:48.427000', 'pi-ls@mail.ru', true, 'test', 'test', '$2a$10$OJTUydhmit/Fc3x4m92HT.h83XlEctgmG9vMCEcKg2jtTQQx1r3wu', 'test', false);
 -- /CUSTOMERS
 
-ALTER SEQUENCE addresses_id_seq RESTART WITH 15;
+-- DELIVERY(ADDRESSES)
+INSERT INTO public.addresses (id, address_line1, address_line2, city, country, state, zip_code)
+VALUES
+(15, 'test', 'test', 'test', 'test', 'test', 'test'),
+(16, 'test', 'test', 'test', 'test', 'test', 'test');
+-- /DELIVERY(ADDRESSES)
+
+-- PAYMENTS
+INSERT INTO public.payments (id, amount, cc_number, cvv) VALUES (15, 105.76, 'test', 'test');
+-- /PAYMENTS
+
+-- ORDER
+INSERT INTO public.orders (id, created_on, order_number, status, billing_addr_id, cust_id, delivery_addr_id, payment_id) VALUES (15, null, '1576322141351', 'NEW', 15, 15, 16, 15);
+-- /ORDER
+
+-- ORDER_ITEMS
+INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (15, 32.00, 1, 15, 41);
+INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (16, 3.76, 1, 15, 17);
+INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (17, 72.00, 1, 15, 42);
+-- /ORDER_ITEMS
+
+-- SEQUENCE
+ALTER SEQUENCE addresses_id_seq RESTART WITH 17;
 ALTER SEQUENCE categories_id_seq RESTART WITH 30;
 ALTER SEQUENCE customers_id_seq RESTART WITH 15;
-ALTER SEQUENCE order_items_id_seq RESTART WITH 15;
-ALTER SEQUENCE orders_id_seq RESTART WITH 15;
-ALTER SEQUENCE payments_id_seq RESTART WITH 15;
+ALTER SEQUENCE order_items_id_seq RESTART WITH 18;
+ALTER SEQUENCE orders_id_seq RESTART WITH 16;
+ALTER SEQUENCE payments_id_seq RESTART WITH 16;
 ALTER SEQUENCE permissions_id_seq RESTART WITH 13;
 ALTER SEQUENCE products_id_seq RESTART WITH 93;
 ALTER SEQUENCE roles_id_seq RESTART WITH 5;
@@ -2758,3 +2780,4 @@ ALTER SEQUENCE posts_id_seq RESTART WITH 15;
 ALTER SEQUENCE promotions_id_seq RESTART WITH 15;
 ALTER SEQUENCE sales_id_seq RESTART WITH 16;
 ALTER SEQUENCE sale_products_id_seq RESTART WITH 18;
+-- /SEQUENCE
