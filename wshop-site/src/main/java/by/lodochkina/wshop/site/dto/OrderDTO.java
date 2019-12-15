@@ -32,27 +32,4 @@ public class OrderDTO implements Serializable {
     private String zipCode;
     @NotEmpty(message = "Country is required")
     private String country;
-
-    @NotEmpty(message = "FirstName is required")
-    private String billingFirstName;
-    @NotEmpty(message = "LastName is required")
-    private String billingLastName;
-    @NotEmpty(message = "Address Line1 is required")
-    private String billingAddressLine1;
-    private String billingAddressLine2;
-    @NotEmpty(message = "City is required")
-    private String billingCity;
-    @NotEmpty(message = "State is required")
-    private String billingState;
-    @NotEmpty(message = "ZipCode is required")
-    private String billingZipCode;
-    @NotEmpty(message = "Country is required")
-    private String billingCountry;
-
-    @NotEmpty(message = "Credit Card Number is required")
-    private String ccNumber;
-    @NotEmpty(message = "CVV is required")
-    private String cvv;
-
-    //setters & getters
 }

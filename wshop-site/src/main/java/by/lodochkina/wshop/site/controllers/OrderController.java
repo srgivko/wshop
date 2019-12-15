@@ -66,16 +66,6 @@ public class OrderController extends WShopSiteBaseController {
 
         newOrder.setDeliveryAddress(address);
 
-        Address billingAddress = new Address();
-        billingAddress.setAddressLine1(order.getAddressLine1());
-        billingAddress.setAddressLine2(order.getAddressLine2());
-        billingAddress.setCity(order.getCity());
-        billingAddress.setState(order.getState());
-        billingAddress.setZipCode(order.getZipCode());
-        billingAddress.setCountry(order.getCountry());
-
-        newOrder.setBillingAddress(billingAddress);
-
         Set<OrderItem> orderItems = new HashSet<>();
         List<LineItem> lineItems = cart.getItems();
 
@@ -94,11 +84,6 @@ public class OrderController extends WShopSiteBaseController {
 
         newOrder.setItems(orderItems);
 
-        Payment payment = new Payment();
-        payment.setCcNumber(order.getCcNumber());
-        payment.setCvv(order.getCvv());
-
-        newOrder.setPayment(payment);
         newOrder.setStatus(OrderStatus.NEW);
 
         Order savedOrder = this.orderService.createOrder(newOrder);
