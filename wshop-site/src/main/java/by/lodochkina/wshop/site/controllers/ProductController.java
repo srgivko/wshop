@@ -51,6 +51,7 @@ public class ProductController extends WShopSiteBaseController {
 
         model.addAttribute("productPage", productPage);
         model.addAttribute("sort", sort);
+        model.addAttribute("query", query);
 
         return "products";
     }
