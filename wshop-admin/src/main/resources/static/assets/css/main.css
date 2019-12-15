@@ -2,7 +2,7 @@
     cursor: pointer;
 }
 
-img#prev {
+img.prev {
     margin-top: 5px;
     max-height: 50px;
 }

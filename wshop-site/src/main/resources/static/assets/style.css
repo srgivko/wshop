@@ -1320,13 +1320,21 @@ a.caption.button-radius.animated.fadeInRight {
     flex-grow: 1; }
 
 .preview-thumbnail.nav-tabs {
+    display: flex;
+    justify-content: space-around;
     border: none;
-    margin-top: 15px; }
+    margin-top: 15px;
+}
 .preview-thumbnail.nav-tabs li {
-    width: 18%;
+    /*width: 18%;*/
     margin-right: 2.5%; }
+
+.preview-thumbnail.nav-tabs li.active {
+    border: 1px solid #5a88ca;
+}
 .preview-thumbnail.nav-tabs li img {
     max-width: 100%;
+    max-height: 70px;
     display: block; }
 .preview-thumbnail.nav-tabs li a {
     padding: 0;
@@ -1336,12 +1344,17 @@ a.caption.button-radius.animated.fadeInRight {
 
 .tab-content {
     overflow: hidden; }
+
 .tab-content img {
-    width: 100%;
+    display: block;
+    margin: 0 auto;
+    max-height: 260px;
+    /* width: 100%; */
     -webkit-animation-name: opacity;
     animation-name: opacity;
     -webkit-animation-duration: .3s;
-    animation-duration: .3s; }
+    animation-duration: .3s;
+}
 
 .card {
     background: #f4f4f4;

@@ -24,8 +24,9 @@ public class ProductValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Product product = (Product) o;
+        product.getImagesUrl().removeIf(String::isEmpty);
         if (this.catalogService.findProductBySku(product.getSku()).isPresent()) {
-            errors.rejectValue("sky", "error.exists", new Object[]{product.getSku()}, "Product SKU " + product.getSku() + " already exists");
+            errors.rejectValue("sku", "error.exists", new Object[]{product.getSku()}, "Product SKU " + product.getSku() + " already exists");
         }
     }
 }

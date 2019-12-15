@@ -1,5 +1,6 @@
 package by.lodochkina.wshop.admin.controllers;
 
+import by.lodochkina.wshop.admin.validators.ProductImagesValidator;
 import by.lodochkina.wshop.admin.validators.ProductValidator;
 import by.lodochkina.wshop.entities.*;
 import by.lodochkina.wshop.services.CatalogService;
@@ -9,8 +10,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -18,7 +21,6 @@ import java.util.List;
 
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 
-// TODO: 12/13/19 add sku validator
 @Slf4j
 @Controller
 @Secured(MANAGE_PRODUCTS)
@@ -30,10 +32,13 @@ public class ProductController extends WShopAdminBaseController {
 
     private final ProductValidator productValidator;
 
+    private final ProductImagesValidator productImagesValidator;
+
     @Autowired
-    public ProductController(CatalogService catalogService, ProductValidator productFormValidator) {
+    public ProductController(CatalogService catalogService, ProductValidator productFormValidator, ProductImagesValidator productImagesValidator) {
         this.catalogService = catalogService;
         this.productValidator = productFormValidator;
+        this.productImagesValidator = productImagesValidator;
     }
 
     @Override
@@ -76,12 +81,13 @@ public class ProductController extends WShopAdminBaseController {
 
     @PostMapping("/products")
     public String createProduct(
-           /* @RequestParam(value = "file") MultipartFile file,*/
             @Valid Product product,
             BindingResult result,
             RedirectAttributes redirectAttributes
-    ) throws Exception {
+    ) {
         this.productValidator.validate(product, result);
+        this.productImagesValidator.validate(product, result);
+
         if (result.hasErrors()) {
             return VIEW_PREFIX + "create_product";
         }
@@ -98,7 +104,13 @@ public class ProductController extends WShopAdminBaseController {
     }
 
     @PostMapping("/products/{id}")
-    public String updateProduct(@Valid Product product, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateProduct(
+            @Valid Product product,
+            BindingResult result,
+            RedirectAttributes redirectAttributes
+    ) {
+        this.productImagesValidator.validate(product, result);
+
         if (result.hasErrors()) {
             return VIEW_PREFIX + "edit_product";
         }

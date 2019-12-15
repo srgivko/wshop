@@ -24,31 +24,23 @@
                 <div class="wrapper row">
                     <div class="preview col-md-4">
                         <div style="position: relative;">
-                            <img src="assets/img/products/2.jpg" alt=""
-                                 th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}"/>
+                            <div class="preview-pic tab-content">
+                                <div class="tab-pane" th:each="image, iStat: ${product.imagesUrl}"
+                                     th:id="${#strings.concat('pic-',iStat.count)}"
+                                     th:classappend="${iStat.count==1} ? 'active'">
+                                    <img th:src="@{/img/{imageUrl}(imageUrl=${image})}"/>
+                                </div>
+                            </div>
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                <li th:each="image, iStat: ${product.imagesUrl}"
+                                    th:classappend="${iStat.count==1} ? 'active'">
+                                    <a th:data-target="${#strings.concat('#pic-', iStat.count)}" data-toggle="tab">
+                                        <img th:src="@{/img/{imageUrl}(imageUrl=${image})}"/>
+                                    </a>
+                                </li>
+                            </ul>
                             <div class="special-item" th:if="${product.discountPrice}"></div>
                         </div>
-                        <!--todo add many photos for product-->
-                        <!-- <div class="preview-pic tab-content">
-                             <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252"/></div>
-                             <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252"/></div>
-                             <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"/></div>
-                             <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252"/></div>
-                             <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252"/></div>
-                         </div>
-                         <ul class="preview-thumbnail nav nav-tabs">
-                             <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                     src="http://placekitten.com/200/126"/></a></li>
-                             <li><a data-target="#pic-2" data-toggle="tab"><img
-                                     src="http://placekitten.com/200/126"/></a></li>
-                             <li><a data-target="#pic-3" data-toggle="tab"><img
-                                     src="http://placekitten.com/200/126"/></a></li>
-                             <li><a data-target="#pic-4" data-toggle="tab"><img
-                                     src="http://placekitten.com/200/126"/></a></li>
-                             <li><a data-target="#pic-5" data-toggle="tab"><img
-                                     src="http://placekitten.com/200/126"/></a></li>
-                         </ul>
- -->
                     </div>
                     <div class="details col-md-8">
                         <h3 class="product-title" th:text="${product.name}">men's shoes fashion</h3>

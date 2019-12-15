@@ -13,6 +13,7 @@
             <h3 class="box-title"><span th:text="#{label.create}">Create</span> <span th:text="#{label.newProduct}">New Product</span></h3>
         </div>
         <div class="box-body">
+            <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
             <form role="form" th:action="@{/products}" th:object="${product}"
                   method="post" enctype="multipart/form-data">
                 <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}"
@@ -48,24 +49,29 @@
                 <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
                     <label th:text="#{label.description}">Description</label>
                     <textarea name="description" id="editor" rows="10" cols="80" th:field="*{description}"></textarea>
-                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{content}" th:class="text-red">Incorrect data</p>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:class="text-red">Incorrect data</p>
                 </div>
 
-                <div class="form-group" th:classappend="${#fields.hasErrors('imageUrl')}? 'has-error'">
-                    <label th:text="#{label.image}">Image</label>
-                    <div class="input-group">
-                        <span id="ckfinder-popup-1" class="input-group-addon ckfinder-popup" th:text="#{label.browseServer}">Browse Server</span>
-                        <input readonly type="text" class="form-control" th:field="*{imageUrl}"/>
-                        <span id="ckfinder-popup-1-delete" class="input-group-addon ckfinder-popup"
-                              th:style="${product.imageUrl!=null && product.imageUrl!=''  ? 'color:red' : 'display:none; color:red'}"><i
-                                class="fa fa-trash" aria-hidden="true"></i></span>
+                <div id="images" class="form-group" th:classappend="${#fields.hasErrors('imagesUrl')}? 'has-error'">
+                    <div style="margin-bottom: 5px">
+                        <label th:text="#{label.image}">Image</label> <a class="btn btn-success" onclick="addImage()"
+                                                                         th:text="#{label.addImage}">Add
+                        more images</a>
                     </div>
-                    <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" th:class="text-red">
+                    <div class="img-wrapper">
+                        <div class="input-group">
+                        <span class="input-group-addon ckfinder-popup" th:text="#{label.browseServer}"
+                              th:onclick="selectFileWithCKFinder()">Browse Server</span>
+                            <input readonly type="text" class="form-control" name="imagesUrl"/>
+                            <span class="input-group-addon ckfinder-popup" style="color : red; display: none;"
+                                  th:onclick="removeImg()"><i
+                                class="fa fa-trash" aria-hidden="true"></i></span>
+                        </div>
+                        <img class="prev" hidden="hidden"/>
+                    </div>
+                    <p th:if="${#fields.hasErrors('imagesUrl')}" th:errors="*{imagesUrl}" th:class="text-red">
                         Incorrect data
                     </p>
-                    <img th:hidden="${(product.imageUrl==null || #strings.isEmpty(product.imageUrl))}" id="prev"
-                         th:src="${(product.imageUrl !=null && !#strings.isEmpty(product.imageUrl)) ? #strings.concat('/img/', product.imageUrl) : ''}"
-                          />
                 </div>
 
                 <div class="form-group"  th:if="${categoriesList!=null && !categoriesList.isEmpty()}">
@@ -121,6 +127,19 @@
             </form>
         </div>
     </div>
+    <div id="templates" style="display: none">
+        <div>
+            <div class="input-group">
+                        <span class="input-group-addon ckfinder-popup" th:text="#{label.browseServer}"
+                              th:onclick="selectFileWithCKFinder()">Browse Server</span>
+                <input readonly type="text" class="form-control" name="imagesUrl"/>
+                <span class="input-group-addon ckfinder-popup" style="color : red; display: none;"
+                      th:onclick="removeImg()"><i
+                        class="fa fa-trash" aria-hidden="true"></i></span>
+            </div>
+            <img class="prev" hidden="hidden"/>
+        </div>
+    </div>
 </div>
 
 <th:block layout:fragment="script">
@@ -129,17 +148,29 @@
             height: 600
         });
         CKFinder.setupCKEditor(editor);
-        var button1 = document.getElementById('ckfinder-popup-1');
-        var button2 = document.getElementById('ckfinder-popup-1-delete');
-        button1.onclick = function () {
-            selectFileWithCKFinder('imageUrl');
-        };
-        button2.onclick = function f() {
-            document.getElementById('imageUrl').value = "";
-            document.getElementById('prev').hidden = true;
-            document.getElementById('ckfinder-popup-1-delete').style.display = "none";
-        };
-        function selectFileWithCKFinder(elementId) {
+
+        function addImage() {
+            const imageWrappers = document.getElementsByClassName('img-wrapper');
+            if (imageWrappers.length > 3) {
+                alert('Не больше 4 фотографий');
+            } else {
+                const imageWrapperTemplate = document.getElementById('templates').firstElementChild.cloneNode(true);
+                imageWrapperTemplate.classList.add('img-wrapper');
+                const imagesDiv = document.getElementById('images');
+                imagesDiv.insertBefore(imageWrapperTemplate, imagesDiv.lastElementChild);
+            }
+        }
+
+        function removeImg() {
+            const currentTarget = event.currentTarget;
+            currentTarget.style.display = 'none';
+            currentTarget.previousElementSibling.value = '';
+            currentTarget.parentElement.nextElementSibling.hidden = true;
+        }
+
+        function selectFileWithCKFinder() {
+            const inputElement = event.target.nextElementSibling;
+            const removeElement = inputElement.nextElementSibling;
             CKFinder.popup({
                 chooseFiles: true,
                 width: 800,
@@ -147,18 +178,18 @@
                 onInit: function (finder) {
                     finder.on('files:choose', function (evt) {
                         var file = evt.data.files.first();
-                        var output = document.getElementById(elementId);
-                        output.value = file.getUrl().substr(file.getUrl().indexOf('/img/')+5);
-                        document.getElementById('ckfinder-popup-1-delete').style.display = '';
-                        document.getElementById('prev').src = file.getUrl();
-                        document.getElementById('prev').hidden = false;
+                        inputElement.value = file.getUrl().substr(file.getUrl().indexOf('/img/') + 5);
+                        removeElement.style.display = '';
+                        const imageElement = removeElement.parentElement.nextElementSibling;
+                        imageElement.src = file.getUrl();
+                        imageElement.hidden = false;
                     });
 
                     finder.on('file:choose:resizedImage', function (evt) {
-                        var output = document.getElementById(elementId);
-                        output.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/')+5);
-                        document.getElementById('prev').src = evt.data.resizedUrl;
-                        document.getElementById('prev').hidden = false;
+                        inputElement.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/') + 5);
+                        const imageElement = inputElement.parentElement.nextElementSibling;
+                        imageElement.src = evt.data.resizedUrl;
+                        imageElement.hidden = false;
                     });
                 }
             });

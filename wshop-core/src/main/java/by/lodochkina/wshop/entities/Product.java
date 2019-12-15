@@ -8,10 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 // TODO: 12/8/19 add quantity in stock and some types of products with different prices
 @Data
@@ -42,8 +39,10 @@ public class Product implements Serializable {
     @NotNull(message = "price cannot be empty")
     private BigDecimal price = new BigDecimal("0.00");
 
-    // TODO: 12/12/19 add more images 
-    private String imageUrl;
+    @ElementCollection
+    @CollectionTable(name = "product_image_urls", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "image_url")
+    private List<String> imagesUrl;
 
     private boolean disabled;
 
@@ -94,5 +93,12 @@ public class Product implements Serializable {
         }
         Optional<SaleProduct> saleProductOptional = this.saleProductSet.stream().filter(saleProduct -> saleProduct.getSale().isActive()).findFirst();
         return saleProductOptional.isPresent() ? saleProductOptional.get().getDiscountPrice() : null;
+    }
+
+    public String getImageUrl() {
+        if (this.imagesUrl!=null && !this.imagesUrl.isEmpty()) {
+            return this.imagesUrl.get(0);
+        }
+        return "";
     }
 }
