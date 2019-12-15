@@ -10,10 +10,6 @@
 </head>
 <body>
 <div layout:fragment="content">
-
-<!--todo add producer, unit, бр-->
-<!--todo rating ajax-->
-    <div class="container">
         <div class="container-fluid">
             <div class="row">
                 <div th:replace="fragments/breadcrumb :: breadcrumb (categoryPath=${categoryPath}, currentProduct=${product})"></div>
@@ -118,7 +114,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <th:block layout:fragment="script">
     <script>

@@ -7,6 +7,7 @@ delete from  users;
 delete from  posts;
 delete from  promotions;
 delete from  rating;
+delete from  product_image_urls;
 
 delete from  sale_products;
 delete from  sales;
@@ -2792,7 +2793,7 @@ INSERT INTO product_image_urls (product_id, image_url) VALUES
 -- /PRODUCT_IMAGE_URLS
 
 -- SALES
-INSERT INTO public.sales (id, begin_date, end_date, name, promo_code) VALUES (15, '2019-12-13 03:35:02.000000', '2019-12-24 03:35:02.000000', 'Распродажа краски', null);
+INSERT INTO public.sales (id, begin_date, end_date, name, promo_code) VALUES (15, now(), now() + '3 DAY', 'Распродажа краски', null);
 -- /SALES
 
 -- SALES PRODUCTS
@@ -2837,7 +2838,7 @@ INSERT INTO public.payments (id, amount, cc_number, cvv) VALUES (15, 105.76, 'te
 -- /PAYMENTS
 
 -- ORDER
-INSERT INTO public.orders (id, created_on, order_number, status, billing_addr_id, cust_id, delivery_addr_id, payment_id) VALUES (15, null, '1576322141351', 'NEW', 15, 15, 16, 15);
+INSERT INTO public.orders (id, created_on, order_number, status, billing_addr_id, cust_id, delivery_addr_id, payment_id) VALUES (15, now(), '1576322141351', 'NEW', 15, 15, 16, 15);
 -- /ORDER
 
 -- ORDER_ITEMS
