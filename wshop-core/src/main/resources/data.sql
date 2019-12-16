@@ -2770,7 +2770,7 @@ INSERT INTO product_image_urls (product_id, image_url) VALUES
 (69,'shtykatyrka/131c1e06a98a4d23b59c346247a3e4d1.jpeg'),
 (70,'shtykatyrka/pr2/22225.png'),
 (83,'cabels/pr7/9e9cd864069c1d0179efd9c767511ad2.jpeg'),
-(71,'shtykatyrka/pr3/%D1%88%D1%823.png'),
+(71,'shtykatyrka/pr3/шт3.png'),
 (72,'shtykatyrka/pr4/f5479fe3f8b5.jpeg'),
 (73,'shtykatyrka/pr5/2ae5bb.jpeg'),
 (74,'shtykatyrka/pr6/4e3e2dadc84.jpeg'),

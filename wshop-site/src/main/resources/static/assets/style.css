@@ -1490,7 +1490,7 @@ h4.discount_price span {
 }
 
 .special-item {
-    background-image: url(/assets/img/special_item.png);
+    background-image: url(/static/assets/img/special_item.png);
     background-repeat: no-repeat;
     background-position: top right;
     z-index: 1;
@@ -1564,3 +1564,27 @@ img.carousel-inner-img {
     flex-direction: column;
     justify-content: space-between;
 }
+
+.error-wrapper {
+    height: 300px;
+    position: relative;
+}
+
+.error {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 3em;
+    position: absolute;
+    top: 59%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: type .5s alternate infinite;
+    padding: 10px;
+}
+
+@keyframes type{
+    from{box-shadow: inset -3px 0px 0px #888;}
+    to{box-shadow: inset -3px 0px 0px transparent;}
+}
+
+

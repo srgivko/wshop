@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+
+<head>
+    <title th:text="#{label.404error}">404 Error</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="error-wrapper">
+        <div class="error">
+            <span class="error-status">error 404</span>
+            <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
+            <span th:text="#{label.erroMessage}" style="display: block;"></span>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

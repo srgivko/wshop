@@ -110,6 +110,7 @@ public class WebConfig implements WebMvcConfigurer {
         connector.setPort(9090);
         connector.setSecure(false);
         connector.setRedirectPort(serverPort);
+        connector.setURIEncoding("UTF-8");
         return connector;
     }
 
