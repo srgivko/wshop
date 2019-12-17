@@ -13,13 +13,20 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class WShopSiteBaseController {
+
+    private static String RECENTLY_VIEWED_PRODUCTS_COOKIE_NAME = "RECENTLY_VIEWED_PRODUCTS";
+    private static String RECENTLY_VIEWED_PRODUCTS_COOKIE_DELIMITER = "#";
+    private static String CART_KEY = "CART_KEY";
 
     @Autowired
     protected MessageSource messageSource;
@@ -73,11 +80,68 @@ public abstract class WShopSiteBaseController {
 
     Cart getOrCreateCart(HttpServletRequest request) {
         Cart cart = null;
-        cart = (Cart) request.getSession().getAttribute("CART_KEY");
+        cart = (Cart) request.getSession().getAttribute(CART_KEY);
         if (cart == null) {
             cart = new Cart();
-            request.getSession().setAttribute("CART_KEY", cart);
+            request.getSession().setAttribute(CART_KEY, cart);
         }
         return cart;
+    }
+
+    Set<Product> getRecentlyViewedProducts(HttpServletRequest request, HttpServletResponse response) {
+        Cookie recentlyViewedProductsCookie = getRecentlyViewedProductsCookie(request, response);
+        if (!recentlyViewedProductsCookie.getValue().isEmpty()) {
+            HashSet<Product> productLinkedHashSet = new LinkedHashSet<>();
+            String[] productIds = recentlyViewedProductsCookie.getValue().split(RECENTLY_VIEWED_PRODUCTS_COOKIE_DELIMITER);
+            for (String productId : productIds) {
+                this.catalogService.findProductById(Long.parseLong(productId)).ifPresent(productLinkedHashSet::add);
+            }
+            return productLinkedHashSet;
+        }
+        return Collections.emptySet();
+    }
+
+    void addProductToRecentlyViewedProducts(HttpServletRequest request, HttpServletResponse response, Long id) {
+        String newCookieValue = "";
+        Cookie recentlyViewedProductsCookie = getRecentlyViewedProductsCookie(request, response);
+        if (!recentlyViewedProductsCookie.getValue().isEmpty()) {
+            List<String> distinctSetProductIds = Arrays.stream(recentlyViewedProductsCookie.getValue().split(RECENTLY_VIEWED_PRODUCTS_COOKIE_DELIMITER))
+                    .filter(value -> !value.equals(id.toString()))
+                    .distinct()
+                    .collect(Collectors.toList());
+            if (distinctSetProductIds.size() > 9) {
+                distinctSetProductIds.remove(distinctSetProductIds.get(0));
+            }
+            newCookieValue =  distinctSetProductIds.stream().collect(Collectors.joining(RECENTLY_VIEWED_PRODUCTS_COOKIE_DELIMITER));;
+        }
+        if (newCookieValue.isEmpty()) {
+            newCookieValue = newCookieValue.concat(id.toString());
+        } else {
+            newCookieValue = newCookieValue.concat(String.format("%s%d", RECENTLY_VIEWED_PRODUCTS_COOKIE_DELIMITER, id));
+        }
+        recentlyViewedProductsCookie = createNewRecentlyViewedProductsCookie(newCookieValue);
+        response.addCookie(recentlyViewedProductsCookie);
+    }
+
+    private Cookie getRecentlyViewedProductsCookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie recentlyViewedProducts = WebUtils.getCookie(request, RECENTLY_VIEWED_PRODUCTS_COOKIE_NAME);
+        if (recentlyViewedProducts == null) {
+            recentlyViewedProducts = createNewRecentlyViewedProductsCookie(null);
+            response.addCookie(recentlyViewedProducts);
+        }
+        return recentlyViewedProducts;
+    }
+
+    private Cookie createNewRecentlyViewedProductsCookie(String value) {
+        Cookie newRecentlyViewedProductsCookie = new Cookie(RECENTLY_VIEWED_PRODUCTS_COOKIE_NAME, "");
+        ;
+        newRecentlyViewedProductsCookie.setHttpOnly(true);
+        newRecentlyViewedProductsCookie.setSecure(true);
+        newRecentlyViewedProductsCookie.setMaxAge(7 * 24 * 60 * 60);
+        newRecentlyViewedProductsCookie.setPath("/");
+        if (value != null) {
+            newRecentlyViewedProductsCookie.setValue(value);
+        }
+        return newRecentlyViewedProductsCookie;
     }
 }

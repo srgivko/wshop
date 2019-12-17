@@ -2,7 +2,6 @@ package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Product;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,11 @@ public class HomeController extends WShopSiteBaseController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(
+            Model model,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
         List<Category> previewCategories = new ArrayList<>();
         List<Category> categories = super.catalogService.getAllCategories().stream()
                 .filter(category -> category.getProducts()!=null && !category.getProducts().isEmpty())
@@ -51,6 +56,7 @@ public class HomeController extends WShopSiteBaseController {
             previewCategories.add(category);
         }
         model.addAttribute("categories", previewCategories);
+        model.addAttribute("recentlyViewedProducts", super.getRecentlyViewedProducts(request, response));
         return "home";
     }
 

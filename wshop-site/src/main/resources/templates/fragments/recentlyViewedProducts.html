@@ -1,0 +1,37 @@
+<div class="maincontent-area"
+     xmlns:th="http://www.thymeleaf.org"
+     th:fragment="recentlyViewedProducts (products)"
+     xmlns:sec="http://www.w3.org/1999/xhtml" th:if="${products!=null && !products.isEmpty()}">
+    <!--/*@thymesVar id="products" type="Set<by.lodochkina.wshop.entities.Product>"*/-->
+    <!--/*@thymesVar id="product" type="by.lodochkina.wshop.entities.Product"*/-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="latest-product">
+                    <h2 class="section-title" th:text="#{label.recentlyViewedProducts}">Latest Products</h2>
+                    <div class="product-carousel">
+                        <div class="single-product" th:each="product : ${products}">
+                            <div class="product-f-image">
+                                <img th:src="@{'/img/{imageUrl}'(imageUrl=${product.imageUrl})}">
+                                <div class="special-item" th:if="${product.discountPrice}"></div>
+                                <div class="product-hover">
+                                    <a th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> <span th:text="#{label.cart.add}">Add to cart</span></a>
+                                    <a th:href="@{/products/{id}(id=${product.id})}" class="view-details-link"><i class="fa fa-link"></i>  <span th:text="#{label.seeDetails}">See details</span></a>
+                                </div>
+                            </div>
+
+                            <h5><a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}">Samsung Galaxy s5- 2015</a></h5>
+
+                            <div class="product-carousel-price">
+                                <ins th:text="${#strings.concat(product.price,' б.р./',product.getUnit().name)}"
+                                     th:styleappend="${product.discountPrice} ? 'text-decoration: line-through;'">$9.00
+                                </ins>
+                                <ins th:if="${product.discountPrice}" th:text="${#strings.concat(product.discountPrice,' б.р./',product.getUnit().name)}" style="color: red">$9.00</ins>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,7 +20,8 @@ jQuery(document).ready(function($){
             1000:{
                 items:5,
             }
-        }
+        },
+        navText: ["&#8678","&#8680"]
     });  
     
     $('.related-products-carousel').owlCarousel({

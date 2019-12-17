@@ -1,0 +1,105 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="footer (rootCategories)">
+    <div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>Пром<span style="position: relative; top: 8px;">Поставки</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus
+                            vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet
+                            eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam.
+                            Laborum commodi veritatis magni at?
+                        </p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="#" target="_blank">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="#" target="_blank">
+                                <i class="fa fa-youtube"></i>
+                            </a>
+                            <a href="#" target="_blank">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title" th:text="#{label.userNavigation}">User Navigation</h2>
+                        <ul>
+                            <li>
+                                <a th:href="@{/myAccount}" th:text="#{label.my.account}">My account</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/wishlist}" th:text="#{label.wishlist}">Wishlist</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/posts}" th:text="#{label.posts}">Posts</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/cart}" th:text="#{label.cart}">Posts</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/}" th:text="#{label.home}">Home page</a>
+                            </li>
+                            <!--                        <li>-->
+                            <!--                            <a href="#">Vendor contact</a>-->
+                            <!--                        </li>-->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title" th:text="#{label.categories}">Categories</h2>
+                        <ul>
+                            <li th:each="cat : ${rootCategories}">
+                                <a th:href="@{/categories/{id}(id=${cat.id})}" th:text="${cat.name}">Category Name</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-newsletter">
+                        <h2 class="footer-wid-title" th:text="#{label.newsLetter}">Newsletter</h2>
+                        <p th:text="#{label.newsletter.text}">Newsletter text</p>
+                        <div class="newsletter-form">
+                            <form action="#">
+                                <input type="email" th:placeholder="#{label.email}">
+                                <input type="submit" th:value="#{label.subscribe}">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>© 2019 uCommerce. All Rights Reserved.
+                            <a href="#" target="_blank">#</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="footer-card-icon">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
