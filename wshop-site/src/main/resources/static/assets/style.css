@@ -821,7 +821,6 @@ a:hover, a:focus {
 .footer-bottom-area {
     background: none repeat scroll 0 0 #000;
     color: #fff;
-    padding-bottom: 40px;
 }
 
 
@@ -1980,4 +1979,33 @@ img.carousel-inner-img {
 
 .product-f-image img {
     height: 200px;
+}
+
+.map {
+    position: relative;
+}
+
+.main-footer__contact {
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 220px;
+}
+
+.main-footer__time p span {
+    font-weight: 600;
+}
+
+.main-footer__mail-wrapper {
+    margin: 10px 0;
+}
+
+.main-footer__tel-wrapper {
+    position: relative;
+    right: -15px;
 }

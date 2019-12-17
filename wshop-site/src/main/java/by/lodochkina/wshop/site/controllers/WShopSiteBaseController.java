@@ -87,17 +87,18 @@ public abstract class WShopSiteBaseController {
         return cart;
     }
 
-    Set<Product> getRecentlyViewedProducts(HttpServletRequest request, HttpServletResponse response) {
+    List<Product> getRecentlyViewedProducts(HttpServletRequest request, HttpServletResponse response) {
         Cookie recentlyViewedProductsCookie = getRecentlyViewedProductsCookie(request, response);
         if (!recentlyViewedProductsCookie.getValue().isEmpty()) {
-            HashSet<Product> productLinkedHashSet = new LinkedHashSet<>();
+            List<Product> productList = new ArrayList<>();
             String[] productIds = recentlyViewedProductsCookie.getValue().split(RECENTLY_VIEWED_PRODUCTS_COOKIE_DELIMITER);
             for (String productId : productIds) {
-                this.catalogService.findProductById(Long.parseLong(productId)).ifPresent(productLinkedHashSet::add);
+                this.catalogService.findProductById(Long.parseLong(productId)).ifPresent(productList::add);
             }
-            return productLinkedHashSet;
+            Collections.reverse(productList);
+            return productList;
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 
     void addProductToRecentlyViewedProducts(HttpServletRequest request, HttpServletResponse response, Long id) {

@@ -19,7 +19,7 @@
                 <div class="woocommerce-info col-md-11" th:if="${#lists.isEmpty(cart.items)}">
                     <h2 th:text="#{label.cart.empty}" class="text-center">Cart is Empty</h2>
                 </div>
-                <div class="col-md-11" th:unless="${#lists.isEmpty(cart.items)}">
+                <div th:unless="${#lists.isEmpty(cart.items)}">
                     <div class="product-content-right">
                         <div class="woocommerce">
                             <form method="post" action="#">

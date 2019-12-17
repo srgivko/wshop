@@ -80,6 +80,56 @@
         </div>
     </div>
 
+    <div class="map">
+        <div class="container-fluid">
+            <div class="main-footer-map">
+                <script type="text/javascript" charset="utf-8" async
+                        src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aac876df2aecf3a3564ce3c0d2020feee05746dc7e697591bae87a6e8254af9e6&amp;width=100%25&amp;height=426&amp;lang=ru_RU&amp;scroll=true"></script>
+            </div>
+            <div class="main-footer__contact">
+                <div class="main-footer__contact-wrapper">
+                    <div class="main-footer__address-wrapper">
+                        <div>
+                            <p th:text="#{lable.company.address}">Адрес компании</p>
+                        </div>
+                    </div>
+                    <div class="main-footer__tel-wrapper">
+                        <div class="main-footer__tel-row main-footer__tel-row--velcom">
+                            <div class="row">
+                                <a href="tel:+375297205500" title="+375 (29) 720-55-00">
+                                    <img th:src="@{/static/assets/img/mts.png}" alt="МТС">
+                                    <span style="font-weight: bold;">+375 (29) 720-55-00</span>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <a href="tel:+375447205500" title="+375 (44) 720-55-00">
+                                    <img th:src="@{/static/assets/img/a1.png}" alt="A1"/>
+                                    <span style="font-weight: bold;">+375 (29) 720-55-00</span>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <a href="tel:+375257205500" title="+375 (25) 720-55-00">
+                                    <img th:src="@{/static/assets/img/life.png}" alt="Life"/>
+                                    <span style="font-weight: bold;">+375 (29) 720-55-00</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-footer__mail-wrapper" th:with="companyEmail=${@environment.getProperty('company.email')}">
+                    <a th:text="${companyEmail}" th:href="${#strings.concat('mailto:', companyEmail)}">Email company</a>
+                </div>
+                <div class="main-footer__time">
+                    <div class="main-footer__time-inner">
+                        <p><span th:text="#{label.workingHours}">Режим работы</span></p>
+                        <span th:text="#{label.weekdays}">Пн-пт:</span> 9.00-19.00 <br> <span th:text="#{label.weekends}">Сб-вс:</span> <span th:text="#{label.weekends.text}">выходной</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
