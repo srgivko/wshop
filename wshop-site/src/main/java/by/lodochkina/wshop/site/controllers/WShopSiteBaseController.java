@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class WShopSiteBaseController {
 
@@ -134,9 +133,8 @@ public abstract class WShopSiteBaseController {
 
     private Cookie createNewRecentlyViewedProductsCookie(String value) {
         Cookie newRecentlyViewedProductsCookie = new Cookie(RECENTLY_VIEWED_PRODUCTS_COOKIE_NAME, "");
-        ;
         newRecentlyViewedProductsCookie.setHttpOnly(true);
-        newRecentlyViewedProductsCookie.setSecure(true);
+//        newRecentlyViewedProductsCookie.setSecure(true); https?
         newRecentlyViewedProductsCookie.setMaxAge(7 * 24 * 60 * 60);
         newRecentlyViewedProductsCookie.setPath("/");
         if (value != null) {

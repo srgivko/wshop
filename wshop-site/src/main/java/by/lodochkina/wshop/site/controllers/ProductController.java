@@ -37,7 +37,7 @@ public class ProductController extends WShopSiteBaseController {
         }
         Collections.reverse(categoryPath);
 
-        model.addAttribute("recentlyViewedProducts", super.getRecentlyViewedProducts(request, response));
+        //model.addAttribute("recentlyViewedProducts", super.getRecentlyViewedProducts(request, response));
         model.addAttribute("categoryPath", categoryPath);
         model.addAttribute("product", product);
 
