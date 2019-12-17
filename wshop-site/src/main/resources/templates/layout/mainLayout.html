@@ -25,7 +25,6 @@
         <link rel="stylesheet" th:href="@{/static/assets/css/responsive.css}"/>
     </head>
     <body>
-
         <div class="header-area">
             <div class="container">
                 <div class="row">
@@ -51,13 +50,10 @@
         </div>
 
         <div class="product-big-title-area">
-            <div class="container">
+            <div class="container" style="position: relative;">
                 <div class="row">
                     <div class="col-md-12">
                         <img class="logo-img" th:src="@{/img/logo-2.png}">
-                        <!--<div class="product-bit-title text-center">
-                            <h2 th:text="#{label.shop.name}">Shop</h2>
-                        </div>-->
                     </div>
                     <div class="fog-low">
                         <img th:src="@{/static/assets/img/fog-low.png}">
@@ -66,22 +62,29 @@
                         <img th:src="@{/static/assets/img/fog-low.png}">
                     </div>
                 </div>
-            </div>
-            <div class="moving-clouds" style="background-image: url('/static/assets/img/clouds.png'); "></div>
-        </div>
-
-     <!--   <div class="site-branding-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="logo">
-                            <h1><a href="#"><img src="assets/img/brand1.png"
-                                                 th:src="@{/static/assets/img/brand1.png}" /></a></h1>
-                        </div>
+                <div class="phones">
+                    <div class="row">
+                        <a href="tel:+375297205500" title="+375 (29) 720-55-00">
+                            <img th:src="@{/static/assets/img/mts.png}" alt="МТС">
+                            <span style="font-weight: bold;">+375 (29) 720-55-00</span>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <a href="tel:+375447205500" title="+375 (44) 720-55-00">
+                            <img th:src="@{/static/assets/img/a1.png}" alt="A1"/>
+                            <span style="font-weight: bold;">+375 (29) 720-55-00</span>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <a href="tel:+375257205500" title="+375 (25) 720-55-00">
+                            <img th:src="@{/static/assets/img/life.png}" alt="Life"/>
+                            <span style="font-weight: bold;">+375 (29) 720-55-00</span>
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>-->
+            <div class="moving-clouds" style="background-image: url('/static/assets/img/clouds.png'); "></div>
+        </div>
 
         <div class="mainmenu-area">
             <div class="container">
@@ -126,6 +129,123 @@
                 <div class="col-md-10">
                     <div layout:fragment="content">
                         <p>Main Content here....</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-top-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-about-us">
+                            <h2>u
+                                <span>Stora</span>
+                            </h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus
+                                vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet
+                                eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam.
+                                Laborum commodi veritatis magni at?
+                            </p>
+                            <div class="footer-social">
+                                <a href="#" target="_blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="#" target="_blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#" target="_blank">
+                                    <i class="fa fa-youtube"></i>
+                                </a>
+                                <a href="#" target="_blank">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-menu">
+                            <h2 class="footer-wid-title">User Navigation</h2>
+                            <ul>
+                                <li>
+                                    <a href="#">My account</a>
+                                </li>
+                                <li>
+                                    <a href="#">Order history</a>
+                                </li>
+                                <li>
+                                    <a href="#">Wishlist</a>
+                                </li>
+                                <li>
+                                    <a href="#">Vendor contact</a>
+                                </li>
+                                <li>
+                                    <a href="#">Front page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-menu">
+                            <h2 class="footer-wid-title">Categories</h2>
+                            <ul>
+                                <li>
+                                    <a href="#">Mobile Phone</a>
+                                </li>
+                                <li>
+                                    <a href="#">Home accesseries</a>
+                                </li>
+                                <li>
+                                    <a href="#">LED TV</a>
+                                </li>
+                                <li>
+                                    <a href="#">Computer</a>
+                                </li>
+                                <li>
+                                    <a href="#">Gadets</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footer-newsletter">
+                            <h2 class="footer-wid-title">Newsletter</h2>
+                            <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to
+                                your inbox!
+                            </p>
+                            <div class="newsletter-form">
+                                <form action="#">
+                                    <input type="email" placeholder="Type your email">
+                                    <input type="submit" value="Subscribe">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="copyright">
+                            <p>© 2015 uCommerce. All Rights Reserved.
+                                <a href="https://freshdesignweb.com" target="_blank">freshDesignweb.com</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="footer-card-icon">
+                            <i class="fa fa-cc-discover"></i>
+                            <i class="fa fa-cc-mastercard"></i>
+                            <i class="fa fa-cc-paypal"></i>
+                            <i class="fa fa-cc-visa"></i>
+                        </div>
                     </div>
                 </div>
             </div>

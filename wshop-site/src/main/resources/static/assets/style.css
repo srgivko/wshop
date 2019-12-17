@@ -1587,4 +1587,20 @@ img.carousel-inner-img {
     to{box-shadow: inset -3px 0px 0px transparent;}
 }
 
+.phones {
+    display: flex;
+    flex-direction: column;
+    height: 115px;
+    justify-content: space-around;
+    top: 50%;
+    position: absolute;
+    right: 16px;
+    transform: translateY(-50%);
+    padding: 12px;
+    z-index: 2;
+}
 
+.phones a {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: whitesmoke;
+}

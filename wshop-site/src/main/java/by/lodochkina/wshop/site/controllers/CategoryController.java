@@ -37,6 +37,7 @@ public class CategoryController extends WShopSiteBaseController {
 
         Collections.reverse(categoryPath);
 
+        // TODO: 12/17/19 https://www.baeldung.com/spring-data-jpa-pagination-sorting use mix pagibale and sort 
         List<Product> products = category.getProductsNotDisable().stream().sorted(SortUtils.getComparator(sort))
                 .skip(pageable.getPageSize() * pageable.getPageNumber())
                 .limit(pageable.getPageSize()).collect(Collectors.toList());
