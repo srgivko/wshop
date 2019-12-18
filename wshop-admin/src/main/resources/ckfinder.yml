@@ -1,7 +1,7 @@
 # ckfinder.yml
 
-licenseName: ''
-licenseKey: ''
+licenseName: 'localhost'
+licenseKey: 'secret'
 roleSessionAttribute: 'CKFinder_UserRole'
 serveStaticResources: true
 checkSizeAfterScaling: true

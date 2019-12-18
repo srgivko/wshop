@@ -25,10 +25,12 @@ public class DashboardController {
         model.addAttribute("latestOrders", this.dashBoardService.get10LatestOrders());
         model.addAttribute("latestProducts", this.dashBoardService.get5LatestProducts());
         model.addAttribute("latestCustomers", this.dashBoardService.get8LatestCustomers());
+        model.addAttribute("latestSubscribers", this.dashBoardService.get10LatestSubscribers());
         model.addAttribute("userCount", this.dashBoardService.getTotalCountOfUsers());
         model.addAttribute("customerCount", this.dashBoardService.getTotalCountOfCustomers());
         model.addAttribute("orderCount", this.dashBoardService.getTotalCountOfOrders());
         model.addAttribute("productCount", this.dashBoardService.getTotalCountOfProducts());
+        model.addAttribute("subscriberCount", this.dashBoardService.getTotalCountOfSubscribers());
         return "dashboard";
     }
 }

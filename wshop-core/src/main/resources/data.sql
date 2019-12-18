@@ -2849,7 +2849,7 @@ INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUE
 -- /ORDER_ITEMS
 
 -- ORDER_ITEMS
-INSERT INTO public.subscribers (email, remove_code) VALUES ('pi-ls@mail.ru', 'abcdsaw');
+INSERT INTO public.subscribers (email, remove_code, subscribed_on) VALUES ('pi-ls@mail.ru', 'abcdsaw', now());
 -- /ORDER_ITEMS
 
 -- SEQUENCE

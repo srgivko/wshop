@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepositoryImplementation<Product, Long> {
+public interface
+ProductRepository extends JpaRepositoryImplementation<Product, Long> {
 
     Optional<Product> findByName(String name);
 

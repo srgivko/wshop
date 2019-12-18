@@ -4,9 +4,11 @@ import by.lodochkina.wshop.customers.CustomerRepository;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Order;
 import by.lodochkina.wshop.entities.Product;
+import by.lodochkina.wshop.entities.Subscriber;
 import by.lodochkina.wshop.orders.OrderRepository;
 import by.lodochkina.wshop.security.UserRepository;
 import by.lodochkina.wshop.shop.ProductRepository;
+import by.lodochkina.wshop.subscribers.SubscriberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +23,22 @@ public class DashboardServiceImpl implements DashboardService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final SubscriberRepository subscriberRepository;
 
     @Autowired
-    public DashboardServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository) {
+    public DashboardServiceImpl(CustomerRepository customerRepository, OrderRepository orderRepository,
+                                UserRepository userRepository, ProductRepository productRepository,
+                                SubscriberRepository subscriberRepository) {
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.subscriberRepository = subscriberRepository;
+    }
+
+    @Override
+    public Long getTotalCountOfSubscribers(){
+        return this.subscriberRepository.count();
     }
 
     @Override
@@ -63,5 +74,10 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public List<Order> get10LatestOrders(){
         return this.orderRepository.findTop10ByStatusIsNotOrderByIdDesc(COMPLETED);
+    }
+
+    @Override
+    public List<Subscriber> get10LatestSubscribers() {
+        return this.subscriberRepository.findTop10ByOrderBySubscribedOnDesc();
     }
 }

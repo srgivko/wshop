@@ -178,7 +178,7 @@
                 onInit: function (finder) {
                     finder.on('files:choose', function (evt) {
                         var file = evt.data.files.first();
-                        inputElement.value = file.getUrl().substr(file.getUrl().indexOf('/img/') + 5);
+                        inputElement.value = decodeURI(file.getUrl().substr(file.getUrl().indexOf('/img/') + 5));
                         removeElement.style.display = '';
                         const imageElement = removeElement.parentElement.nextElementSibling;
                         imageElement.src = file.getUrl();
@@ -186,7 +186,7 @@
                     });
 
                     finder.on('file:choose:resizedImage', function (evt) {
-                        inputElement.value = evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/') + 5);
+                        inputElement.value = decodeURI(evt.data.resizedUrl.substr(evt.data.resizedUrl.indexOf('/img/') + 5));
                         const imageElement = inputElement.parentElement.nextElementSibling;
                         imageElement.src = evt.data.resizedUrl;
                         imageElement.hidden = false;
