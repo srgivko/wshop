@@ -2852,6 +2852,11 @@ INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUE
 INSERT INTO public.subscribers (email, remove_code, subscribed_on) VALUES ('pi-ls@mail.ru', 'abcdsaw', now());
 -- /ORDER_ITEMS
 
+-- POSTS
+INSERT INTO public.posts (id, content, created_on, description, img_title, title) VALUES (15, '<p><iframe allowfullscreen="" frameborder="0" height="360" src="https://www.youtube.com/embed/VRZVQVUO4PU" width="640"></iframe></p>
+', '2019-12-18 04:01:33.000000', 'Fork from https://javascript.info/bind', 'user6-128x128.jpg', 'Title');
+-- /POSTS
+
 -- SEQUENCE
 ALTER SEQUENCE addresses_id_seq RESTART WITH 17;
 ALTER SEQUENCE categories_id_seq RESTART WITH 30;
@@ -2866,7 +2871,7 @@ ALTER SEQUENCE tags_id_seq RESTART WITH 15;
 ALTER SEQUENCE units_id_seq RESTART WITH 18;
 ALTER SEQUENCE users_id_seq RESTART WITH 2;
 ALTER SEQUENCE producers_id_seq RESTART WITH 26;
-ALTER SEQUENCE posts_id_seq RESTART WITH 15;
+ALTER SEQUENCE posts_id_seq RESTART WITH 16;
 ALTER SEQUENCE promotions_id_seq RESTART WITH 15;
 ALTER SEQUENCE sales_id_seq RESTART WITH 16;
 ALTER SEQUENCE sale_products_id_seq RESTART WITH 18;

@@ -2023,3 +2023,25 @@ img.carousel-inner-img {
         left: 0;
     }
 }
+
+.post-content-title {
+    padding: 5px 0;
+    border-bottom: 1px solid black;
+    position: relative;
+}
+
+.post-content-description {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
+.post-content-content {
+    padding: 10px 0;
+}
+
+.post-content-title span {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
