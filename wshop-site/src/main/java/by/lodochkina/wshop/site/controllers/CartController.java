@@ -23,6 +23,14 @@ public class CartController extends WShopSiteBaseController {
         return "Корзина";
     }
 
+    @GetMapping("/cart")
+    public String showCart(HttpServletRequest request, Model model) {
+        Cart cart = getOrCreateCart(request);
+        updateLineItems(cart);
+        model.addAttribute("cart", cart);
+        return "cart";
+    }
+    
     @GetMapping("/cart/items/count")
     @ResponseBody
     public Map<String, Object> getCartItemCount(HttpServletRequest request) {
@@ -41,14 +49,6 @@ public class CartController extends WShopSiteBaseController {
         Cart cart = getOrCreateCart(request);
         Product p = super.catalogService.findProductById(product.getId()).orElseThrow(WShopException::new);
         cart.addItem(p);
-    }
-
-    @GetMapping("/cart")
-    public String showCart(HttpServletRequest request, Model model) {
-        Cart cart = getOrCreateCart(request);
-        updateLineItems(cart);
-        model.addAttribute("cart", cart);
-        return "cart";
     }
 
     @PutMapping("/cart/items")

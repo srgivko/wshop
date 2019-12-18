@@ -2,6 +2,7 @@ package by.lodochkina.wshop.services;
 
 import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Customer;
+import by.lodochkina.wshop.entities.Subscriber;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,4 +62,5 @@ public class EmailServiceImpl implements EmailService {
         String message = String.format(FORGET_MESSAGE_FORMAT, urlHostname, customer.getActivationCode());
         this.send(customer.getEmail(), FORGET_SUBJECT, message);
     }
+
 }

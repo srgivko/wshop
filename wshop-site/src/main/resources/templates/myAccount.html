@@ -48,10 +48,6 @@
                                 <input type="text" class="form-control"
                                        th:field="*{phone}" readonly="readonly"/>
                             </div>
-                            <div class="form-group">
-                                <label th:text="#{label.subscribe}">Subscribe</label>
-                                <input type="checkbox" th:checked="*{subscribe}" th:onchange="'javascript:subscribe(this.checked, this);'"/>
-                            </div>
                         </form>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="orders">

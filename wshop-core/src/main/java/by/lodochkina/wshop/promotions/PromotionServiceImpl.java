@@ -1,10 +1,10 @@
 package by.lodochkina.wshop.promotions;
 
 import by.lodochkina.wshop.WShopException;
-import by.lodochkina.wshop.customers.CustomerService;
-import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Promotion;
+import by.lodochkina.wshop.entities.Subscriber;
 import by.lodochkina.wshop.services.EmailService;
+import by.lodochkina.wshop.subscribers.SubscriberService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ public class PromotionServiceImpl implements PromotionService {
 
     private final EmailService emailService;
 
-    private final CustomerService customerService;
+    private final SubscriberService subscriberService;
 
     @Autowired
-    public PromotionServiceImpl(PromotionRepository promotionRepository, EmailService emailService, CustomerService customerService) {
+    public PromotionServiceImpl(PromotionRepository promotionRepository, EmailService emailService, SubscriberService subscriberService) {
         this.promotionRepository = promotionRepository;
         this.emailService = emailService;
-        this.customerService = customerService;
+        this.subscriberService = subscriberService;
     }
 
     @Override
@@ -59,10 +59,20 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Transactional
     @Override
-    public void sendPromotion(Long id) {
-        List<Customer> subscribers = this.customerService.getAllSubscribers();
+    public void sendPromotion(Long id, String urlHostname) {
+        List<Subscriber> subscribers = this.subscriberService.getAllSubscribers();
         Promotion promotion = this.promotionRepository.findById(id).orElseThrow(WShopException::new);
-        subscribers.forEach(subscriber -> this.emailService.send(subscriber.getEmail(), promotion.getSubject(), promotion.getContent()));
+        subscribers.forEach(subscriber -> {
+            String contentWithUnsubscribeTag = createUnsubscribeTag(urlHostname, promotion, subscriber);
+            this.emailService.send(subscriber.getEmail(), promotion.getSubject(), contentWithUnsubscribeTag);
+        });
         promotion.setSendOn(new Date());
     }
+
+    private String createUnsubscribeTag(String urlHostname, Promotion promotion, Subscriber subscriber) {
+        String unsubscribeUrl = String.format(UNSUBSCRIBE_URL_FORMAT, urlHostname, subscriber.getRemoveCode());
+        String unsubscribeAHREF = String.format(UNSUBSCRIBE_AHREF, unsubscribeUrl);
+        return promotion.getContent().replace(UNSUBSCRIBE_URL_PLACE, unsubscribeAHREF);
+    }
+
 }

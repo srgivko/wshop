@@ -120,18 +120,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public void subscribe(Long id, Boolean subscribe) {
-        Customer customer = this.customerRepository.findById(id).orElseThrow(WShopException::new);
-        customer.setSubscribe(subscribe);
-    }
-
-    @Override
-    public List<Customer> getAllSubscribers() {
-        return this.customerRepository.findAllBySubscribeIsTrue();
-    }
-
-    @Transactional
-    @Override
     public Rating setRate(Long productId, Long customerId, int rate) {
         Rating rating;
         Customer customer = this.customerRepository.findById(customerId).orElseThrow(WShopException::new);

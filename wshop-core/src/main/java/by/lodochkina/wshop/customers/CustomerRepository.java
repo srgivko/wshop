@@ -15,6 +15,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     List<Customer> findTop8ByOrderByIdDesc();
 
     Optional<Customer> findByActivationCode(String activationCode);
-
-    List<Customer> findAllBySubscribeIsTrue();
 }

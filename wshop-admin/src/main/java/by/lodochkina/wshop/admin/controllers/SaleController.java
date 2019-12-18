@@ -1,12 +1,12 @@
 package by.lodochkina.wshop.admin.controllers;
 
-import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Sale;
 import by.lodochkina.wshop.entities.SaleProduct;
 import by.lodochkina.wshop.sales.SaleService;
 import by.lodochkina.wshop.services.CatalogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PROMOTIONS;
+
 @Slf4j
 @Controller
+@Secured(MANAGE_PROMOTIONS)
 public class SaleController extends WShopAdminBaseController {
 
     private static final String VIEW_PREFIX = "sales/";

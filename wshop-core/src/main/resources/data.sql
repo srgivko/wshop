@@ -8,6 +8,7 @@ delete from  posts;
 delete from  promotions;
 delete from  rating;
 delete from  product_image_urls;
+delete from  subscribers;
 
 delete from  sale_products;
 delete from  sales;
@@ -2793,7 +2794,7 @@ INSERT INTO product_image_urls (product_id, image_url) VALUES
 -- /PRODUCT_IMAGE_URLS
 
 -- SALES
-INSERT INTO public.sales (id, begin_date, end_date, name, promo_code) VALUES (15, now(), now() + '3 DAY', 'Распродажа краски', null);
+INSERT INTO public.sales (id, begin_date, end_date, name) VALUES (15, now(), now() + '3 DAY', 'Распродажа краски');
 -- /SALES
 
 -- SALES PRODUCTS
@@ -2823,7 +2824,7 @@ INSERT INTO public.product_tag (product_id, tag_id) VALUES (40, 1);
 -- /PRODUCT_TAGS
 
 -- CUSTOMERS
-INSERT INTO public.customers (id, activation_code, created_on, email, enabled, firstname, lastname, password, phone, subscribe) VALUES (15, null, '2019-12-13 17:29:48.427000', 'pi-ls@mail.ru', true, 'test', 'test', '$2a$10$OJTUydhmit/Fc3x4m92HT.h83XlEctgmG9vMCEcKg2jtTQQx1r3wu', 'test', false);
+INSERT INTO public.customers (id, activation_code, created_on, email, enabled, firstname, lastname, password, phone) VALUES (15, null, '2019-12-13 17:29:48.427000', 'pi-ls@mail.ru', true, 'test', 'test', '$2a$10$OJTUydhmit/Fc3x4m92HT.h83XlEctgmG9vMCEcKg2jtTQQx1r3wu', 'test');
 -- /CUSTOMERS
 
 -- DELIVERY(ADDRESSES)
@@ -2845,6 +2846,10 @@ INSERT INTO public.orders (id, created_on, order_number, status, billing_addr_id
 INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (15, 32.00, 1, 15, 41);
 INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (16, 3.76, 1, 15, 17);
 INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (17, 72.00, 1, 15, 42);
+-- /ORDER_ITEMS
+
+-- ORDER_ITEMS
+INSERT INTO public.subscribers (email, remove_code) VALUES ('pi-ls@mail.ru', 'abcdsaw');
 -- /ORDER_ITEMS
 
 -- SEQUENCE

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+
+<head>
+    <title th:text="#{label.subscribes}">Subscribers</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!--/*@thymesVar id="sales" type="List<by.lodochkina.wshop.entities.Sale>"*/-->
+    <!--/*@thymesVar id="sale" type="by.lodochkina.wshop.entities.Sale"*/-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title" th:text="#{label.subscribes}">List of Subscribers</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th th:text="#{label.email}">Email</th>
+                            <th th:text="#{label.removeCode}">Remove Code</th>
+                            <th th:text="#{label.delete}">Delete</th>
+                        </tr>
+                        <!--/*@thymesVar id="subscribers" type="List<by.lodochkina.wshop.entities.Subscriber>"*/-->
+                        <tr th:each="subscriber,iterStat : ${subscribers}">
+                            <!--/*@thymesVar id="subscriber" type="by.lodochkina.wshop.entities.Subscriber"*/-->
+                            <td th:text="${iterStat.count}">1</td>
+                            <td th:text="${subscriber.email}">Email</td>
+                            <td th:text="${subscriber.removeCode}">Remove code</td>
+                            <td>
+                                <a th:email="${subscriber.email}" onclick="javascript:removeSubscriber(this.getAttribute('email'));"
+                                   class="btn btn-sm btn-default"><i class="fa fa-trash-o" aria-hidden="true"></i><span
+                                        th:text="#{label.delete}">Delete</span></a>
+                            </td>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

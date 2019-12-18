@@ -8,6 +8,10 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <div th:if="${info}" class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span th:text="${info}"></span>
+    </div>
     <div th:replace="fragments/slider :: slider (products=${top5Products})"></div>
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>

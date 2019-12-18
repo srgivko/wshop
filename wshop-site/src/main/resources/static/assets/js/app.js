@@ -92,22 +92,13 @@ function addProductToWishlist(id, target) {
     });
 }
 
-function subscribe(value, target) {
-    $.ajax({
-        url: '/myAccount/subscribe',
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: '{"subscribe":"' + value + '"}"',
-        complete: function (responseData, status, xhttp) {
-            if (value) {
-                alert('you are subscribed');
-            } else {
-                alert('you are unsubscribed');
-            }
-            target.checked = value;
-        }
-    });
+function subscribe() {
+    const email = {
+        email: event.target.previousElementSibling.value
+    };
+    postData('/subscribe', email)
+        .then(data => alert(`You are subscribe ${data.email}`))
+        .catch(reason => console.log(reason));
 }
 
 function postData(url = '', data = {}) {

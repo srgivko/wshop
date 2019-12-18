@@ -27,9 +27,6 @@ public class Sale {
     @Column
     private String name;
 
-    @Column
-    private String promoCode;
-
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date beginDate = new Date();

@@ -1,6 +1,5 @@
 package by.lodochkina.wshop.services;
 
-
 import by.lodochkina.wshop.entities.Customer;
 
 public interface EmailService {

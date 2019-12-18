@@ -9,6 +9,15 @@ function removeSaleProduct(saleId, saleProductId) {
         .catch(error => console.error(error));
 }
 
+function removeSubscriber(id) {
+    const targetTr = event.target.closest('tr');
+    deleteData(`/subscribers/${id}`)
+        .then(data => {
+            targetTr.remove();
+        })
+        .catch(error => console.error(error));
+}
+
 function deleteData(url = '') {
     // Значения по умолчанию обозначены знаком *
     return fetch(url, {

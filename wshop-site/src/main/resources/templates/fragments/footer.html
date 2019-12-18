@@ -69,10 +69,8 @@
                         <h2 class="footer-wid-title" th:text="#{label.newsLetter}">Newsletter</h2>
                         <p th:text="#{label.newsletter.text}">Newsletter text</p>
                         <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" th:placeholder="#{label.email}">
-                                <input type="submit" th:value="#{label.subscribe}">
-                            </form>
+                            <input type="email" th:placeholder="#{label.email}"/>
+                            <a th:text="#{label.subscribe}" th:onclick="'javascript:subscribe();'"></a>
                         </div>
                     </div>
                 </div>

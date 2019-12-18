@@ -45,6 +45,7 @@
                 </div>
 
                 <h3 th:text="#{label.useOnlyAbsolutePath}" style="color: red"></h3>
+                <h3 th:text="#{label.insertUnsubscribeTagPlace(${T(by.lodochkina.wshop.promotions.PromotionService).UNSUBSCRIBE_URL_PLACE})}" style="color: red"></h3>
 
                 <div class="form-group" th:classappend="${#fields.hasErrors('content')}? 'has-error'">
                     <label th:text="#{label.content}">Content</label>

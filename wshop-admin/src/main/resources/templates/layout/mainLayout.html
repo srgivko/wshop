@@ -207,6 +207,13 @@
                                 <span th:text="#{label.orders}">Orders</span>
                             </a>
                         </li>
+                        <li th:class="${CURRENT_MENU == 'Subscribers'}? 'active' : ''"
+                            sec:authorize="hasRole('MANAGE_PROMOTIONS')">
+                            <a href="#" th:href="@{'/subscribers'}">
+                                <i class="fa fa-rss" aria-hidden="true"></i>
+                                <span th:text="#{label.subscribes}">Subscribers</span>
+                            </a>
+                        </li>
                         <li th:class="${CURRENT_MENU == 'Customers'}? 'active' : ''"
                             sec:authorize="hasRole('ROLE_MANAGE_CUSTOMERS')">
                             <a href="#" th:href="@{'/customers'}">
