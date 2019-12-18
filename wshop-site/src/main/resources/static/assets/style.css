@@ -2011,3 +2011,15 @@ img.carousel-inner-img {
     position: relative;
     right: -15px;
 }
+
+@media screen and (max-width: 768px) {
+    .main-footer__contact {
+        background-color: whitesmoke;
+        padding: 20px;
+        box-shadow: none;
+        border-radius: 0;
+        position: relative;
+        top: 120px;
+        left: 0;
+    }
+}
