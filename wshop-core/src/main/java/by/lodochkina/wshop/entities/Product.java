@@ -1,6 +1,7 @@
 package by.lodochkina.wshop.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "products")
+@EqualsAndHashCode(exclude = {"imagesUrl", "tags", "unit", "rating", "saleProductSet"})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = -8954674651400832477L;
@@ -39,7 +41,7 @@ public class Product implements Serializable {
     @NotNull(message = "price cannot be empty")
     private BigDecimal price = new BigDecimal("0.00");
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_image_urls", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "image_url")
     private List<String> imagesUrl;

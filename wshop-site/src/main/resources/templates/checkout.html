@@ -37,12 +37,18 @@
                                             <span th:text="${item.product.name}">Product Name</span>
                                             <strong class="product-quantity" th:text="'× '+${item.quantity}">× 1</strong> </td>
                                         <td class="product-total">
-                                            <span class="amount" th:unless="${item.product.discountPrice}" th:text="${item.product.price * item.quantity}">£15.00</span>
-                                            <span class="amount" th:if="${item.product.discountPrice}" th:text="${item.product.discountPrice * item.quantity}">$150.00</span>
+                                            <span class="amount" th:text="${item.getSubTotal(cart.coupon)}">$150.00</span>
                                         </td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
+                                    <th:block th:if="${cart.coupon}">
+                                        <tr class="cart-subtotal"
+                                            th:if="${!cart.priceDiscountCoupon.equals(T(java.math.BigDecimal).ZERO)}">
+                                            <th th:text="#{label.cart.coupon.price}">Total discount coupon</th>
+                                            <td><span class="amount" th:text="${cart.priceDiscountCoupon}">$15.00</span></td>
+                                        </tr>
+                                    </th:block>
                                     <tr class="cart-subtotal">
                                         <th th:text="#{label.cart.subtotal}">Cart Subtotal</th>
                                         <td><span class="amount" th:text="${cart.totalAmount}">£15.00</span>

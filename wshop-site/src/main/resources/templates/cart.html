@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 
@@ -22,7 +21,6 @@
                 <div th:unless="${#lists.isEmpty(cart.items)}">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action="#">
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                     <tr>
@@ -30,6 +28,9 @@
                                         <th class="product-thumbnail">&nbsp;</th>
                                         <th class="product-name" th:text="#{label.product}">Product</th>
                                         <th class="product-price" th:text="#{label.price}">Price</th>
+                                        <th class="product-subtotal" th:if="${cart.coupon}" th:text="#{label.coupon}">
+                                            Coupon
+                                        </th>
                                         <th class="product-quantity" th:text="#{label.quantity}">Quantity</th>
                                         <th class="product-subtotal" th:text="#{label.total}">Total</th>
                                     </tr>
@@ -59,6 +60,11 @@
                                             <span class="amount" th:if="${item.product.discountPrice}" th:text="${item.product.discountPrice}" style="color: red;">$15.00</span>
                                         </td>
 
+                                        <td class="product-discount-coupon" th:if="${cart.coupon}">
+                                            <span class="amount" th:if="${item.discountCoupon}"
+                                                  th:text="${item.discountCoupon}" style="color: red;">$15.00</span>
+                                        </td>
+
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
                                                 <input type="text" size="5" value="1" th:value="${item.quantity}"
@@ -67,18 +73,31 @@
                                         </td>
 
                                         <td class="product-subtotal">
-                                            <span class="amount" th:unless="${item.product.discountPrice}" th:text="${item.product.price * item.quantity}">$150.00</span>
-                                            <span class="amount" th:if="${item.product.discountPrice}" th:text="${item.product.discountPrice * item.quantity}">$150.00</span>
+                                            <span class="amount" th:text="${item.getSubTotal(cart.coupon)}">$150.00</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="actions" colspan="6">
-                                            <a class="add_to_cart_button" href="#" th:href="@{/checkout}" th:text="#{label.checkout}">CHECKOUT</a>
+                                        <td class="actions" th:colspan="${cart.coupon!=null ? 7 : 6}">
+                                            <div class="actions-wrapper">
+                                                <div class="coupon-wrapper">
+                                                    <form th:action="@{/cart/coupon}" class="coupon" method="post"
+                                                          th:object="${coupon}">
+                                                        <input type="text" th:placeholder="#{label.couponCode}"
+                                                               th:field="*{code}" class="input-text" name="coupon_code">
+                                                        <button type="submit" th:text="#{label.applyCoupon}"
+                                                                class="cart-button"></button>
+                                                    </form>
+                                                    <p th:text="${couponError}" style="color: red"></p>
+                                                </div>
+                                                <div class="actions-cart-wrapper">
+                                                    <a th:href="@{/checkout}" th:text="#{label.checkout}"
+                                                       class="cart-button"></a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                            </form>
 
                             <div class="cart-collaterals">
                                 <div class="cart_totals ">
@@ -86,6 +105,21 @@
 
                                     <table cellspacing="0">
                                         <tbody>
+                                        <th:block th:if="${cart.coupon}">
+                                            <tr class="cart-subtotal bg-success"
+                                                th:if="${!cart.priceDiscountCoupon.equals(T(java.math.BigDecimal).ZERO)}">
+                                                <th th:text="#{label.cart.coupon.price}">Total discount coupon</th>
+                                                <td><span class="amount"
+                                                          th:text="${cart.priceDiscountCoupon}">$15.00</span></td>
+                                            </tr>
+                                            <tr class="cart-subtotal bg-success"
+                                                th:if="${!cart.totalDiscountCoupon.equals(T(java.math.BigDecimal).ZERO)}">
+                                                <th th:text="#{label.cart.coupon.total}">Total discount coupon</th>
+                                                <td><span class="amount"
+                                                          th:text="${cart.totalDiscountCoupon}">$15.00</span></td>
+                                            </tr>
+                                        </th:block>
+
                                         <tr class="cart-subtotal">
                                             <th th:text="#{label.cart.subtotal}">Cart Subtotal</th>
                                             <td><span class="amount" th:text="${cart.totalAmount}">$15.00</span></td>

@@ -1,15 +1,19 @@
 package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.WShopException;
-import by.lodochkina.wshop.entities.Producer;
+import by.lodochkina.wshop.cart.Cart;
+import by.lodochkina.wshop.cart.LineItem;
+import by.lodochkina.wshop.coupons.CouponService;
 import by.lodochkina.wshop.entities.Product;
-import by.lodochkina.wshop.site.models.Cart;
-import by.lodochkina.wshop.site.models.LineItem;
+import by.lodochkina.wshop.entities.coupons.Coupon;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,6 +21,9 @@ import java.util.Optional;
 
 @Controller
 public class CartController extends WShopSiteBaseController {
+
+    @Autowired
+    private CouponService couponService;
 
     @Override
     protected String getHeaderTitle() {
@@ -28,6 +35,7 @@ public class CartController extends WShopSiteBaseController {
         Cart cart = getOrCreateCart(request);
         updateLineItems(cart);
         model.addAttribute("cart", cart);
+        model.addAttribute("coupon", cart.getCoupon() != null ? cart.getCoupon() : new Coupon());
         return "cart";
     }
     
@@ -70,6 +78,19 @@ public class CartController extends WShopSiteBaseController {
         cart.removeItem(id);
     }
 
+    @PostMapping("/cart/coupon")
+    public String addCoupon(@Valid Coupon coupon, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        Optional<Coupon> persistedCoupon = this.couponService.findCouponByCode(coupon.getCode());
+        Cart cart = getOrCreateCart(request);
+        if (!persistedCoupon.isPresent() || !persistedCoupon.get().isActive()) {
+            redirectAttributes.addFlashAttribute("couponError", "This code doesn't exist");
+            cart.setCoupon(null);
+        } else {
+            cart.setCoupon(persistedCoupon.get());
+        }
+        return "redirect:/cart";
+    }
+
     /**
      * Обновляет цены на товары в корзине
      * Проблема (В сессии созранялась корзина с продуктами, и с истекщими скидками)
@@ -89,4 +110,5 @@ public class CartController extends WShopSiteBaseController {
             lineItem.setProduct(productById.get());
         }
     }
+
 }

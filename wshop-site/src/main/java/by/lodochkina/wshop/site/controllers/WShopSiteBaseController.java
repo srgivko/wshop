@@ -6,7 +6,7 @@ import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Product;
 import by.lodochkina.wshop.services.CatalogService;
-import by.lodochkina.wshop.site.models.Cart;
+import by.lodochkina.wshop.cart.Cart;
 import by.lodochkina.wshop.site.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

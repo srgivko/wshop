@@ -1,5 +1,6 @@
 package by.lodochkina.wshop.entities;
 
+import by.lodochkina.wshop.entities.coupons.Coupon;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -50,10 +51,20 @@ public class Order implements Serializable {
     @Column(name = "created_on")
     private Date createdOn;
 
+    @OneToOne
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
+    @Column
+    private BigDecimal priceDiscountCoupon;
+
     public BigDecimal getTotalAmount() {
         BigDecimal amount = new BigDecimal("0.0");
         for (OrderItem item : items) {
-            amount = amount.add(item.getSubTotal());
+            amount = amount.add(item.getTotalPrice());
+        }
+        if (priceDiscountCoupon != null) {
+            amount = amount.subtract(priceDiscountCoupon);
         }
         return amount;
     }

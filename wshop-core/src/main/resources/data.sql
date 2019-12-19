@@ -13,6 +13,9 @@ delete from  subscribers;
 delete from  sale_products;
 delete from  sales;
 
+delete from  coupon_items;
+delete from  coupons;
+
 delete from  product_tag;
 delete from  category_tag;
 delete from  order_items;
@@ -25,6 +28,8 @@ delete from  categories;
 delete from  tags;
 delete from  units;
 delete from  producers;
+
+
 
 INSERT INTO permissions (id, name) VALUES
 (1, 'MANAGE_CATEGORIES'),
@@ -2827,6 +2832,21 @@ INSERT INTO public.product_tag (product_id, tag_id) VALUES (40, 1);
 INSERT INTO public.customers (id, activation_code, created_on, email, enabled, firstname, lastname, password, phone) VALUES (15, null, '2019-12-13 17:29:48.427000', 'pi-ls@mail.ru', true, 'test', 'test', '$2a$10$OJTUydhmit/Fc3x4m92HT.h83XlEctgmG9vMCEcKg2jtTQQx1r3wu', 'test');
 -- /CUSTOMERS
 
+-- POSTS
+INSERT INTO public.posts (id, content, created_on, description, img_title, title) VALUES (15, '<p><iframe allowfullscreen="" frameborder="0" height="360" src="https://www.youtube.com/embed/VRZVQVUO4PU" width="640"></iframe></p>
+', '2019-12-18 04:01:33.000000', 'Fork from https://javascript.info/bind', 'user6-128x128.jpg', 'Title');
+-- /POSTS
+
+-- COUPONS
+INSERT INTO public.coupons (id, begin_date, code, end_date, name) VALUES (1, now(), 'abc1', now() + '3 DAY', 'abc1');
+-- /COUPONS
+
+-- COUPON_ITEMS
+INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price, quantity, coupon_id, product_id) VALUES ('PRICE_COUPON', 1, 1.00, 10.00, null, 1, null);
+INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price, quantity, coupon_id, product_id) VALUES ('PRODUCT_COUPON', 2, 1.00, null, null, 1, 15);
+INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price, quantity, coupon_id, product_id) VALUES ('QUANTITY_COUPON', 3, null, null, 3, 1, 16);
+-- /COUPON_ITEMS
+
 -- DELIVERY(ADDRESSES)
 INSERT INTO public.addresses (id, address_line1, address_line2, city, country, state, zip_code)
 VALUES
@@ -2843,19 +2863,14 @@ INSERT INTO public.orders (id, created_on, order_number, status, billing_addr_id
 -- /ORDER
 
 -- ORDER_ITEMS
-INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (15, 32.00, 1, 15, 41);
-INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (16, 3.76, 1, 15, 17);
-INSERT INTO public.order_items (id, price, quantity, order_id, product_id) VALUES (17, 72.00, 1, 15, 42);
+INSERT INTO public.order_items (id, total_price, quantity, order_id, product_id) VALUES (15, 32.00, 1, 15, 41);
+INSERT INTO public.order_items (id, total_price, quantity, order_id, product_id) VALUES (16, 3.76, 1, 15, 17);
+INSERT INTO public.order_items (id, total_price, quantity, order_id, product_id) VALUES (17, 72.00, 1, 15, 42);
 -- /ORDER_ITEMS
 
 -- ORDER_ITEMS
 INSERT INTO public.subscribers (email, remove_code, subscribed_on) VALUES ('pi-ls@mail.ru', 'abcdsaw', now());
 -- /ORDER_ITEMS
-
--- POSTS
-INSERT INTO public.posts (id, content, created_on, description, img_title, title) VALUES (15, '<p><iframe allowfullscreen="" frameborder="0" height="360" src="https://www.youtube.com/embed/VRZVQVUO4PU" width="640"></iframe></p>
-', '2019-12-18 04:01:33.000000', 'Fork from https://javascript.info/bind', 'user6-128x128.jpg', 'Title');
--- /POSTS
 
 -- SEQUENCE
 ALTER SEQUENCE addresses_id_seq RESTART WITH 17;
@@ -2875,4 +2890,6 @@ ALTER SEQUENCE posts_id_seq RESTART WITH 16;
 ALTER SEQUENCE promotions_id_seq RESTART WITH 15;
 ALTER SEQUENCE sales_id_seq RESTART WITH 16;
 ALTER SEQUENCE sale_products_id_seq RESTART WITH 18;
+ALTER SEQUENCE coupons_id_seq RESTART WITH 16;
+ALTER SEQUENCE coupon_items_id_seq RESTART WITH 18;
 -- /SEQUENCE

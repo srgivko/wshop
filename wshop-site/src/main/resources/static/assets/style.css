@@ -1200,7 +1200,7 @@ td.product-quantity div.quantity {
     margin: 0;
 }
 
-td.actions div.coupon {
+td.actions form.coupon {
     float: left;
 }
 
@@ -2044,4 +2044,25 @@ img.carousel-inner-img {
     top: 50%;
     right: 0;
     transform: translateY(-50%);
+}
+
+a.cart-button {
+    background: none repeat scroll 0 0 #5a88ca;
+    border: medium none;
+    color: #fff;
+    padding: 11px 15px;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cart-button:hover, .cart-button:focus {
+    background-color: darkorange;
+    color: #fff;
+}
+
+.actions-wrapper {
+    display: flex;
+    justify-content: space-between;
 }

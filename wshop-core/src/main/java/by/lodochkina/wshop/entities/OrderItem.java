@@ -27,7 +27,7 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private BigDecimal price;
+    private BigDecimal totalPrice;
 
     private int quantity;
 
@@ -35,11 +35,4 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public BigDecimal getSubTotal() {
-        if (this.product.getDiscountPrice() != null) {
-            return this.product.getDiscountPrice().multiply(new BigDecimal(quantity));
-        } else {
-            return this.product.getPrice().multiply(new BigDecimal(quantity));
-        }
-    }
 }

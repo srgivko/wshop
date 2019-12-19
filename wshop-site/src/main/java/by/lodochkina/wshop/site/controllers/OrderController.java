@@ -1,13 +1,13 @@
 package by.lodochkina.wshop.site.controllers;
 
 import by.lodochkina.wshop.WShopException;
+import by.lodochkina.wshop.cart.Cart;
+import by.lodochkina.wshop.cart.LineItem;
 import by.lodochkina.wshop.customers.CustomerService;
 import by.lodochkina.wshop.entities.*;
 import by.lodochkina.wshop.orders.OrderService;
 import by.lodochkina.wshop.services.EmailService;
 import by.lodochkina.wshop.site.dto.OrderDTO;
-import by.lodochkina.wshop.site.models.Cart;
-import by.lodochkina.wshop.site.models.LineItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -73,11 +74,7 @@ public class OrderController extends WShopSiteBaseController {
             OrderItem item = new OrderItem();
             item.setProduct(lineItem.getProduct());
             item.setQuantity(lineItem.getQuantity());
-            if (lineItem.getProduct().getDiscountPrice() != null) {
-                item.setPrice(lineItem.getProduct().getDiscountPrice());
-            } else {
-                item.setPrice(lineItem.getProduct().getPrice());
-            }
+            item.setTotalPrice(lineItem.getSubTotal(cart.getCoupon()));
             item.setOrder(newOrder);
             orderItems.add(item);
         }
@@ -85,6 +82,12 @@ public class OrderController extends WShopSiteBaseController {
         newOrder.setItems(orderItems);
 
         newOrder.setStatus(OrderStatus.NEW);
+
+        newOrder.setCoupon(cart.getCoupon());
+
+        newOrder.setPriceDiscountCoupon(cart.getPriceDiscountCoupon());
+
+        newOrder.setCreatedOn(new Date());
 
         Order savedOrder = this.orderService.createOrder(newOrder);
 

@@ -333,6 +333,7 @@
                                     <th th:text="#{label.orderNumber}">Order ID</th>
                                     <th th:text="#{label.itemCount}">Items count</th>
                                     <th th:text="#{label.orderStatus}">Status</th>
+                                    <th th:text="#{label.coupon}">Coupon</th>
                                     <th th:text="#{label.orderTotal}">Total price</th>
                                 </tr>
                                 </thead>
@@ -344,17 +345,18 @@
                                     <td>
                                         <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).NEW}"
                                               class="label label-info"
-                                              th:text="${order.status.name()}">NEW</span>
+                                              th:text="#{label.order.status.new}">NEW</span>
                                         <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).IN_PROCESS}"
                                               class="label label-primary"
-                                              th:text="${order.status.name()}">IN_PROCESS</span>
+                                              th:text="#{label.order.status.inProgress}">IN_PROCESS</span>
                                         <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).COMPLETED}"
                                               class="label label-success"
-                                              th:text="${order.status.name()}">COMPLETED</span>
+                                              th:text="#{label.order.status.completed}">COMPLETED</span>
                                         <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).FAILED}"
                                               class="label label-danger"
-                                              th:text="${order.status.name()}">FAILED</span>
+                                              th:text="#{label.order.status.failed}">FAILED</span>
                                     </td>
+                                    <td th:text="${order.coupon?.name}"></td>
                                     <td>
                                         <div class="sparkbar" data-color="#00a65a" data-height="20" th:text="${order.totalAmount}"></div>
                                     </td>

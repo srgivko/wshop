@@ -1,11 +1,13 @@
-package by.lodochkina.wshop.site.models;
+package by.lodochkina.wshop.cart;
 
 import by.lodochkina.wshop.entities.Address;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Payment;
 import by.lodochkina.wshop.entities.Product;
+import by.lodochkina.wshop.entities.coupons.Coupon;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Transient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,6 +21,12 @@ public class Cart {
     private Customer customer = new Customer();
     private Address deliveryAddress = new Address();
     private Payment payment = new Payment();
+    private Coupon coupon;
+
+    @Transient
+    private BigDecimal totalDiscountCoupon = BigDecimal.ZERO;
+    @Transient
+    private BigDecimal priceDiscountCoupon = BigDecimal.ZERO;
 
     public void addItem(Product product) {
         for (LineItem lineItem : items) {
@@ -27,7 +35,7 @@ public class Cart {
                 return;
             }
         }
-        LineItem item = new LineItem(product, 1);
+        LineItem item = new LineItem(product, 1, BigDecimal.ZERO);
         this.items.add(item);
     }
 
@@ -65,11 +73,28 @@ public class Cart {
     }
 
     public BigDecimal getTotalAmount() {
+        totalDiscountCoupon = BigDecimal.ZERO;
+        priceDiscountCoupon = BigDecimal.ZERO;
         BigDecimal amount = new BigDecimal("0.0");
         for (LineItem lineItem : items) {
-            amount = amount.add(lineItem.getSubTotal());
+            amount = amount.add(lineItem.getSubTotal(coupon));
+            if (lineItem.getDiscountCoupon() != null) {
+                totalDiscountCoupon = totalDiscountCoupon.add(lineItem.getDiscountCoupon());
+            }
+        }
+        if (coupon != null) {
+            BigDecimal amountWithoutPriceCoupon = amount;
+            priceDiscountCoupon = coupon.getCouponItems().stream()
+                    .map(couponItem -> couponItem.calculateDiscount(amountWithoutPriceCoupon))
+                    .max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+            amount = amount.subtract(priceDiscountCoupon);
+            totalDiscountCoupon = totalDiscountCoupon.add(priceDiscountCoupon);
         }
         return amount;
     }
 
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
+        getTotalAmount();
+    }
 }

@@ -29,10 +29,22 @@
                             <tr th:each="item : ${order.items}">
                                 <td th:text="${item.product.name}">product.name</td>
                                 <td th:text="${item.quantity}"></td>
-                                <td th:text="${item.price * item.quantity}">price</td>
+                                <td th:text="${item.totalPrice}">price</td>
                             </tr>
                             </tbody>
                             <tfoot>
+                            <tr class="cart-subtotal">
+                                <th th:text="#{label.cart.subtotal}">Order Subtotal</th>
+                                <td><span class="amount" th:text="${order.totalAmount}">£15.00</span>
+                                </td>
+                            </tr>
+                            <th:block th:if="${order.coupon}">
+                                <tr class="cart-subtotal"
+                                    th:if="${!order.priceDiscountCoupon.equals(T(java.math.BigDecimal).ZERO)}">
+                                    <th th:text="#{label.cart.coupon.price}">Total discount coupon</th>
+                                    <td><span class="amount" th:text="${order.priceDiscountCoupon}">$15.00</span></td>
+                                </tr>
+                            </th:block>
                             <tr class="cart-subtotal">
                                 <th th:text="#{label.cart.subtotal}">Order Subtotal</th>
                                 <td><span class="amount" th:text="${order.totalAmount}">£15.00</span>
@@ -50,7 +62,19 @@
                             </tr>
                             <tr class="cart-subtotal">
                                 <th th:text="#{label.order.status}">Status</th>
-                                <td><span th:text="${order.status}">Status</span>
+                                <td>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).NEW}"
+                                           class="label label-info"
+                                           th:text="#{label.order.status.new}">NEW</span>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).IN_PROCESS}"
+                                          class="label label-primary"
+                                          th:text="#{label.order.status.inProgress}">IN_PROCESS</span>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).COMPLETED}"
+                                          class="label label-success"
+                                          th:text="#{label.order.status.completed}">COMPLETED</span>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).FAILED}"
+                                          class="label label-danger"
+                                          th:text="#{label.order.status.failed}">FAILED</span>
                                 </td>
                             </tr>
                             </tfoot>

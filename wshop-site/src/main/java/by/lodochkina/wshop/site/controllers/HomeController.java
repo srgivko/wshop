@@ -1,16 +1,21 @@
 package by.lodochkina.wshop.site.controllers;
 
+import by.lodochkina.wshop.coupons.CouponService;
 import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Product;
+import by.lodochkina.wshop.entities.coupons.Coupon;
+import by.lodochkina.wshop.entities.coupons.PriceCoupon;
+import by.lodochkina.wshop.entities.coupons.ProductCoupon;
+import by.lodochkina.wshop.entities.coupons.QuantityCoupon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +23,7 @@ import java.util.stream.Collectors;
 public class HomeController extends WShopSiteBaseController {
 
     @Autowired
-    private EntityManager entityManager;
+    private CouponService couponService;
 
     @Override
     protected String getHeaderTitle() {
@@ -36,6 +41,7 @@ public class HomeController extends WShopSiteBaseController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
+
         List<Category> previewCategories = new ArrayList<>();
         List<Category> categories = super.catalogService.getAllCategories().stream()
                 .filter(category -> category.getProducts()!=null && !category.getProducts().isEmpty())

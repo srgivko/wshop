@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
@@ -35,10 +34,18 @@
                             <tr th:each="item : ${order.items}">
                                 <td th:text="${item.product.name}">product.name</td>
                                 <td th:text="${item.quantity}"></td>
-                                <td th:text="${item.price * item.quantity}">price</td>
+                                <td th:text="${item.totalPrice}">price</td>
                             </tr>
                             </tbody>
                             <tfoot>
+                            <th:block th:if="${order.coupon}">
+                                <tr class="cart-subtotal"
+                                    th:if="${!order.priceDiscountCoupon.equals(T(java.math.BigDecimal).ZERO)}">
+                                    <th th:text="#{label.cart.coupon.price}">Total discount coupon</th>
+                                    <td><span class="amount" th:text="${order.priceDiscountCoupon}">$15.00</span></td>
+                                </tr>
+                            </th:block>
+
                             <tr class="cart-subtotal">
                                 <th th:text="#{label.cart.subtotal}">Order Subtotal</th>
                                 <td><span class="amount" th:text="${order.totalAmount}">£15.00</span>

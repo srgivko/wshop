@@ -57,7 +57,7 @@
                             <tr>
                                 <th>#</th>
                                 <th th:text="#{label.order.number}">Order Number</th>
-                                <th th:text="#{label.order.status}">Status</th>
+                                <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -66,7 +66,18 @@
                                 <td><a href="#" th:text="${order.orderNumber}"
                                        th:href="@{/orders/{id}(id=${order.id})}">OrderNumber</a>
                                 </td>
-                                <td><span th:text="${order.status}">Status</span></td>
+                                <td> <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).NEW}"
+                                           class="label label-info"
+                                           th:text="#{label.order.status.new}">NEW</span>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).IN_PROCESS}"
+                                          class="label label-primary"
+                                          th:text="#{label.order.status.inProgress}">IN_PROCESS</span>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).COMPLETED}"
+                                          class="label label-success"
+                                          th:text="#{label.order.status.completed}">COMPLETED</span>
+                                    <span th:if="${order.status==T(by.lodochkina.wshop.entities.OrderStatus).FAILED}"
+                                          class="label label-danger"
+                                          th:text="#{label.order.status.failed}">FAILED</span></td>
                             </tr>
                             </tbody>
                         </table>
