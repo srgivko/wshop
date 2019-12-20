@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("QUANTITY_COUPON")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class QuantityCoupon extends CouponItem {
+public class QuantityCouponItem extends CouponItem {
 
     @OneToOne
     @JoinColumn(name = "product_id")
@@ -32,10 +32,8 @@ public class QuantityCoupon extends CouponItem {
     public BigDecimal calculateDiscount(LineItem lineItem) {
         Product lineItemProduct = lineItem.getProduct();
         if (this.product.equals(lineItemProduct) && lineItem.getQuantity() >= quantity) {
-            BigDecimal discountPrice = lineItemProduct.getDiscountPrice();
-            return discountPrice != null
-                    ? discountPrice.multiply(new BigDecimal(lineItem.getQuantity() / quantity))
-                    : lineItemProduct.getPrice().multiply(new BigDecimal(lineItem.getQuantity() / quantity));
+            BigDecimal currentPrice = product.getDiscountPrice() != null ? product.getDiscountPrice() : product.getPrice();
+            return currentPrice.multiply(new BigDecimal(lineItem.getQuantity() / quantity));
         }
         return BigDecimal.ZERO;
     }

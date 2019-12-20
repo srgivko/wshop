@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
-@EqualsAndHashCode(exclude = {"products", "childCategories", "parentCategory"})
+@EqualsAndHashCode(exclude = {"products", "childCategories", "parentCategory", "tags"})
 @ToString(exclude = {"products", "childCategories", "parentCategory"})
 public class Category {
 

@@ -1,11 +1,10 @@
 package by.lodochkina.wshop.entities.coupons;
 
 import by.lodochkina.wshop.cart.LineItem;
+import by.lodochkina.wshop.entities.Product;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Getter
@@ -13,26 +12,28 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@DiscriminatorValue("PRICE_COUPON")
+@DiscriminatorValue("PRODUCT_COUPON")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class PriceCoupon extends CouponItem {
+public class ProductCouponItem extends CouponItem {
 
-    @Column
-    private BigDecimal limitTotalPrice;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column
     private BigDecimal discount;
 
     @Override
     public BigDecimal calculateDiscount(BigDecimal cartAmount) {
-        if (cartAmount.compareTo(limitTotalPrice) > 0) {
-            return discount;
-        }
         return BigDecimal.ZERO;
     }
 
     @Override
     public BigDecimal calculateDiscount(LineItem lineItem) {
+        if (product.equals(lineItem.getProduct())) {
+            return discount.multiply(new BigDecimal(lineItem.getQuantity()));
+        }
         return BigDecimal.ZERO;
     }
+
 }

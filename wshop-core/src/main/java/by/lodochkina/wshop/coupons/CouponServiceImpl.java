@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,5 +27,10 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public Optional<Coupon> findCouponByCode(String code) {
         return this.couponRepository.findByCode(code);
+    }
+
+    @Override
+    public List<Coupon> getAllCoupons() {
+        return this.couponRepository.findAll();
     }
 }
