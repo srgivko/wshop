@@ -79,7 +79,7 @@ public class CartController extends WShopSiteBaseController {
     }
 
     @PostMapping("/cart/coupon")
-    public String addCoupon(@Valid Coupon coupon, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String addCoupon(Coupon coupon, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Optional<Coupon> persistedCoupon = this.couponService.findCouponByCode(coupon.getCode());
         Cart cart = getOrCreateCart(request);
         if (!persistedCoupon.isPresent() || !persistedCoupon.get().isActive()) {

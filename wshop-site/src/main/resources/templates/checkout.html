@@ -93,7 +93,7 @@
                                                 <p id="shipping_phone_field" class="form-row form-row-first validate-required">
                                                     <label><span th:text="#{label.phone}">Phone</span> <abbr title="required" class="required">*</abbr>
                                                     </label>
-                                                    <input type="text" th:field="*{phone}" class="input-text"/>
+                                                    <input type="text" th:field="*{phone}" class="input-text" placeholder="+375(**)*******"/>
                                                 <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" th:errorclass="text-danger">Incorrect phone</p>
                                                 </p>
 
@@ -165,5 +165,13 @@
         </div>
     </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script>
+        $(function(){
+            $("#phone").mask("+375(99)9999999");
+        });
+    </script>
+</th:block>
 </body>
 </html>

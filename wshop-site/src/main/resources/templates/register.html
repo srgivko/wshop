@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <div class="control-group" th:classappend="${#fields.hasErrors('phone')} ? 'has-error' : ''">
                                 <label for="phone"><span th:text="#{label.phone}">Phone</span> <span class="required">*</span></label>
-                                <input type="text" th:field="*{phone}" id="phone" class="form-control"  placeholder="+375(**)*******"/>
+                                <input type="text" th:field="*{phone}" id="phone" class="form-control" placeholder="+375(**)*******"/>
                                 <label class="help-block" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Incorrect data</label>
                             </div>
                         </div>

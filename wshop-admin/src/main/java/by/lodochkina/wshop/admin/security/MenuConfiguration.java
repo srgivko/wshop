@@ -25,6 +25,7 @@ class MenuConfiguration {
         MENU_URL_PATTERN_MAP.put("/promotions", "Promotions");
         MENU_URL_PATTERN_MAP.put("/sales", "Sales");
         MENU_URL_PATTERN_MAP.put("/subscribers", "Subscribers");
+        MENU_URL_PATTERN_MAP.put("/coupons", "Coupons");
     }
 
     private MenuConfiguration() {

@@ -11,25 +11,25 @@ public class OrderDTO implements Serializable {
 
     private static final long serialVersionUID = -122761727403506118L;
 
-    @NotEmpty(message = "FirstName is required")
+    @NotEmpty(message = "{errors.firstname.required}")
     private String firstName;
-    @NotEmpty(message = "LastName is required")
+    @NotEmpty(message = "{errors.lastname.required}")
     private String lastName;
-    @NotEmpty(message = "EmailId is required")
+    @NotEmpty(message = "{errors.email.required}")
     @Email
     private String emailId;
-    @NotEmpty(message = "Phone is required")
+    @NotEmpty(message = "{errors.phone.required}")
     private String phone;
 
-    @NotEmpty(message = "Address Line1 is required")
+    @NotEmpty(message = "{errors.address.required}")
     private String addressLine1;
     private String addressLine2;
-    @NotEmpty(message = "City is required")
+    @NotEmpty(message = "{errors.city.required}")
     private String city;
-    @NotEmpty(message = "State is required")
+    @NotEmpty(message = "{errors.state.required}")
     private String state;
-    @NotEmpty(message = "ZipCode is required")
+    @NotEmpty(message = "{errors.zipCode.required}")
     private String zipCode;
-    @NotEmpty(message = "Country is required")
+    @NotEmpty(message = "{errors.country.required}")
     private String country;
 }

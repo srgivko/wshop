@@ -2,9 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
-
 <head>
-    <title th:text="#{label.coupoons}">Coupons</title>
+    <title th:text="#{label.coupons}">Coupons</title>
 </head>
 <body>
 
@@ -17,25 +16,26 @@
                     <h3 class="box-title" th:text="#{label.coupons}">List of Coupons</h3>
                     <div class="box-tools">
                         <div class="input-group" style="width: 150px;">
-                            <a class="btn btn-sm btn-default" th:href="@{/coupon/new}"><i
-                                    class="fa fa-plus-circle"></i> <span
-                                    th:text="#{label.newCoupon}">New sale</span></a>
+                            <a class="btn btn-sm btn-default" th:href="@{/coupons/new}">
+                                <i class="fa fa-plus-circle"></i> <span th:text="#{label.newCoupon}">New sale</span></a>
                         </div>
                     </div>
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th th:text="#{label.name}">Name</th>
-                            <th th:text="#{label.code}">Code</th>
-                            <th th:text="#{label.beginDate}">Begin date</th>
-                            <th th:text="#{label.endDate}">End date</th>
-                            <th th:text="#{label.edit}">Edit</th>
-                            <th th:text="#{label.delete}">Delete</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th th:text="#{label.name}">Name</th>
+                                <th th:text="#{label.code}">Code</th>
+                                <th th:text="#{label.beginDate}">Begin date</th>
+                                <th th:text="#{label.endDate}">End date</th>
+                                <th th:text="#{label.edit}">Edit</th>
+                                <th th:text="#{label.delete}">Delete</th>
+                            </tr>
+                        </thead>
+                        <!--/*@thymesVar id="coupon" type="by.lodochkina.wshop.entities.coupons.Coupon"*/-->
                         <tr th:each="coupon,iterStat : ${coupons}" th:classappend="${coupon.active} ? 'bg-success'">
-                            <!--/*@thymesVar id="coupon" type="by.lodochkina.wshop.entities.coupons.Coupon"*/-->
                             <td>
                                 <a th:href="@{/coupons/{id}(id=${coupon.id})}">
                                     <span th:text="${iterStat.count}">1</span>
@@ -51,7 +51,8 @@
                                 </a>
                             </td>
                             <td>
-                                <a th:href="@{/coupons/{id}/delete(id=${coupon.id})}" class="btn btn-sm btn-default">
+                                <a th:onclick="'javascript:removeCoupon(' + ${coupon.id} + ');'"
+                                   class="btn btn-sm btn-default">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i><span th:text="#{label.delete}">Delete</span>
                                 </a>
                             </td>

@@ -9,6 +9,24 @@ function removeSaleProduct(saleId, saleProductId) {
         .catch(error => console.error(error));
 }
 
+function removeCoupon(couponId) {
+    const targetTr = event.target.closest('tr');
+    deleteData(`/coupons/${couponId}`)
+        .then(data => {
+            targetTr.remove();
+        })
+        .catch(error => console.error(error));
+}
+
+function removeCouponItem(couponId, couponItemId) {
+    const targetTr = event.target.closest('tr');
+    deleteData(`/coupons/${couponId}/couponItems/${couponItemId}`)
+        .then(data => {
+            targetTr.remove();
+        })
+        .catch(error => console.error(error));
+}
+
 function removeSubscriber(id) {
     const targetTr = event.target.closest('tr');
     deleteData(`/subscribers/${id}`)

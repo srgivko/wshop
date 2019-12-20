@@ -5,6 +5,8 @@ import by.lodochkina.wshop.entities.Product;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -14,13 +16,16 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("QUANTITY_COUPON")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString
 public class QuantityCouponItem extends CouponItem {
 
     @OneToOne
     @JoinColumn(name = "product_id")
+    @NotNull
     private Product product;
 
     @Column
+    @NotEmpty
     private Long quantity;
 
     @Override
@@ -37,4 +42,6 @@ public class QuantityCouponItem extends CouponItem {
         }
         return BigDecimal.ZERO;
     }
+
+
 }

@@ -2842,9 +2842,10 @@ INSERT INTO public.coupons (id, begin_date, code, end_date, name) VALUES (1, now
 -- /COUPONS
 
 -- COUPON_ITEMS
-INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price, quantity, coupon_id, product_id) VALUES ('PRICE_COUPON', 1, 1.00, 10.00, null, 1, null);
-INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price, quantity, coupon_id, product_id) VALUES ('PRODUCT_COUPON', 2, 1.00, null, null, 1, 15);
-INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price, quantity, coupon_id, product_id) VALUES ('QUANTITY_COUPON', 3, null, null, 3, 1, 16);
+INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price_cart, quantity, coupon_id, product_id) VALUES ('PRICE_COUPON', 1, 1.00, 10.00, null, 1, null);
+INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price_cart, quantity, coupon_id, product_id) VALUES ('PRODUCT_COUPON', 2, 1.00, null, null, 1, 15);
+INSERT INTO public.coupon_items (coupon_item_type, id, discount, limit_total_price_cart, quantity, coupon_id, product_id) VALUES ('QUANTITY_COUPON', 3, null, null, 3, 1, 16);
+INSERT INTO public.coupon_items (coupon_item_type, id, discount_percent, discount, limit_total_price_cart, quantity, coupon_id, category_id, product_id) VALUES ('CATEGORY_COUPON', 4, 20, null, null, null, 1, 16, null);
 -- /COUPON_ITEMS
 
 -- DELIVERY(ADDRESSES)
@@ -2891,5 +2892,5 @@ ALTER SEQUENCE promotions_id_seq RESTART WITH 15;
 ALTER SEQUENCE sales_id_seq RESTART WITH 16;
 ALTER SEQUENCE sale_products_id_seq RESTART WITH 18;
 ALTER SEQUENCE coupons_id_seq RESTART WITH 16;
-ALTER SEQUENCE coupon_items_id_seq RESTART WITH 18;
+ALTER SEQUENCE coupon_items_id_seq RESTART WITH 5;
 -- /SEQUENCE

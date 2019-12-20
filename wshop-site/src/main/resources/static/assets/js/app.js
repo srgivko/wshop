@@ -98,7 +98,7 @@ function subscribe() {
     };
     postData('/subscribe', email)
         .then(data => alert(`You are subscribe ${data.email}`))
-        .catch(reason => console.log(reason));
+        .catch(reason => alert(reason));
 }
 
 function postData(url = '', data = {}) {

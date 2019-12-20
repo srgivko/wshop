@@ -54,7 +54,6 @@
                 </div>
             </form>
         </div>
-        <div th:with="${#}" th:replace="fragments/product_table :: productTable (products=${products})"></div>
     </div>
     <div class="container-fluid" th:if="${sale.saleProductList!=null && !sale.saleProductList.isEmpty()}">
         <div class="row">

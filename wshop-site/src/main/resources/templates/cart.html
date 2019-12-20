@@ -7,8 +7,7 @@
     <title th:text="#{label.cart}">Cart</title>
 </head>
 <body>
-<!--https://bootsnipp.com/snippets/P2eO9-->
-<!-- todo https://bootsnipp.com/snippets/84KX-->
+
 <div layout:fragment="content">
 
     <div class="single-product-area">
@@ -67,7 +66,7 @@
 
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
-                                                <input type="text" size="5" value="1" th:value="${item.quantity}"
+                                                <input type="number" size="5" value="1" th:value="${item.quantity}"
                                                        th:onchange="'javascript:updateCartItemQuantity( \''+${item.product.id}+'\' , '+this.value+');'"/>
                                             </div>
                                         </td>

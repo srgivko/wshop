@@ -3,31 +3,39 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/mainLayout">
 <head>
-    <title th:text="#{label.categoryCouponItem}">SaleProduct - New</title>
+    <title th:text="#{label.productCouponItem}">Product coupon item</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <!--/*@thymesVar id="saleProduct" type="by.lodochkina.wshop.entities.SaleProduct"*/-->
+    <!--/*@thymesVar id="productCouponItem" type="by.lodochkina.wshop.entities.coupons.ProductCouponItem"*/-->
     <!--/*@thymesVar id="products" type="List<by.lodochkina.wshop.entities.Product>"*/-->
     <div class="box box-warning">
         <div class="box-header with-border">
-            <h3 class="box-title" th:text="#{label.addCategoryCouponItem}">New sale product</span></h3>
+            <h3 class="box-title" th:text="#{label.productCouponItem}">Product coupon item</h3>
         </div>
         <div class="box-body">
-            <!--/*@thymesVar id="saleId" type="java.lang.Long"*/-->
-            <form role="form" th:action="@{/sales/{saleId}/addSaleProduct(saleId=${saleId})}" th:object="${saleProduct}"
+            <!--/*@thymesVar id="couponId" type="java.lang.Long"*/-->
+            <form role="form" th:action="@{/coupons/{couponId}/addProductCouponItem(couponId=${couponId})}"
+                  th:object="${productCouponItem}"
                   method="post" enctype="multipart/form-data">
+
+                <input type="number" hidden="true" th:field="*{id}"/>
 
                 <div class="form-group" th:if="${products!=null && !products.isEmpty()}"
                      th:classappend="${#fields.hasErrors('product')}? 'has-error'">
-                    <label th:text="#{label.products}">Product</label>
+                    <label th:text="#{label.products}">Products</label>
                     <div>
                         <select class="form-control" th:field="*{product}">
                             <option th:value="0" th:text="#{label.chooseProduct}">Choose product</option>
                             <!--/*@thymesVar id="pr" type="by.lodochkina.wshop.entities.Product"*/-->
                             <option th:each="pr : ${products}"
-                                    th:value="${pr.id}"
-                                    th:text="${#strings.concat(pr.name, '-', pr.price)}">Product
+                                    th:value="${pr.id}">
+                                <th:block th:if="${pr.discountPrice}">
+                                    <span th:text="${pr.name}"></span>#<span th:text="${pr.price}"></span> р.б.#[<span th:text="#{label.validSale(${pr.discountPrice})}"></span> р.б.]
+                                   </th:block>
+                                <th:block th:unless="${pr.discountPrice}">
+                                    <span th:text="${pr.name}"></span>#<span th:text="${pr.price}"></span> р.б.
+                                </th:block>
                             </option>
                         </select>
                     </div>
@@ -35,10 +43,10 @@
                         data</p>
                 </div>
 
-                <div class="form-group" th:classappend="${#fields.hasErrors('discountPrice')}? 'has-error'">
-                    <label th:text="#{label.discountPrice}">DiscountPrice</label>
-                    <input type="text" class="form-control" name="discountPrice" th:field="*{discountPrice}"/>
-                    <p th:if="${#fields.hasErrors('discountPrice')}" th:errors="*{discountPrice}"
+                <div class="form-group" th:classappend="${#fields.hasErrors('discount')}? 'has-error'">
+                    <label th:text="#{label.discountMoney}">Discount</label>
+                    <input type="text" class="form-control" name="discount" th:field="*{discount}"/>
+                    <p th:if="${#fields.hasErrors('discount')}" th:errors="*{discount}"
                        th:class="text-red">Incorrect data</p>
                 </div>
 

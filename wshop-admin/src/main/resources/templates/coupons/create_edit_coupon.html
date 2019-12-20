@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+<head>
+    <title th:text="#{label.coupon}">Coupon</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!--/*@thymesVar id="coupon" type="by.lodochkina.wshop.entities.coupons.Coupon"*/-->
+    <div class="box box-warning">
+        <div class="box-header with-border">
+
+            <h3 class="box-title" th:if="${coupon.id==null}" th:text="#{label.newCoupon}">New Coupon</h3>
+            <h3 class="box-title" th:if="${coupon.id!=null}">
+                <span th:text="#{label.edit}">Edit</span> <span th:text="#{label.coupon}">Coupon</span>
+            </h3>
+            <div class="box-tools" th:if="${coupon.id!=null}">
+                <div class="input-group" style="width: 150px; display: inline;">
+                    <a class="btn btn-sm btn-default" th:href="@{/coupons/{id}/addCategoryCouponItem(id=${coupon.id})}"><i
+                            class="fa fa-plus-circle"></i> <span th:text="#{label.addCategoryCouponItem}">Add category coupon item</span></a>
+                    <a class="btn btn-sm btn-default" th:href="@{/coupons/{id}/addPriceCouponItem(id=${coupon.id})}"><i
+                            class="fa fa-plus-circle"></i> <span th:text="#{label.addPriceCouponItem}">Add price coupon item</span></a>
+                    <a class="btn btn-sm btn-default" th:href="@{/coupons/{id}/addQuantityCouponItem(id=${coupon.id})}"><i
+                            class="fa fa-plus-circle"></i> <span th:text="#{label.addQuantityCouponItem}">Add coupon item</span></a>
+                    <a class="btn btn-sm btn-default"
+                       th:href="@{/coupons/{id}/addProductCouponItem(id=${coupon.id})}"><i
+                            class="fa fa-plus-circle"></i> <span
+                            th:text="#{label.addProductCouponItem}">Add coupon item</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <form post="form" th:action="@{/coupons}" th:object="${coupon}" method="post">
+                <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" th:class="text-red">Incorrect data</p>
+
+                <input type="number" hidden="true" th:field="*{id}"/>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                    <label th:text="#{label.name}">Name</label>
+                    <input type="text" class="form-control" th:field="*{name}"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('code')}? 'has-error'">
+                    <label th:text="#{label.code}">Code</label>
+                    <input type="text" class="form-control" th:field="*{code}"/>
+                    <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}" th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('beginDate')}? 'has-error'">
+                    <label th:text="#{label.beginDate}">Date</label>
+                    <input type="datetime-local" class="form-control" th:field="*{beginDate}"/>
+                    <p th:if="${#fields.hasErrors('beginDate')}" th:errors="*{beginDate}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('endDate')}? 'has-error'">
+                    <label th:text="#{label.endDate}">Date</label>
+                    <input type="datetime-local" class="form-control" th:field="*{endDate}"/>
+                    <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" th:class="text-red">Incorrect
+                        data</p>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid" th:if="${coupon.couponItems!=null && !coupon.couponItems.isEmpty()}">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title" th:text="#{label.couponItems}">List of Coupon Items</h3>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th th:text="#{label.coupon}">Coupon</th>
+                                <th th:text="#{label.edit}">Edit</th>
+                                <th th:text="#{label.delete}">Delete</th>
+                            </tr>
+                            <tr th:each="couponItem,iterStat : ${coupon.couponItems}">
+                                <td>
+                                    <span th:text="${iterStat.count}">1</span>
+                                </td>
+                                <th:block th:switch="${couponItem.class}">
+                                    <th:block th:case="${T(by.lodochkina.wshop.entities.coupons.QuantityCouponItem)}">
+                                        <td>
+                                            <span th:text="#{label.quanityCouponItem}"></span> #
+                                            <span th:text="#{label.productName(${couponItem.product.name})}"></span> #
+                                            <span th:text="#{label.couponItemQuantity(${couponItem.quantity})}"></span>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/coupons/{couponId}/quantityCouponItem/{couponItemId}(couponId=${coupon.id}, couponItemId=${couponItem.id})}"
+                                               class="btn btn-sm btn-default">
+                                                <i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span></a>
+                                        </td>
+                                    </th:block>
+                                    <th:block th:case="${T(by.lodochkina.wshop.entities.coupons.PriceCouponItem)}">
+                                        <td>
+                                            <span th:text="#{label.priceCouponItem}"></span> #
+                                            <span th:text="${couponItem.limitTotalPriceCart}"></span> р.б. #
+                                            <span th:text="#{label.discountMoney}"></span> <span th:text="${couponItem.discount}"></span> р.б.</td>
+                                        <td>
+                                            <a th:href="@{/coupons/{couponId}/priceCouponItem/{couponItemId}(couponId=${coupon.id}, couponItemId=${couponItem.id})}"
+                                               class="btn btn-sm btn-default">
+                                                <i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span></a>
+                                        </td>
+                                    </th:block>
+                                    <th:block th:case="${T(by.lodochkina.wshop.entities.coupons.CategoryCouponItem)}">
+                                        <td>
+                                            <span th:text="#{label.categoryCouponItem}"></span> #
+                                            <span th:text="#{label.categoryName(${couponItem.category.name})}"></span> #
+                                            <span th:text="#{label.categoryDiscountPercent(${couponItem.discountPercent})}"></span>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/coupons/{couponId}/categoryCouponItem/{couponItemId}(couponId=${coupon.id}, couponItemId=${couponItem.id})}"
+                                               class="btn btn-sm btn-default">
+                                                <i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span></a>
+                                        </td>
+                                    </th:block>
+                                    <th:block th:case="${T(by.lodochkina.wshop.entities.coupons.ProductCouponItem)}">
+                                        <td>
+                                            <span th:text="#{label.productCouponItem}"></span> #
+                                            <span th:text="#{label.productName(${couponItem.product.name})}"></span> #
+                                            <span th:text="#{label.discountMoney}"></span>
+                                            <span th:text="${couponItem.discount}"></span> р.б.
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/coupons/{couponId}/productCouponItem/{couponItemId}(couponId=${coupon.id}, couponItemId=${couponItem.id})}"
+                                               class="btn btn-sm btn-default">
+                                                <i class="fa fa-edit"></i><span th:text="#{label.edit}">Edit</span></a>
+                                        </td>
+                                    </th:block>
+                                </th:block>
+                                <td>
+                                    <a th:onclick="'javascript:removeCouponItem(' + ${coupon.id} + ', '+${couponItem.id}+');'"
+                                       class="btn btn-sm btn-default">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        <span th:text="#{label.delete}">Delete</span></a>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

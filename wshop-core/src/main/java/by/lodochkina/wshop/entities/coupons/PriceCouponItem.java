@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -15,17 +16,20 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("PRICE_COUPON")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString
 public class PriceCouponItem extends CouponItem {
 
     @Column
-    private BigDecimal limitTotalPrice;
+    @NotNull
+    private BigDecimal limitTotalPriceCart;
 
     @Column
+    @NotNull
     private BigDecimal discount;
 
     @Override
     public BigDecimal calculateDiscount(BigDecimal cartAmount) {
-        if (cartAmount.compareTo(limitTotalPrice) > 0) {
+        if (cartAmount.compareTo(limitTotalPriceCart) > 0) {
             return discount;
         }
         return BigDecimal.ZERO;

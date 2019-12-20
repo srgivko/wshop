@@ -104,7 +104,7 @@ public class SaleController extends WShopAdminBaseController {
 
     @DeleteMapping({"/sales/{saleId}/saleProduct/{saleProductId}"})
     @ResponseBody
-    public void addSaleProduct(@PathVariable Long saleId, @PathVariable Long saleProductId) {
+    public void removeSaleProduct(@PathVariable Long saleId, @PathVariable Long saleProductId) {
         this.saleService.removeSaleProduct(saleId, saleProductId);
     }
 

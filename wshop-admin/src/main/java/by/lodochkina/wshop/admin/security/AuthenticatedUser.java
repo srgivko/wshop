@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.*;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = 3953275838457016803L;

@@ -5,6 +5,7 @@ import by.lodochkina.wshop.entities.Product;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -14,13 +15,16 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("PRODUCT_COUPON")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString
 public class ProductCouponItem extends CouponItem {
 
     @OneToOne
     @JoinColumn(name = "product_id")
+    @NotNull
     private Product product;
 
     @Column
+    @NotNull
     private BigDecimal discount;
 
     @Override

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+<head>
+    <title th:text="#{label.priceCouponItem}">Price coupon item</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--/*@thymesVar id="priceCouponItem" type="by.lodochkina.wshop.entities.coupons.PriceCouponItem"*/-->
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title" th:text="#{label.priceCouponItem}">Category coupon item</h3>
+        </div>
+        <div class="box-body">
+            <!--/*@thymesVar id="couponId" type="java.lang.Long"*/-->
+            <form role="form" th:action="@{/coupons/{couponId}/addPriceCouponItem(couponId=${couponId})}"
+                  th:object="${priceCouponItem}"
+                  method="post" enctype="multipart/form-data">
+
+                <input type="number" hidden="true" th:field="*{id}"/>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('limitTotalPriceCart')}? 'has-error'">
+                    <label th:text="#{label.limitTotalPriceCart}">LimitTotalPrice</label>
+                    <input type="text" class="form-control" name="limitTotalPrice" th:field="*{limitTotalPriceCart}"/>
+                    <p th:if="${#fields.hasErrors('limitTotalPriceCart')}" th:errors="*{limitTotalPriceCart}"
+                       th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('discount')}? 'has-error'">
+                    <label th:text="#{label.discountMoney}">Discount</label>
+                    <input type="text" class="form-control" name="discount" th:field="*{discount}"/>
+                    <p th:if="${#fields.hasErrors('discount')}" th:errors="*{discount}"
+                       th:class="text-red">Incorrect data</p>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

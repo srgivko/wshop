@@ -158,6 +158,13 @@
                                 <span th:text="#{label.promotions}">Promotions</span>
                             </a>
                         </li>
+                        <li th:class="${CURRENT_MENU == 'Coupons'}? 'active' : ''"
+                            sec:authorize="hasRole('ROLE_MANAGE_PROMOTIONS')">
+                            <a href="#" th:href="@{'/coupons'}">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                                <span th:text="#{label.coupons}">Coupons</span>
+                            </a>
+                        </li>
                         <li th:class="${CURRENT_MENU == 'Sales'}? 'active' : ''"
                             sec:authorize="hasRole('ROLE_MANAGE_PROMOTIONS')">
                             <a href="#" th:href="@{'/sales'}">

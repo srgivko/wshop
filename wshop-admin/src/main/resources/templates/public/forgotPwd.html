@@ -7,8 +7,18 @@
     <title th:text="#{label.forgot_password}">Forgot Password</title>
 </head>
 <body>
-<div layout:fragment="content">
-
+<div layout:fragment="content" style="
+    margin: auto;
+    position: absolute;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 19px;
+    border-radius: 5px;
+    box-shadow: 0 8px 21px -6px black;
+">
     <form action="forgotPwd" th:action="@{/forgotPwd}" method="post">
         <input type="email" class="form-control" name="email" th:placeholder="#{label.email}"/>
         <button type="submit" class="btn btn-primary btn-block btn-flat" th:text="#{label.submit}">Submit</button>

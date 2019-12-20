@@ -8,6 +8,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -17,10 +19,12 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("CATEGORY_COUPON")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString
 public class CategoryCouponItem extends CouponItem {
 
     @OneToOne
     @JoinColumn(name = "category_id")
+    @NotNull
     private Category category;
 
     @Max(100)
