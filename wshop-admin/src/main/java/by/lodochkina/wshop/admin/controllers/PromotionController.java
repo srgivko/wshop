@@ -7,6 +7,7 @@ import by.lodochkina.wshop.entities.Promotion;
 import by.lodochkina.wshop.promotions.PromotionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -32,10 +34,21 @@ public class PromotionController extends WShopAdminBaseController {
 
     private final PromotionValidator promotionValidator;
 
+    @Value("${site.server.port}")
+    private String siteServerPort;
+
     @Autowired
     public PromotionController(PromotionService promotionService, PromotionValidator promotionValidator) {
         this.promotionService = promotionService;
         this.promotionValidator = promotionValidator;
+    }
+
+    // TODO: 12/21/19 need replace port site(shop)
+    @PostConstruct
+    public void init() {
+        if (siteServerPort != null && !siteServerPort.isEmpty()) {
+            siteServerPort = ":".concat(siteServerPort);
+        }
     }
 
     @Override
@@ -87,7 +100,7 @@ public class PromotionController extends WShopAdminBaseController {
 
     @GetMapping("/promotions/{id}/send")
     public String sendPromotion(@PathVariable Long id, RedirectAttributes redirectAttributes, HttpServletRequest request) {
-        this.promotionService.sendPromotion(id, WebUtils.getURLSiteWithoutContextPath(request));
+        this.promotionService.sendPromotion(id, WebUtils.getURLSiteWithoutContextPath(request).concat(siteServerPort));
         redirectAttributes.addFlashAttribute("info", "Promotion send successfully");
         return "redirect:/promotions";
     }

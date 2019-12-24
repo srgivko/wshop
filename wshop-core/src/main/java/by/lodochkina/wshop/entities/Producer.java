@@ -2,13 +2,11 @@ package by.lodochkina.wshop.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-// TODO: 12/13/19 description must be text 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +22,7 @@ public class Producer {
     @NotBlank(message = "Name cannot be empty")
     private String name;
 
-    @Column
+    @Column(columnDefinition="TEXT")
     @NotBlank(message = "Name cannot be empty")
     private String description;
 }

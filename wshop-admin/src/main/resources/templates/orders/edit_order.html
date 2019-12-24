@@ -48,7 +48,11 @@
                             <th:block th:if="${order.coupon}">
                                 <tr class="cart-coupon">
                                     <th th:text="#{label.order.usedCoupon}">Coupon used</th>
-                                    <td th:text="${order.coupon.getName()}">Coupon name</td> <!--todo add href to coupon-->
+                                    <td>
+                                        <a th:href="@{/coupons/{id}(id=${order.coupon.id})}">
+                                            <span th:text="${order.coupon.name}">Order coupon</span>
+                                        </a>
+                                    </td>
                                 </tr>
                                 <tr class="cart-subtotal"
                                     th:if="${!order.priceDiscountCoupon.equals(T(java.math.BigDecimal).ZERO)}">

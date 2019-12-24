@@ -356,7 +356,13 @@
                                               class="label label-danger"
                                               th:text="#{label.order.status.failed}">FAILED</span>
                                     </td>
-                                    <td th:text="${order.coupon?.name}"></td>
+                                    <td>
+                                        <th:block th:if="${order.coupon}">
+                                            <a th:href="@{/coupons/{id}(id=${order.coupon.id})}">
+                                                <span th:text="${order.coupon.name}">Order coupon</span>
+                                            </a>
+                                        </th:block>
+                                    </td>
                                     <td>
                                         <div class="sparkbar" data-color="#00a65a" data-height="20" th:text="${order.totalAmount}"></div>
                                     </td>

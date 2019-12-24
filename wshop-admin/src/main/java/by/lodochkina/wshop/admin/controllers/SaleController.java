@@ -92,9 +92,13 @@ public class SaleController extends WShopAdminBaseController {
         return "redirect:/sales";
     }
 
-    // TODO: 12/12/19 heck if exist another sale with this project between begin and end sale dates
     @PostMapping({"/sales/{saleId}/addSaleProduct"})
-    public String addSaleProduct(@PathVariable Long saleId, @Valid SaleProduct saleProduct, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addSaleProduct(
+            @PathVariable Long saleId,
+            @Valid SaleProduct saleProduct,
+            BindingResult result,
+            RedirectAttributes redirectAttributes
+    ) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("add_sale_product.html");
         }

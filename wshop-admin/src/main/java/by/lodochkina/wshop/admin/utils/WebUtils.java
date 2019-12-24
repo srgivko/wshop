@@ -12,8 +12,7 @@ public class WebUtils {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     }
 
-    // TODO: 12/18/19 need some change (send email with url unsubscribe HARD_CODE)
     public static String getURLSiteWithoutContextPath(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" +"8443";
+        return request.getScheme() + "://" + request.getServerName();
     }
 }

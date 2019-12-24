@@ -38,13 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-    // TODO: 11/21/19 webjars? resources? 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/webjars/**","/assets/**").permitAll()
+                .antMatchers("/assets/**").permitAll()
                 .antMatchers("/", "/forgotPwd","/resetPwd").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -56,8 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/403");
+                .permitAll();
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class RatingController extends WShopSiteBaseController {
 
-
     // TODO: 12/12/19 add reload? when click on rating
     @PostMapping("/products/{id}/rating")
     @ResponseBody

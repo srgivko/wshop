@@ -3,6 +3,17 @@ $(function () {
     updateCartItemCount();
 });
 
+function addAlert(style, text) {
+    const alerts = document.querySelector('.alerts');
+    const element = alerts.querySelector('.template-alert .alert');
+    console.log(element);
+    const alert = element.cloneNode(true);
+    alert.classList.toggle(style);
+    alert.querySelector('span').textContent = text;
+    setTimeout(() => alert.remove(), 5000);
+    alerts.append(alert);
+}
+
 function addItemToCart(id) {
     $.ajax({
         url: '/cart/items',
@@ -63,7 +74,6 @@ function removeItemFromCart(id) {
 }
 
 function removeProductFromWishlist(id,target) {
-    // todo show event message
     $.ajax({
         url: '/wishlist/products/' + id,
         type: 'DELETE',
@@ -97,8 +107,10 @@ function subscribe() {
         email: event.target.previousElementSibling.value
     };
     postData('/subscribe', email)
-        .then(data => alert(`You are subscribe ${data.email}`))
-        .catch(reason => alert(reason));
+        .then(data => addAlert('alert-success', `You are subscribe ${data.email}`))
+        .catch(reason => {
+            addAlert('alert-danger', reason.errors[0].defaultMessage)
+        });
 }
 
 function postData(url = '', data = {}) {
@@ -116,5 +128,11 @@ function postData(url = '', data = {}) {
         referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
     })
-        .then(response => response.json()); // парсит JSON ответ в Javascript объект
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(err => {throw err});
+            }
+        }); // парсит JSON ответ в Javascript объект
 }

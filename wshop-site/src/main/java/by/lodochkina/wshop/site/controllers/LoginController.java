@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-// TODO: 11/29/19 check workflow restore password 
 @Controller
 public class LoginController extends WShopSiteBaseController {
 

@@ -2067,3 +2067,16 @@ a.cart-button {
     display: flex;
     justify-content: space-between;
 }
+
+.alerts {
+    position: fixed;
+    top: 8%;
+    right: 0;
+    z-index: 2;
+}
+
+.alerts .alert {
+    margin-left: auto;
+    width: fit-content;
+    margin-bottom: 5px;
+}

@@ -36,7 +36,6 @@ public class SaleServiceImpl implements SaleService {
         return this.saleRepository.save(sale);
     }
 
-    // TODO: 12/12/19 all add update saleProductList
     @Transactional
     @Override
     public Sale updateSale(Sale sale) {

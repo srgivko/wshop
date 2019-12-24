@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
@@ -57,7 +58,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     //    https://stackoverflow.com/questions/47700115/tomcatembeddedservletcontainerfactory-is-missing-in-spring-boot-2
-    @Bean
+/*    @Bean
     public ServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
@@ -82,7 +83,7 @@ public class WebConfig implements WebMvcConfigurer {
         connector.setRedirectPort(serverPort);
         connector.setURIEncoding("UTF-8");
         return connector;
-    }
+    }*/
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -95,7 +96,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
+        CookieLocaleResolver slr = new CookieLocaleResolver();
+        slr.setCookieName("lang");
         slr.setDefaultLocale(Locale.forLanguageTag("ru"));
         return slr;
     }

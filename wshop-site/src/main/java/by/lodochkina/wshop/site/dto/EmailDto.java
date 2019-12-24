@@ -6,6 +6,6 @@ import javax.validation.constraints.Email;
 
 @Data
 public class EmailDto {
-    @Email
+    @Email(message = "{errors.invalid_email}")
     private String email;
 }

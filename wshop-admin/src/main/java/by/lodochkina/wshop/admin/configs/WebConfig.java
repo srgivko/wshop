@@ -3,20 +3,15 @@ package by.lodochkina.wshop.admin.configs;
 import by.lodochkina.wshop.admin.security.PostAuthorizationFilter;
 import com.cksource.ckfinder.servlet.CKFinderServlet;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -31,6 +26,7 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
+import java.time.Duration;
 import java.util.Locale;
 
 @Configuration
@@ -87,6 +83,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 //    https://stackoverflow.com/questions/47700115/tomcatembeddedservletcontainerfactory-is-missing-in-spring-boot-2
+/*
     @Bean
     public ServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -113,13 +110,16 @@ public class WebConfig implements WebMvcConfigurer {
         connector.setURIEncoding("UTF-8");
         return connector;
     }
+*/
 
     @Value("${upload.path}")
     private String uploadPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("file://" + uploadPath + "/");
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("file://" + uploadPath + "/")
+                .setCacheControl(CacheControl.maxAge(Duration.ofDays(30)));
     }
 
     @Bean
