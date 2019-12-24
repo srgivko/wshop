@@ -1,5 +1,6 @@
 package by.lodochkina.wshop.sales;
 
+import by.lodochkina.wshop.entities.Product;
 import by.lodochkina.wshop.entities.Sale;
 import by.lodochkina.wshop.entities.SaleProduct;
 
@@ -21,4 +22,6 @@ public interface SaleService {
     SaleProduct removeSaleProduct(Long saleId, Long saleProductId);
 
     void removeSale(Sale sale);
+
+    List<Product> getAllProductsWithActiveSale();
 }

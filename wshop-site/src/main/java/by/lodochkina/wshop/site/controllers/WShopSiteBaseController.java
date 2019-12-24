@@ -46,6 +46,10 @@ public abstract class WShopSiteBaseController {
         return messageSource.getMessage(code, null, defaultMsg, null);
     }
 
+    public String getMessage(String code, Locale locale) {
+        return messageSource.getMessage(code, null, locale);
+    }
+
     @ModelAttribute("categoryMenu")
     public List<Category> getCategoryMenu() {
         return this.catalogService.getRootCategories();

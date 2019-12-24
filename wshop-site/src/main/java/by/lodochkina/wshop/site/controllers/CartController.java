@@ -6,6 +6,7 @@ import by.lodochkina.wshop.cart.LineItem;
 import by.lodochkina.wshop.coupons.CouponService;
 import by.lodochkina.wshop.entities.Product;
 import by.lodochkina.wshop.entities.coupons.Coupon;
+import by.lodochkina.wshop.site.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class CartController extends WShopSiteBaseController {
@@ -53,10 +51,11 @@ public class CartController extends WShopSiteBaseController {
 
     @PostMapping("/cart/items")
     @ResponseBody
-    public void addToCart(@RequestBody Product product, HttpServletRequest request) {
+    public ProductDto addToCart(@RequestBody Product product, HttpServletRequest request, Locale locale) {
         Cart cart = getOrCreateCart(request);
         Product p = super.catalogService.findProductById(product.getId()).orElseThrow(WShopException::new);
         cart.addItem(p);
+        return ProductDto.createProductDto(p, getMessage("message.cart.addProduct.success", locale));
     }
 
     @PutMapping("/cart/items")

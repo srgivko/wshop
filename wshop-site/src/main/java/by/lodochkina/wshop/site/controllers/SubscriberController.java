@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
 @Controller
 @Slf4j
-public class SubscriberController {
+public class SubscriberController extends WShopSiteBaseController{
 
     private final SubscriberService subscriberService;
+
+    @Override
+    protected String getHeaderTitle() {
+        return "Manage Subscribe";
+    }
 
     @Autowired
     public SubscriberController(SubscriberService subscriberService) {
@@ -24,8 +30,9 @@ public class SubscriberController {
 
     @PostMapping("/subscribe")
     @ResponseBody
-    public EmailDto subscribe(@RequestBody @Valid EmailDto email) {
+    public EmailDto subscribe(@RequestBody @Valid EmailDto email, Locale locale) {
         this.subscriberService.subscribe(email.getEmail());
+        email.setMessage(super.getMessage("message.subscribe.success", locale));
         return email;
     }
 

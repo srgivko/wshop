@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/mainLayout">
+
+<head>
+    <title th:text="#{label.sale}">Sale</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container-fluid">
+            <div class="row" th:if="${productPage.content!=null && !productPage.content.isEmpty()}">
+                <div th:replace="fragments/sorting ::  sorting (sort)"></div>
+                <div th:replace="fragments/productColumns :: productColumns (products=${productPage.content})"></div>
+            </div>
+            <div th:replace="fragments/pager :: pager (page = ${productPage})"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

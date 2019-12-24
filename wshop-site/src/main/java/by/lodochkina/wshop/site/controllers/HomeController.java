@@ -1,6 +1,5 @@
 package by.lodochkina.wshop.site.controllers;
 
-import by.lodochkina.wshop.coupons.CouponService;
 import by.lodochkina.wshop.entities.Category;
 import by.lodochkina.wshop.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class HomeController extends WShopSiteBaseController {
 
     @Autowired
-    private CouponService couponService;
+    EntityManager entityManager;
 
     @Override
     protected String getHeaderTitle() {

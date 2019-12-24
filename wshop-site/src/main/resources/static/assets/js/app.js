@@ -6,7 +6,6 @@ $(function () {
 function addAlert(style, text) {
     const alerts = document.querySelector('.alerts');
     const element = alerts.querySelector('.template-alert .alert');
-    console.log(element);
     const alert = element.cloneNode(true);
     alert.classList.toggle(style);
     alert.querySelector('span').textContent = text;
@@ -21,8 +20,11 @@ function addItemToCart(id) {
         dataType: "json",
         contentType: "application/json",
         data: '{"id":"' + id + '"}"',
-        complete: function (responseData, status, xhttp) {
+        complete: function (data, status, xhttp) {
             updateCartItemCount();
+            const product = data.responseJSON;
+            console.dir(product);
+            addAlert('alert-info', `${product.name} - ${product.price} р.б. ${product.message}` );
         }
     });
 }
@@ -107,7 +109,7 @@ function subscribe() {
         email: event.target.previousElementSibling.value
     };
     postData('/subscribe', email)
-        .then(data => addAlert('alert-success', `You are subscribe ${data.email}`))
+        .then(data => addAlert('alert-success', `${data.message} ${data.email}`))
         .catch(reason => {
             addAlert('alert-danger', reason.errors[0].defaultMessage)
         });

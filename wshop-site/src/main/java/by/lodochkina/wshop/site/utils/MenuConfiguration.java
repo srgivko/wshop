@@ -13,6 +13,7 @@ public class MenuConfiguration {
         MENU_URL_PATTERN_MAP.put("/home", "Home");
         MENU_URL_PATTERN_MAP.put("/wishlist", "Wishlist");
         MENU_URL_PATTERN_MAP.put("/posts", "Posts");
+        MENU_URL_PATTERN_MAP.put("/sale", "Sale");
     }
 
     private MenuConfiguration() {

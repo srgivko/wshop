@@ -8,4 +8,5 @@ import javax.validation.constraints.Email;
 public class EmailDto {
     @Email(message = "{errors.invalid_email}")
     private String email;
+    private String message;
 }

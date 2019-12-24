@@ -1,6 +1,7 @@
 package by.lodochkina.wshop.sales;
 
 import by.lodochkina.wshop.WShopException;
+import by.lodochkina.wshop.entities.Product;
 import by.lodochkina.wshop.entities.Sale;
 import by.lodochkina.wshop.entities.SaleProduct;
 import org.springframework.beans.BeanUtils;
@@ -70,5 +71,10 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void removeSale(Sale sale) {
         this.saleRepository.delete(sale);
+    }
+
+    @Override
+    public List<Product> getAllProductsWithActiveSale() {
+        return this.saleRepository.getAllProductsWithActiveSale();
     }
 }
