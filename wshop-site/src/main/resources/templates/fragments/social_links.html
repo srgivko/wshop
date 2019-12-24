@@ -1,0 +1,14 @@
+<!--                    todo add share liinks-->
+<div class="social-links" xmlns:th="http://www.thymeleaf.org" th:fragment="social_links (post)">
+    <hr>
+    <p>
+    <span th:with="baseUrl=${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.serverPort}">
+        <span th:text="#{label.share}">Share</span> :
+        <a th:href="@{http://www.fb.com/sharer.php?s=100&p[title]={pTitle}&p[url]={pUrl}&p[images][0]={pImage}(pTitle=${post.title}, pUrl=@{__${baseUrl}__/posts/{id}(id=${post.id})}, pImage=@{__${baseUrl}__/img/{imgTitle}(imgTitle=${post.imgTitle})})}"><i
+                        class="fa fa-facebook margin_left10" aria-hidden="true"></i></a>
+        <a href="javascript::;"><i class="fa fa-twitter margin_left10" aria-hidden="true"></i></a>
+        <a href="javascript::;"><i class="fa fa-google-plus margin_left10" aria-hidden="true"></i></a>
+        <a href="javascript::;"><i class="fa fa-instagram margin_left10" aria-hidden="true"></i>
+    </span>
+    </p>
+</div>

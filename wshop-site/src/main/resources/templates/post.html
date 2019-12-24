@@ -18,27 +18,18 @@
         <div class="row">
             <div class="post-content">
                 <div class="post-content-title">
-                    <h2 th:text="${post.getTitle()}" style="text-align: center"></h2>
+                    <h2 th:text="${post.getTitle()}" style="text-align: center; margin: 0; text-transform: uppercase;">
+                    </h2>
                     <span th:text="${#dates.format(post.createOn, 'dd-MM-yyyy HH:mm')}"></span>
                 </div>
-                <div class="post-content-description">
-                    <div th:text="${post.description}"></div>
-                </div>
+                <!-- <div class="post-content-description">
+                     <div th:text="${post.description}"></div>
+                 </div>-->
                 <div class="post-content-content" style="padding: 15px;" th:utext="${post.content}">
                 </div>
             </div>
         </div>
-        <div class="row" style="padding: 0 15px;">
-            <!--                        todo add share liinks-->
-            <p><span
-                    th:with="baseUrl=${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.serverPort}"><span
-                    th:text="#{label.share}">Share</span> :
-				<a th:href="@{http://www.fb.com/sharer.php?s=100&p[title]={pTitle}&p[url]={pUrl}&p[images][0]={pImage}(pTitle=${post.title}, pUrl=@{__${baseUrl}__/posts/{id}(id=${post.id})}, pImage=@{__${baseUrl}__/img/{imgTitle}(imgTitle=${post.imgTitle})})}"><i
-                        class="fa fa-facebook margin_left10" aria-hidden="true"></i></a>
-				<a href="javascript::;"><i class="fa fa-twitter margin_left10" aria-hidden="true"></i></a>
-				<a href="javascript::;"><i class="fa fa-google-plus margin_left10" aria-hidden="true"></i></a>
-				 </span></p>
-        </div>
+        <div th:replace="fragments/social_links :: social_links (post = ${post})"></div>
     </div>
 </div>
 </body>

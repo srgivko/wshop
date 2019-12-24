@@ -2027,7 +2027,7 @@ img.carousel-inner-img {
 
 .post-content-title {
     padding: 5px 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #d8d8d8;
     position: relative;
 }
 
@@ -2043,8 +2043,10 @@ img.carousel-inner-img {
 .post-content-title span {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 2%;
     transform: translateY(-50%);
+    font-style: oblique;
+    color: grey;
 }
 
 a.cart-button {
