@@ -7,7 +7,6 @@ import by.lodochkina.wshop.entities.Rating;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface CustomerService {
     Optional<Customer> findCustomerByEmail(String email);
@@ -20,9 +19,9 @@ public interface CustomerService {
 
     List<Order> getCustomerOrders(Long customerId);
 
-    Set<Product> addProductToWishList(Long customerId, Long productId);
+    Product addProductToWishList(Long customerId, Long productId);
 
-    Set<Product> removeProductFromWishList(Long customerId, Long productId);
+    Product removeProductFromWishList(Long customerId, Long productId);
 
     void activateCustomer(String code);
 

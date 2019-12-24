@@ -72,20 +72,20 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public Set<Product> addProductToWishList(Long customerId, Long productId) {
+    public Product addProductToWishList(Long customerId, Long productId) {
         Customer customer = this.findCustomerById(customerId).orElseThrow(WShopException::new);
         Product product = this.productRepository.findById(productId).orElseThrow(WShopException::new);
         customer.addProductToWishList(product);
-        return customer.getWishList();
+        return product;
     }
 
     @Transactional
     @Override
-    public Set<Product> removeProductFromWishList(Long customerId, Long productId) {
+    public Product removeProductFromWishList(Long customerId, Long productId) {
         Customer customer = this.findCustomerById(customerId).orElseThrow(WShopException::new);
         Product product = this.productRepository.findById(productId).orElseThrow(WShopException::new);
         customer.removeProductToWishList(product);
-        return customer.getWishList();
+        return product;
     }
 
     @Transactional

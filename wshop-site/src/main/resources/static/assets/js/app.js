@@ -23,7 +23,6 @@ function addItemToCart(id) {
         complete: function (data, status, xhttp) {
             updateCartItemCount();
             const product = data.responseJSON;
-            console.dir(product);
             addAlert('alert-info', `${product.name} - ${product.price} р.б. ${product.message}` );
         }
     });
@@ -81,10 +80,11 @@ function removeProductFromWishlist(id,target) {
         type: 'DELETE',
         dataType: 'json',
         contentType: 'application/json',
-        complete: function (responseData, status, xhttp) {
+        complete: function (data, status, xhttp) {
             target.style.display = 'none';
             target.previousElementSibling.style.display  = '';
-            console.log('Success remove product with id = '+ id);
+            const product = data.responseJSON;
+            addAlert('alert-danger', `${product.name} - ${product.price} р.б. ${product.message}` );
         }
     });
 }
@@ -96,10 +96,11 @@ function addProductToWishlist(id, target) {
         dataType: 'json',
         contentType: 'application/json',
         data: '{"id":"' + id + '"}"',
-        complete: function (responseData, status, xhttp) {
+        complete: function (data, status, xhttp) {
             target.style.display = 'none';
             target.nextElementSibling.style.display = '';
-            console.log('Success add product with id = '+ id);
+            const product = data.responseJSON;
+            addAlert('alert-info', `${product.name} - ${product.price} р.б. ${product.message}` );
         }
     });
 }

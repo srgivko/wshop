@@ -3,6 +3,7 @@ package by.lodochkina.wshop.site.controllers;
 import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.entities.Customer;
 import by.lodochkina.wshop.entities.Product;
+import by.lodochkina.wshop.site.dto.ProductDto;
 import by.lodochkina.wshop.site.utils.SortUtils;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,13 +43,15 @@ public class WishController extends WShopSiteBaseController {
 
     @PostMapping("/wishlist/products")
     @ResponseBody
-    public void addToWishList(@RequestBody Product product) {
-        super.customerService.addProductToWishList(getCurrentUser().getCustomer().getId(), product.getId());
+    public ProductDto addToWishList(@RequestBody Product product, Locale locale) {
+        product = super.customerService.addProductToWishList(getCurrentUser().getCustomer().getId(), product.getId());
+        return ProductDto.createProductDto(product, super.getMessage("message.wishlist.addProduct.success", locale));
     }
 
     @DeleteMapping("/wishlist/products/{id}")
     @ResponseBody
-    public void removeCartItem(@PathVariable("id") Long productId) {
-        super.customerService.removeProductFromWishList(getCurrentUser().getCustomer().getId(), productId);
+    public ProductDto removeCartItem(@PathVariable("id") Product product, Locale locale) {
+        product = super.customerService.removeProductFromWishList(getCurrentUser().getCustomer().getId(), product.getId());
+        return ProductDto.createProductDto(product, super.getMessage("message.wishlist.removeProduct.success", locale));
     }
 }

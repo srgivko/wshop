@@ -791,9 +791,9 @@ body {
 }
 
 .newsletter-form a {
+    text-align: center;
     width: 100%;
     background: none repeat scroll 0 0 #5a88ca;
-    border: medium none;
     color: #fff;
     display: inline-block;
     font-size: 16px;
@@ -1113,6 +1113,7 @@ form.cart {
 
 .tab-content {
     margin-bottom: 30px;
+    margin-top: 10px;
 }
 
 .submit-review label {
