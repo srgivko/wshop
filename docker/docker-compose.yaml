@@ -1,0 +1,60 @@
+# Use postgres/example user/password credentials
+#init scripts are run when there postgres-data folder is created. If the postgres-data folder is initialized, the init scripts will be ignored.
+version: '3.1'
+
+services:
+
+  db:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./postgres-data:/var/lib/postgresql/data
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 9443:9443
+    volumes:
+      - ${APP_UPLOAD_PATH_HOST}:${APP_UPLOAD_PATH_CONTAINER}
+      - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
+    working_dir: ${APP_PATH_CONTAINER}
+    command: ["java", "-jar","-Dupload.path=${APP_UPLOAD_PATH_CONTAINER}", "-Dspring.profiles.active=default, docker", "wshop-admin-1.0-SNAPSHOT.jar"]
+    depends_on:
+      - db
+    links:
+      - db
+
+  site:
+    build:
+      context: ./site
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ${APP_UPLOAD_PATH_HOST}:${APP_UPLOAD_PATH_CONTAINER}
+      - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
+    working_dir: ${APP_PATH_CONTAINER}
+    command: ["java", "-jar", "-Dspring.profiles.active=default, docker", "wshop-site-1.0-SNAPSHOT.jar"]
+    depends_on:
+      - db
+      - admin
+    links:
+      - db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8083:8080
+    depends_on:
+      - db
