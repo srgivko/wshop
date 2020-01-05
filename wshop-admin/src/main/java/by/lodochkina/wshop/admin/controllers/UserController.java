@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_USERS;
 
 @Slf4j
@@ -70,7 +69,12 @@ public class UserController extends WShopAdminBaseController {
     }
 
     @PostMapping(value = "/users")
-    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String createUser(
+            @Valid @ModelAttribute("user") User user,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         this.userValidator.validate(user, result);
         if (result.hasErrors()) {
             return VIEW_PREFIX + "create_user";
@@ -80,7 +84,7 @@ public class UserController extends WShopAdminBaseController {
         user.setPassword(encodedPwd);
         User persistedUser = this.securityService.createUser(user);
         log.debug("Created new User with id : {} and name : {}", persistedUser.getId(), persistedUser.getName());
-        redirectAttributes.addFlashAttribute("info", "User created successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_USER));
         return "redirect:/users";
     }
 
@@ -91,14 +95,20 @@ public class UserController extends WShopAdminBaseController {
     }
 
     @PostMapping("/users/{id}")
-    public String updateUser(@PathVariable("id") User userFromDB, @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateUser(
+            @PathVariable("id") User userFromDB,
+            @ModelAttribute("user") User user,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         if (result.hasErrors()) {
             return VIEW_PREFIX + "edit_user";
         }
         BeanUtils.copyProperties(user, userFromDB, "id", "password", "passwordResetToken");
         User persistedUser = this.securityService.updateUser(user);
         log.debug("Updated user with id : {} and name : {}", persistedUser.getId(), persistedUser.getName());
-        redirectAttributes.addFlashAttribute("info", "User updates successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_USER));
         return "redirect:/users";
     }
 

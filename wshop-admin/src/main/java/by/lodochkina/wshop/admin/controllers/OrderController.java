@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.Locale;
+
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_ORDERS;
 
 @Slf4j
@@ -53,13 +56,18 @@ public class OrderController extends WShopAdminBaseController {
     }
 
     @PostMapping("/orders/{id}")
-    public String updateOrder(@ModelAttribute("order") Order order, @RequestParam(value = "send-email", required = false, defaultValue = "false") Boolean isSendEmail, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String updateOrder(
+            @ModelAttribute("order") Order order,
+            @RequestParam(value = "send-email", required = false, defaultValue = "false") boolean isSendEmail,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         Order persistedOrder = this.orderService.updateOrder(order);
         if (isSendEmail) {
             this.sendOrderStatusUpdateEmail(persistedOrder);
         }
         log.debug("Updated order with orderNumber : {}", persistedOrder.getOrderNumber());
-        redirectAttributes.addFlashAttribute("info", "Order updated successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_ORDER));
         return "redirect:/orders";
     }
 

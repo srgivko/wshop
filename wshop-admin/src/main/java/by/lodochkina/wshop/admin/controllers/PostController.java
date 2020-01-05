@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_POSTS;
 
 @Slf4j
@@ -59,7 +61,8 @@ public class PostController extends WShopAdminBaseController {
             @PathVariable(required = false) Long id,
             @Valid Post post,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         if (result.hasErrors()) {
             return VIEW_PREFIX + "create_edit_post";
@@ -68,11 +71,11 @@ public class PostController extends WShopAdminBaseController {
         if (id == null) {
             persistedPost = this.postService.createPost(post);
             log.debug("Created new post with id : {} and name : {}", persistedPost.getId(), persistedPost.getTitle());
-            redirectAttributes.addFlashAttribute("info", "Post created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_POST));
         } else {
             persistedPost = this.postService.updatePost(post);
             log.debug("Updated new post with id : {} and name : {}", persistedPost.getId(), persistedPost.getTitle());
-            redirectAttributes.addFlashAttribute("info", "Post updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_POST));
         }
         return "redirect:/posts";
     }

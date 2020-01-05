@@ -17,6 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import java.util.Locale;
+
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 
 @Slf4j
@@ -62,7 +65,8 @@ public class    ProducerController extends WShopAdminBaseController {
             @PathVariable(required = false) Long id,
             @Valid Producer producer,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         this.producerValidator.validate(producer, result);
         if (result.hasErrors()) {
@@ -72,11 +76,11 @@ public class    ProducerController extends WShopAdminBaseController {
         if (id == null) {
             persistedProducer = this.catalogService.createProducer(producer);
             log.debug("Created new producer with id : {} and name : {}", persistedProducer.getId(), persistedProducer.getName());
-            redirectAttributes.addFlashAttribute("info", "Producer created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_PRODUCER));
         } else {
             persistedProducer = this.catalogService.updateProducer(producer);
             log.debug("Updated new producer with id : {} and name : {}", persistedProducer.getId(), persistedProducer.getName());
-            redirectAttributes.addFlashAttribute("info", "Producer updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_PRODUCER));
         }
         return "redirect:/producers";
     }

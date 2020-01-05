@@ -18,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_CATEGORIES;
 
 @Slf4j
@@ -61,14 +63,19 @@ public class CategoryController extends WShopAdminBaseController {
     }
 
     @PostMapping("/categories")
-    public String createCategory(@Valid @ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String createCategory(
+            @Valid @ModelAttribute("category") Category category,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         this.categoryValidator.validate(category, result);
         if (result.hasErrors()) {
             return VIEW_PREFIX + "create_category";
         }
         Category persistedCategory = catalogService.createCategory(category);
         log.debug("Created new category with id : {} and name : {}", persistedCategory.getId(), persistedCategory.getName());
-        redirectAttributes.addFlashAttribute("info", "Category created successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_CATEGORY));
         return "redirect:/categories";
     }
 
@@ -80,10 +87,15 @@ public class CategoryController extends WShopAdminBaseController {
     }
 
     @PostMapping("/categories/{id}")
-    public String updateCategory(@Valid Category category, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateCategory(
+            @Valid Category category,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         Category persistedCategory = this.catalogService.updateCategory(category);
         log.debug("Updated category with id : {} and name : {}", persistedCategory.getId(), persistedCategory.getName());
-        redirectAttributes.addFlashAttribute("info", "Category updated successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_CATEGORY));
         return "redirect:/categories";
     }
 }

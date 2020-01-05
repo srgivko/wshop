@@ -3,7 +3,6 @@ package by.lodochkina.wshop.admin.controllers;
 import by.lodochkina.wshop.WShopException;
 import by.lodochkina.wshop.admin.validators.UnitValidator;
 import by.lodochkina.wshop.entities.Unit;
-import by.lodochkina.wshop.entities.Unit;
 import by.lodochkina.wshop.services.CatalogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 
 @Slf4j
@@ -63,7 +64,8 @@ public class UnitController extends WShopAdminBaseController {
             @PathVariable(required = false) Long id,
             @Valid Unit unit,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         this.unitValidator.validate(unit, result);
         if (result.hasErrors()) {
@@ -73,13 +75,12 @@ public class UnitController extends WShopAdminBaseController {
         if (id == null) {
             persistedUnit = this.catalogService.createUnit(unit);
             log.debug("Created new unit with id : {} and name : {}", persistedUnit.getId(), persistedUnit.getName());
-            redirectAttributes.addFlashAttribute("info", "Unit created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_UNIT));
         } else {
             persistedUnit = this.catalogService.updateUnit(unit);
             log.debug("Unit new unit with id : {} and name : {}", persistedUnit.getId(), persistedUnit.getName());
-            redirectAttributes.addFlashAttribute("info", "Unit updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_UNIT));
         }
-        redirectAttributes.addFlashAttribute("info", "Unit created successfully");
         return "redirect:/units";
     }
 }

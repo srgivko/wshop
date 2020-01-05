@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import java.util.Locale;
+
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PROMOTIONS;
 
 @Slf4j
@@ -55,18 +58,23 @@ public class SaleController extends WShopAdminBaseController {
     }
 
     @PostMapping({"/sales"})
-    public String saveOrUpdateSale(@Valid Sale sale, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String saveOrUpdateSale(
+            @Valid Sale sale,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("create_edit_sale");
         }
         if (sale.getId() == null) {
             this.saleService.createSale(sale);
             log.debug("Created new sale with id : {} and name : {}", sale.getId(), sale.getName());
-            redirectAttributes.addFlashAttribute("info", "Sale created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_SALE));
         } else {
             this.saleService.updateSale(sale);
             log.debug("Created update sale with id : {} and name : {}", sale.getId(), sale.getName());
-            redirectAttributes.addFlashAttribute("info", "Sale updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_SALE));
         }
         return "redirect:/sales";
     }

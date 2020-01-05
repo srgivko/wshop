@@ -18,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 
 @Slf4j
@@ -83,7 +85,8 @@ public class ProductController extends WShopAdminBaseController {
     public String createProduct(
             @Valid Product product,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         this.productValidator.validate(product, result);
         this.productImagesValidator.validate(product, result);
@@ -93,7 +96,7 @@ public class ProductController extends WShopAdminBaseController {
         }
         Product persistedProduct = this.catalogService.createProduct(product);
         log.debug("Created new product with id : {} and name : {}", persistedProduct.getId(), persistedProduct.getName());
-        redirectAttributes.addFlashAttribute("info", "Product created successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_PRODUCT));
         return "redirect:/products";
     }
 
@@ -107,7 +110,8 @@ public class ProductController extends WShopAdminBaseController {
     public String updateProduct(
             @Valid Product product,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         this.productImagesValidator.validate(product, result);
 
@@ -116,7 +120,7 @@ public class ProductController extends WShopAdminBaseController {
         }
         Product persistedProduct = this.catalogService.updateProduct(product);
         log.debug("Updated product with id : {} and name : {}", persistedProduct.getId(), persistedProduct.getName());
-        redirectAttributes.addFlashAttribute("info", "Product updated successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_PRODUCT));
         return "redirect:/products";
     }
 

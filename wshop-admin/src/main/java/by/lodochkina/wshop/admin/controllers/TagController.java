@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PRODUCTS;
 
 @Slf4j
@@ -62,7 +64,8 @@ public class TagController extends WShopAdminBaseController {
             @PathVariable(required = false) Long id,
             @Valid Tag tag,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         this.tagValidator.validate(tag, result);
         if (result.hasErrors()) {
@@ -72,11 +75,11 @@ public class TagController extends WShopAdminBaseController {
         if (id == null) {
             persistedTag = this.catalogService.createTag(tag);
             log.debug("Created new tag with id : {} and name : {}", persistedTag.getId(), persistedTag.getName());
-            redirectAttributes.addFlashAttribute("info", "Tag created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_TAG));
         } else {
             persistedTag = this.catalogService.updateTag(tag);
             log.debug("Updated new tag with id : {} and name : {}", persistedTag.getId(), persistedTag.getName());
-            redirectAttributes.addFlashAttribute("info", "Tag updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_TAG));
         }
         return "redirect:/tags";
     }

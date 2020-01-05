@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_ROLES;
 
 @Slf4j
@@ -59,16 +57,20 @@ public class RoleController extends WShopAdminBaseController {
         return VIEW_PREFIX + "create_role";
     }
 
-//    Note that BindingResult result argument should be next to @ModelAttribute property to have validation errors population working properly.
     @PostMapping(value = "/roles")
-    public String createRole(@Valid @ModelAttribute("role") Role role, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String createRole(
+            @Valid @ModelAttribute("role") Role role,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Locale locale
+    ) {
         roleValidator.validate(role, result);
         if (result.hasErrors()) {
             return VIEW_PREFIX + "create_role";
         }
         Role persistedRole = this.securityService.createRole(role);
         log.debug("Created new role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
-        redirectAttributes.addFlashAttribute("info", "Role created successfully"); //TODO; i18n
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_ROLE));
         return "redirect:/roles";
     }
 
@@ -104,10 +106,10 @@ public class RoleController extends WShopAdminBaseController {
     }
 
     @PostMapping(value="/roles/{id}")
-    public String updateRole(@ModelAttribute("role") Role role, RedirectAttributes redirectAttributes) {
+    public String updateRole(@ModelAttribute("role") Role role, RedirectAttributes redirectAttributes, Locale locale) {
         Role persistedRole = securityService.updateRole(role);
         log.debug("Updated role with id : {} and name : {}", persistedRole.getId(), persistedRole.getName());
-        redirectAttributes.addFlashAttribute("info", "Role updated successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_ROLE));
         return "redirect:/roles";
     }
 }

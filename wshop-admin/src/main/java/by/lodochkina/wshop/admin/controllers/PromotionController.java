@@ -21,6 +21,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import java.util.Locale;
+
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PROMOTIONS;
 
 @Slf4j
@@ -79,7 +82,8 @@ public class PromotionController extends WShopAdminBaseController {
             @PathVariable(value = "id", required = false) Long id,
             @Valid Promotion promotion,
             BindingResult result,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Locale locale
     ) {
         this.promotionValidator.validate(promotion, result);
         if (result.hasErrors()) {
@@ -89,19 +93,19 @@ public class PromotionController extends WShopAdminBaseController {
         if (id == null) {
             persistedPromotion = this.promotionService.createPromotion(promotion);
             log.debug("Created new promotion with id : {} and subject : {}", persistedPromotion.getId(), persistedPromotion.getSubject());
-            redirectAttributes.addFlashAttribute("info", "Promotion created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_PROMOTION));
         } else {
             persistedPromotion = this.promotionService.updatePromotion(promotion);
             log.debug("Updated new post with id : {} and subject : {}", persistedPromotion.getId(), persistedPromotion.getSubject());
-            redirectAttributes.addFlashAttribute("info", "Promotion updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_PROMOTION));
         }
         return "redirect:/promotions";
     }
 
     @GetMapping("/promotions/{id}/send")
-    public String sendPromotion(@PathVariable Long id, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String sendPromotion(@PathVariable Long id, RedirectAttributes redirectAttributes, HttpServletRequest request, Locale locale) {
         this.promotionService.sendPromotion(id, WebUtils.getURLSiteWithoutContextPath(request).concat(siteServerPort));
-        redirectAttributes.addFlashAttribute("info", "Promotion send successfully");
+        redirectAttributes.addFlashAttribute("info", getMessage(INFO_SEND_SUCCESS, locale, LABEL_PROMOTION));
         return "redirect:/promotions";
     }
 

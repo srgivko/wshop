@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
+import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PROMOTIONS;
 
 @Slf4j
@@ -55,18 +57,18 @@ public class CouponController extends WShopAdminBaseController {
     }
 
     @PostMapping({"/coupons"})
-    public String saveOrUpdateSale(@Valid Coupon coupon, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String saveOrUpdateSale(@Valid Coupon coupon, BindingResult result, RedirectAttributes redirectAttributes, Locale locale) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("create_edit_coupon");
         }
         if (coupon.getId() == null) {
             this.couponService.createCoupon(coupon);
             log.debug("Created new coupon with id : {} and name : {}", coupon.getId(), coupon.getName());
-            redirectAttributes.addFlashAttribute("info", "Coupon created successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_CREATE_SUCCESS, locale, LABEL_COUPON));
         } else {
             this.couponService.updateCoupon(coupon);
             log.debug("Updated coupon with id : {} and name : {}", coupon.getId(), coupon.getName());
-            redirectAttributes.addFlashAttribute("info", "Coupon updated successfully");
+            redirectAttributes.addFlashAttribute("info", getMessage(INFO_UPDATE_SUCCESS, locale, LABEL_COUPON));
         }
         return "redirect:/coupons";
     }
@@ -96,7 +98,7 @@ public class CouponController extends WShopAdminBaseController {
     }
 
     @PostMapping({"/coupons/{couponId}/addCategoryCouponItem"})
-    public String addCategoryCouponItem(@PathVariable Long couponId, @Valid CategoryCouponItem categoryCouponItem, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addCategoryCouponItem(@PathVariable Long couponId, @Valid CategoryCouponItem categoryCouponItem, BindingResult result) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("create_edit_category_coupon_item");
         }
@@ -122,7 +124,7 @@ public class CouponController extends WShopAdminBaseController {
     }
 
     @PostMapping({"/coupons/{couponId}/addPriceCouponItem"})
-    public String addCategoryCouponItem(@PathVariable Long couponId, @Valid PriceCouponItem priceCouponItem, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addCategoryCouponItem(@PathVariable Long couponId, @Valid PriceCouponItem priceCouponItem, BindingResult result) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("create_edit_price_coupon_item");
         }
@@ -148,7 +150,7 @@ public class CouponController extends WShopAdminBaseController {
     }
 
     @PostMapping({"/coupons/{couponId}/addProductCouponItem"})
-    public String addProductCouponItem(@PathVariable Long couponId, @Valid ProductCouponItem productCouponItem, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addProductCouponItem(@PathVariable Long couponId, @Valid ProductCouponItem productCouponItem, BindingResult result) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("create_edit_product_coupon_item");
         }
@@ -174,7 +176,7 @@ public class CouponController extends WShopAdminBaseController {
     }
 
     @PostMapping({"/coupons/{couponId}/addQuantityCouponItem"})
-    public String addQuantityCouponItem(@PathVariable Long couponId, @Valid QuantityCouponItem quantityCouponItem, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addQuantityCouponItem(@PathVariable Long couponId, @Valid QuantityCouponItem quantityCouponItem, BindingResult result) {
         if (result.hasErrors()) {
             return VIEW_PREFIX.concat("create_edit_quantity_coupon_item");
         }

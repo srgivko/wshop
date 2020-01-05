@@ -7,6 +7,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.Arrays;
+import java.util.Locale;
+
 public abstract class WShopAdminBaseController {
 
     @Autowired
@@ -14,8 +17,16 @@ public abstract class WShopAdminBaseController {
 
     protected abstract String getHeaderTitle();
 
-    public String getMessage(String code) {
-        return messageSource.getMessage(code, null, null);
+    public String getMessage(String code, Locale locale, String... args) {
+        if (args != null) {
+            Object[] localeArgs = Arrays.stream(args).map(label -> getMessage(label, locale)).toArray();
+            return messageSource.getMessage(code, localeArgs, locale);
+        }
+        return messageSource.getMessage(code, null, locale);
+    }
+
+    public String getMessage(String code, Locale locale) {
+        return messageSource.getMessage(code, null, locale);
     }
 
     public String getMessage(String code, String defaultMsg) {

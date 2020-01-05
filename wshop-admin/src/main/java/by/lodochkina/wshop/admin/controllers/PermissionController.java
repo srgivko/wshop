@@ -1,7 +1,5 @@
 package by.lodochkina.wshop.admin.controllers;
 
-import static by.lodochkina.wshop.admin.utils.SecurityUtils.*;
-
 import by.lodochkina.wshop.entities.Permission;
 import by.lodochkina.wshop.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+
+import static by.lodochkina.wshop.admin.utils.SecurityUtils.MANAGE_PERMISSIONS;
 
 @Controller
 @Secured(MANAGE_PERMISSIONS)

@@ -15,6 +15,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 import static by.lodochkina.wshop.admin.utils.MessageCodes.*;
 
@@ -45,7 +46,12 @@ public class UserAuthController extends WShopAdminBaseController {
     }
 
     @PostMapping(value = "/resetPwd")
-    public String handleResetPwd(HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
+    public String handleResetPwd(
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            Locale locale
+    ) {
         try {
             String email = request.getParameter("email");
             String token = request.getParameter("token");
@@ -54,21 +60,21 @@ public class UserAuthController extends WShopAdminBaseController {
             if (!password.equals(confPassword)) {
                 model.addAttribute("email", email);
                 model.addAttribute("token", token);
-                model.addAttribute("msg", getMessage(ERROR_PASSWORD_CONF_PASSWORD_MISMATCH));
+                model.addAttribute("msg", getMessage(ERROR_PASSWORD_CONF_PASSWORD_MISMATCH, locale));
                 return "public/resetPwd";
             }
             String encodedPwd = this.passwordEncoder.encode(password);
             this.securityService.updatePassword(email, token, encodedPwd);
-            redirectAttributes.addFlashAttribute("msg", getMessage(INFO_PASSWORD_UPDATED_SUCCESS));
+            redirectAttributes.addFlashAttribute("msg", getMessage(INFO_PASSWORD_UPDATED_SUCCESS, locale));
         } catch (WShopException e) {
             System.err.println(e);
-            redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST));
+            redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST, locale));
         }
         return "redirect:/login";
     }
 
     @GetMapping(value="/resetPwd")
-    public String resetPwd(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
+    public String resetPwd(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, Locale locale)
     {
         String email = request.getParameter("email");
         String token = request.getParameter("token");
@@ -79,26 +85,26 @@ public class UserAuthController extends WShopAdminBaseController {
             model.addAttribute("token", token);
             return VIEW_PREFIX+"resetPwd";
         } else {
-            redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST));
+            redirectAttributes.addFlashAttribute("msg", getMessage(ERROR_INVALID_PASSWORD_RESET_REQUEST, locale));
             return "redirect:/login";
         }
     }
 
     @PostMapping(value = "/forgotPwd")
-    public String handleForgotPwd(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String handleForgotPwd(HttpServletRequest request, RedirectAttributes redirectAttributes, Locale locale) {
         String email = request.getParameter("email");
         try {
             String token = this.securityService.resetPassword(email);
             String resetPwdURL = WebUtils.getURLWithContextPath(request) + "/resetPwd?email=" + email + "&token=" + token;
-            this.sendForgotPasswordEmail(email, resetPwdURL);
-            redirectAttributes.addFlashAttribute("msg", getMessage(INFO_PASSWORD_RESET_LINK_SENT));
+            this.sendForgotPasswordEmail(email, resetPwdURL, locale);
+            redirectAttributes.addFlashAttribute("msg", getMessage(INFO_PASSWORD_RESET_LINK_SENT, locale));
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("msg", e.getMessage());
         }
         return "redirect:/forgotPwd";
     }
 
-    private void sendForgotPasswordEmail(String email, String resetPwdURL) {
+    private void sendForgotPasswordEmail(String email, String resetPwdURL, Locale locale) {
         try {
             // Prepare the evaluation context
             final Context ctx = new Context();
@@ -107,7 +113,7 @@ public class UserAuthController extends WShopAdminBaseController {
             // Create the HTML body using Thymeleaf
             final String htmlContent = this.templateEngine.process("templates/email-templates/forgot-password-email", ctx);
 
-            this.emailService.send(email, getMessage(LABEL_PASSWORD_RESET_EMAIL_SUBJECT), htmlContent);
+            this.emailService.send(email, getMessage(LABEL_PASSWORD_RESET_EMAIL_SUBJECT, locale), htmlContent);
         } catch (WShopException e) {
             System.err.println("Some error");
         }
