@@ -69,9 +69,8 @@ div.cart-collaterals ul.products li.product {
   text-align: center;
 } 
 .shopping-item {
-  float: none;
+  width: 100%;
   margin-bottom: 20px;
-  margin-top: 5px;
   text-align: center;
 }  
 .navbar-header {

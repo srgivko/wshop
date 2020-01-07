@@ -17,7 +17,7 @@ public class OrderDTO implements Serializable {
     private String lastName;
     @NotEmpty(message = "{errors.email.required}")
     @Email
-    private String emailId;
+    private String email;
     @NotEmpty(message = "{errors.phone.required}")
     private String phone;
 

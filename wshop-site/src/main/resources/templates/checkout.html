@@ -100,8 +100,8 @@
                                                 <p id="shipping_email_field" class="form-row form-row-first validate-required">
                                                     <label><span th:text="#{label.email}">Email</span> <abbr title="required" class="required">*</abbr>
                                                     </label>
-                                                    <input type="text" th:field="*{emailId}" class="input-text"/>
-                                                <p th:if="${#fields.hasErrors('emailId')}" th:errors="*{emailId}" th:errorclass="text-danger">Incorrect phone</p>
+                                                    <input type="text" th:field="*{email}" class="input-text"/>
+                                                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="text-danger">Incorrect phone</p>
                                                 </p>
 
                                                 <div class="clear"></div>

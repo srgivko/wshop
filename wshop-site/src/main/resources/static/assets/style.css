@@ -1986,6 +1986,7 @@ img.carousel-inner-img {
 }
 
 .map {
+    min-height: 290px;
     position: relative;
 }
 
@@ -2021,7 +2022,7 @@ img.carousel-inner-img {
         box-shadow: none;
         border-radius: 0;
         position: relative;
-        top: 120px;
+        top: 140px;
         left: 0;
     }
 }
@@ -2043,9 +2044,8 @@ img.carousel-inner-img {
 
 .post-content-title span {
     position: absolute;
-    top: 50%;
-    right: 2%;
-    transform: translateY(-50%);
+    bottom: 1%;
+    right: 1%;
     font-style: oblique;
     color: grey;
 }
@@ -2082,4 +2082,13 @@ a.cart-button {
     margin-left: auto;
     width: fit-content;
     margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 767px) {
+    .navbar-form > input[type="text"] {
+        width: 70%;
+    }
+    .navbar-form > input[type="submit"] {
+        width: 29%;
+    }
 }

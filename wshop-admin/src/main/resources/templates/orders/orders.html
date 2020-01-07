@@ -22,13 +22,20 @@
                             <th th:text="#{label.orderNumber}">Order Number</th>
                             <th th:text="#{label.customerName}">Customer Name</th>
                             <th th:text="#{label.email}">Email</th>
-                            <th th:text="#{label.edit}">Edit</th>
+                            <th th:text="#{label.address.phone}">Phone Number</th>
+                            <th th:text="#{label.address.email}">Email</th>
+                            <th th:text="#{label.address.firstName}">Email</th>
+                            <th th:text="#{label.address.lastName}">Edit</th>
                         </tr>
                         <tr th:each="order,iterStat : ${orders}">
                             <td><span th:text="${iterStat.count}">1</span></td>
                             <td th:text="${order.orderNumber}">Order Number</td>
                             <td th:text="${order.customer.firstName}">Customer Name</td>
                             <td th:text="${order.customer.email}">Customer Email</td>
+                            <th th:text="${order.deliveryAddress.phoneNumber}">Phone Number</th>
+                            <th th:text="${order.deliveryAddress.email}">Contact Email</th>
+                            <th th:text="${order.deliveryAddress.firstName}">Contact firstName</th>
+                            <th th:text="${order.deliveryAddress.lastName}">Contact lastName</th>
                             <td><a th:href="@{/orders/{id}(id=${order.id})}"
                                    class="btn btn-sm btn-default"><i class="fa fa-edit"></i> <span th:text="#{label.edit}">Edit</span></a></td>
                         </tr>

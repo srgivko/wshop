@@ -15,20 +15,17 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final EmailService emailService;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, EmailService emailService) {
+    public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.emailService = emailService;
     }
 
     @Transactional
     @Override
     public Order createOrder(Order order) {
         order.setOrderNumber(String.valueOf(System.currentTimeMillis()));
-        Order savedOrder = orderRepository.save(order);
-        return savedOrder;
+        return this.orderRepository.save(order);
     }
 
     @Override
@@ -49,4 +46,5 @@ public class OrderServiceImpl implements OrderService {
         o.setStatus(order.getStatus());
         return this.orderRepository.save(o);
     }
+
 }

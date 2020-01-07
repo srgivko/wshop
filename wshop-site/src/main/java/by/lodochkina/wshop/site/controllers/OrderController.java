@@ -14,13 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -28,12 +27,19 @@ public class OrderController extends WShopSiteBaseController {
 
     private final CustomerService customerService;
     private final OrderService orderService;
+    private final TemplateEngine templateEngine;
     private final EmailService emailService;
 
     @Autowired
-    public OrderController(CustomerService customerService, OrderService orderService, EmailService emailService) {
+    public OrderController(
+            CustomerService customerService,
+            OrderService orderService,
+            TemplateEngine templateEngine,
+            EmailService emailService
+    ) {
         this.customerService = customerService;
         this.orderService = orderService;
+        this.templateEngine = templateEngine;
         this.emailService = emailService;
     }
 
@@ -43,8 +49,13 @@ public class OrderController extends WShopSiteBaseController {
     }
 
     @PostMapping("/orders")
-    public String placeOrder(@Valid @ModelAttribute("order") OrderDTO order,
-                             BindingResult result, Model model, HttpServletRequest request) {
+    public String placeOrder(
+            @Valid @ModelAttribute("order") OrderDTO order,
+            BindingResult result,
+            Model model,
+            HttpServletRequest request,
+            Locale locale
+    ) {
         Cart cart = getOrCreateCart(request);
         if (result.hasErrors()) {
             model.addAttribute("cart", cart);
@@ -64,6 +75,11 @@ public class OrderController extends WShopSiteBaseController {
         address.setState(order.getState());
         address.setZipCode(order.getZipCode());
         address.setCountry(order.getCountry());
+
+        address.setFirstName(order.getFirstName());
+        address.setLastName(order.getLastName());
+        address.setEmail(order.getEmail());
+        address.setPhoneNumber(order.getPhone());
 
         newOrder.setDeliveryAddress(address);
 
@@ -90,23 +106,12 @@ public class OrderController extends WShopSiteBaseController {
         newOrder.setCreatedOn(new Date());
 
         Order savedOrder = this.orderService.createOrder(newOrder);
-
-        this.sendOrderConfirmationEmail(savedOrder);
+        this.sendConfirmationOrder(savedOrder, locale);
 
         request.getSession().removeAttribute("CART_KEY");
         return "redirect:orderconfirmation?orderNumber=" + savedOrder.getOrderNumber();
     }
 
-    private void sendOrderConfirmationEmail(Order order) {
-        try {
-            this.emailService.send(order.getCustomer().getEmail(),
-                    "QuilCartCart - Order Confirmation",
-                    "Your order has been placed successfully.\n"
-                            + "Order Number : " + order.getOrderNumber());
-        } catch (WShopException e) {
-            log.error(e.getMessage(), e);
-        }
-    }
 
     @GetMapping("/orderconfirmation")
     public String showOrderConfirmation(@RequestParam(value = "orderNumber") String orderNumber, Model model) {
@@ -119,5 +124,17 @@ public class OrderController extends WShopSiteBaseController {
     public String viewOrder(@PathVariable(value = "id") Order order, Model model) { ;
         model.addAttribute("order", order);
         return "view_order";
+    }
+
+    private void sendConfirmationOrder(Order order, Locale locale) {
+        try {
+            final Context ctx = new Context();
+            ctx.setVariable("order", order);
+            ctx.setLocale(locale);
+            final String htmlContent = this.templateEngine.process("email-templates/orderConfirmation", ctx);
+            this.emailService.send(order.getDeliveryAddress().getEmail(), getMessage("label.orderConfirmation", locale), htmlContent);
+        } catch (WShopException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 }

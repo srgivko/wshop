@@ -76,7 +76,7 @@ public class OrderController extends WShopAdminBaseController {
             final Context ctx = new Context();
             ctx.setVariable("order", order);
             final String htmlContent = this.templateEngine.process("email-templates/order-status-update-email", ctx);
-            this.emailService.send(order.getCustomer().getEmail(), "QuilCartCart - Order Status Update", htmlContent);
+            this.emailService.send(order.getDeliveryAddress().getEmail(), "PromPostavki - Order Status Update", htmlContent);
         } catch (WShopException e) {
             log.error(e.getMessage(), e);
         }

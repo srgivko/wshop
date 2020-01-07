@@ -18,6 +18,11 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String email;
+    private String phoneNumber;
+    private String firstName;
+    private String lastName;
+
     private String addressLine1;
 
     private String addressLine2;
